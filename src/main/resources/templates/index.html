@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div>
+    <!-- Thymeleaf for iterating over comments -->
+    <p>ffff</p>
+    <div th:each="infoObject : ${infoObjects}">
+        <div>
+            <p th:text="${infoObject.content}">Comment content</p>
+            <!-- Other comment fields -->
+        </div>
+    </div>
+    <!-- Form for new comments, searching by tag, etc. -->
+</div>
+</body>
+</html>
