@@ -55,18 +55,18 @@
       padding: 20px;
       gap: 20px;
     }
-    .comments, .submit-form {
+    .info-objects, .form-container {
       background-color: #333;
       padding: 20px;
       border-radius: 8px;
       color: #fff;
       box-shadow: 3px 3px 5px 0 rgba(0,0,0,0.5);
     }
-    .comments {
+    .info-objects {
       width: 70%;
       margin-right: 10px;
     }
-    .submit-form {
+    .form-container {
       justify-content: start;
       width: 30%;
       display: flex;
@@ -74,7 +74,7 @@
       gap: 5px;
       max-height: 50%;
     }
-    .submit-form__form {
+    .form-container__form {
       display: flex;
       flex-direction: column;
     }
@@ -95,6 +95,9 @@
       width: 100%;
       max-width: 100%;
       min-width: 100%;
+    }
+    .form__textarea {
+      height: 10rem;
     }
     .form__input[type="submit"] {
       background-color: #146c43; /* A more muted button color for retro feel */
@@ -236,7 +239,7 @@
       display:flex;
       justify-content: space-between;
     }
-    .comment-tag {
+    .info-object-tag {
       display: block; /* Change to block for better control over positioning */
       background-color: #444; /* Darker background for the tag */
       color: #9acd32; /* A retro green color for the text */
@@ -255,11 +258,19 @@
       user-select: text;
     }
   </style>
+  <script src="https://unpkg.com/htmx.org@1.9.10" integrity="sha384-D1Kt99CQMDuVetoL1lrYwg5t+9QdHe7NLX/SoJYkXDFfX37iInKRy5xLSi8nO7UC" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/idiomorph/dist/idiomorph-ext.min.js"></script>
 </head>
 <body>
 <div class="container">
-  <div class="comments">
-    <div>
+  <div class="info-objects"
+       hx-ext="morph"
+       hx-get=""
+       hx-trigger="every 3s"
+       hx-target="#hx-swappable"
+       hx-swap="morph:outerHTML"
+       hx-select="#hx-swappable">
+    <div id="hx-swappable">
       <!-- Search form for filtering by tag -->
       <form th:action="@{/}" method="get">
         <input type="text" name="tag" placeholder="Search by tag..." th:value="${tag}">
@@ -275,6 +286,7 @@
       </div>
     </div>
 
+    <div id="last-reload-time">Last log load: [[${currentDateTime}]]</div>
     <div th:each="infoObject : ${infoObjectsPage.content}">
       <div class="info-object-card box" th:id="${'info-object-' + infoObject.id}">
         <div class="header-container">
@@ -282,15 +294,22 @@
             <h4 th:text="${'Author: ' + infoObject.authorIp}">Author IP</h4>
             <h5 th:if="${infoObject.topic}" th:text="${'Topic: ' + infoObject.topic}">Topic</h5>
           </div>
-          <div th:if="${infoObject.tag}">
-            <span class="comment-tag" th:text="${'Tag: ' + infoObject.tag}">Tag</span>
+          <div th:if="${!#strings.isEmpty(infoObject.tag)}">
+            <span class="info-object-tag" th:text="${'Tag: ' + infoObject.tag}">Tag</span>
           </div>
         </div>
         <p th:text="${infoObject.content}" class="content">Content</p>
         <div class="button-container">
           <button th:data-content="${infoObject.content}"
                   onclick="copyToClipboard(this, this.getAttribute('data-content'))">Copy</button>
-          <button class="remove-button" th:attr="onclick=|location.href='@{/info-object/delete/' + ${infoObject.id}}'|">Remove</button>
+          <button class="remove-button"
+                  th:hx-delete="@{/info-object/__${infoObject.id}__}"
+                  th:hx-target="|#info-object-${infoObject.id}|"
+                  hx-swap="outerHTML"
+                  hx-confirm="Are you sure you wish to delete this Information Object?"
+                  type="button">
+            Remove
+          </button>
         </div>
       </div>
     </div>
@@ -306,8 +325,8 @@
   </div>
 
   <!-- Form to submit new InfoObject -->
-  <div class="submit-form">
-    <form th:action="@{/info-object}" th:object="${infoObjectDto}" method="post" class="submit-form__form">
+  <div class="form-container">
+    <form th:action="@{/info-object}" th:object="${infoObjectDto}" method="post" class="form-container__form">
       <div class="form-section">
         <label for="topic" class="form__label">Topic:</label>
         <input type="text" id="topic" th:field="*{topic}" placeholder="Enter Topic" class="form__input">

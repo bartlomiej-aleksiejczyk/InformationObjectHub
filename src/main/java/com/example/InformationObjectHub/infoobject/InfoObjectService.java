@@ -29,12 +29,18 @@ public class InfoObjectService {
         return infoObjectRepository.findById(id);
     }
 
+    @Transactional(readOnly = true)
+    public List<String> findAllUniqueTags() {
+        return infoObjectRepository.findDistinctTags();
+    }
+
     @Transactional
     public void saveInfoObject(InfoObjectDTO infoObjectDTO, String authorIp) {
         InfoObject infoObject = new InfoObject();
         infoObject.setContent(infoObjectDTO.getContent());
         infoObject.setTopic(infoObjectDTO.getTopic());
-        infoObject.setTag(infoObjectDTO.getTag());
+        infoObject.setTag(Optional.ofNullable(infoObjectDTO.getTag())
+                .map(String::toUpperCase).orElse(null));
         infoObject.setAuthorIp(authorIp);
         infoObjectRepository.save(infoObject);
     }
@@ -46,7 +52,8 @@ public class InfoObjectService {
             InfoObject existingInfoObject = infoObjectOptional.get();
             existingInfoObject.setContent(infoObjectDTO.getContent());
             existingInfoObject.setTopic(infoObjectDTO.getTopic());
-            existingInfoObject.setTag(infoObjectDTO.getTag());
+            existingInfoObject.setTag(Optional.ofNullable(infoObjectDTO.getTag())
+                    .map(String::toUpperCase).orElse(null));
             // No need to set authorIp for updates
             infoObjectRepository.save(existingInfoObject);
         } else {
