@@ -3,6 +3,7 @@ package com.example.InformationObjectHub.infoobject;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -12,6 +13,7 @@ import jakarta.validation.Valid;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.Optional;
 
 @Controller
@@ -21,6 +23,8 @@ public class InfoObjectController {
 
     @GetMapping("/")
     public String index(Model model, @RequestParam(required = false) String tag, Pageable pageable) {
+        model.addAttribute("currentDateTime", new Date());
+        model.addAttribute("uniqueTags", infoObjectService.findAllUniqueTags());
         model.addAttribute("infoObjectsPage", infoObjectService.findAllInfoObjects(tag, pageable));
         model.addAttribute("currentDateTime", DateTimeFormatter.ofPattern("Y-MM-dd HH:mm:ss").format(java.time.LocalDateTime.now()));
         model.addAttribute("infoObjectDto", new InfoObjectDTO());
@@ -78,10 +82,8 @@ public class InfoObjectController {
         return "redirect:/";
     }
 
-    @GetMapping("/info-object/delete/{id}")
-    public String deleteInfoObject(@PathVariable Long id, RedirectAttributes redirectAttributes) {
+    @DeleteMapping("/info-object/{id}")
+    public ResponseEntity<String> deleteInfoObject(@PathVariable Long id, RedirectAttributes redirectAttributes) {
         infoObjectService.removeInfoObject(id);
-        redirectAttributes.addFlashAttribute("message", "InfoObject removed successfully!");
-        return "redirect:/";
-    }
+        return ResponseEntity.ok().body("InfoObject removed successfully!");    }
 }
