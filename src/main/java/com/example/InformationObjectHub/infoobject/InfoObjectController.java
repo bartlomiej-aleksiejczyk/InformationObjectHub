@@ -1,6 +1,7 @@
 package com.example.InformationObjectHub.infoobject;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -9,7 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.data.domain.Pageable;
 import org.springframework.validation.BindingResult;
-import jakarta.validation.Valid;
+
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.format.DateTimeFormatter;
@@ -51,8 +52,10 @@ public class InfoObjectController {
                               RedirectAttributes redirectAttributes,
                               HttpServletRequest request) {
         if (bindingResult.hasErrors()) {
+            System.out.println("TTTTTT");
             return "infoobjects/info-object-create-update";
         }
+        System.out.println("yyyyyy");
 
         infoObjectService.saveInfoObject(infoObjectDTO, request.getRemoteAddr());
         redirectAttributes.addFlashAttribute("message", "Comment posted successfully!");
