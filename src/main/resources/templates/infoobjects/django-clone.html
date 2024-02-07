@@ -319,8 +319,10 @@
       <a th:if="${infoObjectsPage.hasPrevious()}" th:href="@{|/?page=1&tag=${tag}|}">&laquo; first</a>
       <a th:if="${infoObjectsPage.hasPrevious()}" th:href="@{|/?page=${infoObjectsPage.previousPageable().getPageNumber()}&tag=${tag}|}">previous</a>
       <span>Page [[${infoObjectsPage.number + 1}]] of [[${infoObjectsPage.totalPages}]].</span>
-      <a th:if="${infoObjectsPage.hasNext()}" th:href="@{|/?page=${infoObjectsPage.nextPageable().getPageNumber()}&tag=${tag}|}">next</a>
-      <a th:if="${infoObjectsPage.hasNext()}" th:href="@{|/?page=${infoObjectsPage.totalPages}&tag=${tag}|}">last &raquo;</a>
+      <a th:if="${infoObjectsPage.hasNext()}" 
+      th:href="@{|/?page=${infoObjectsPage.nextPageable().getPageNumber()}&tag=${tag != null ? tag : ''}|}">next</a>
+      <a th:if="${infoObjectsPage.hasNext()}" 
+      th:href="@{|/?page=${infoObjectsPage.totalPages}&tag=${tag != null ? tag : ''}|}">last &raquo;</a>
     </div>
   </div>
 

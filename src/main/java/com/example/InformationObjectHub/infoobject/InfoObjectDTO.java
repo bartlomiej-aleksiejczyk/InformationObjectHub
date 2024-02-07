@@ -3,9 +3,9 @@ package com.example.InformationObjectHub.infoobject;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-import lombok.experimental.FieldNameConstants;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -13,10 +13,10 @@ import lombok.experimental.FieldNameConstants;
 @Getter
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class InfoObjectDTO {
-    @NotNull(message = "Content cannot be empty")
-    @NotEmpty(message = "Content cannot be empty")
+    @Size(min = 2, message = "Bajo jajo")
     @NotBlank(message = "Content cannot be empty")
     String content;
+    @NotBlank(message = "Content cannot be empty")
     String topic;
     String tag;
 }
