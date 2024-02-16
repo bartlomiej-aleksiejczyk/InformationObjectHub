@@ -17,9 +17,9 @@ pipeline {
 
         stage('Build Docker Image') {
             steps {
+                // Use the 'script' block directly within 'steps'
                 script {
-                    // Build the Docker image
-                    docker.build("${IMAGE_NAME}:${IMAGE_TAG}")
+                    docker.build("${env.IMAGE_NAME}:${env.IMAGE_TAG}")
                 }
             }
         }
@@ -27,13 +27,14 @@ pipeline {
         stage('Deploy') {
             steps {
                 script {
+                    // Ensure commands are correctly structured within the 'script' block
                     // Stop and remove any existing container
-                    sh "docker stop ${IMAGE_NAME} || true"
-                    sh "docker rm ${IMAGE_NAME} || true"
+                    sh "docker stop ${env.IMAGE_NAME} || true"
+                    sh "docker rm ${env.IMAGE_NAME} || true"
                     // Run the Docker container from the built image
                     // Adjust the docker run command according to your application's needs
                     // For example, mapping ports or specifying environment variables
-                    sh "docker run -d --name ${IMAGE_NAME} -p 8080:8080 ${IMAGE_NAME}:${IMAGE_TAG}"
+                    sh "docker run -d --name ${env.IMAGE_NAME} -p 8080:8080 ${env.IMAGE_NAME}:${env.IMAGE_TAG}"
                 }
             }
         }
@@ -42,6 +43,11 @@ pipeline {
     post {
         always {
             // Add post-build actions here, like cleanup
+            script {
+                // Use 'sh' steps within a 'script' block for consistency
+                sh "docker stop ${env.IMAGE_NAME} || true"
+                sh "docker rm ${env.IMAGE_NAME} || true"
+            }
         }
     }
 }
