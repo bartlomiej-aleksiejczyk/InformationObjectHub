@@ -4,17 +4,17 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.data.domain.Pageable;
 import org.springframework.validation.BindingResult;
-
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
 import java.util.Optional;
 
 @Controller
@@ -23,14 +23,17 @@ public class InfoObjectController {
     private final InfoObjectService infoObjectService;
 
     @GetMapping("/")
-    public String index(Model model, @RequestParam(required = false) String tag, Pageable pageable) {
-        model.addAttribute("currentDateTime", new Date());
+    public String index(Model model, @RequestParam(required = false) String tag,
+                        @RequestParam(defaultValue = "0") int page,
+                        @RequestParam(defaultValue = "10") int size) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "modifiedAt"));
+        model.addAttribute("currentDateTime", DateTimeFormatter.ofPattern("y-MM-dd HH:mm:ss")
+                .format(java.time.LocalDateTime.now()));
         model.addAttribute("uniqueTags", infoObjectService.findAllUniqueTags());
         model.addAttribute("infoObjectsPage", infoObjectService.findAllInfoObjects(tag, pageable));
-        model.addAttribute("currentDateTime", DateTimeFormatter.ofPattern("Y-MM-dd HH:mm:ss").format(java.time.LocalDateTime.now()));
         model.addAttribute("infoObjectDto", new InfoObjectDTO());
         model.addAttribute("tag", tag);
-        return "infoobjects/django-clone"; // Uses src/main/resources/templates/index.html
+        return "infoobjects/django-clone";
     }
 
     @GetMapping("/all/")
@@ -52,10 +55,8 @@ public class InfoObjectController {
                               RedirectAttributes redirectAttributes,
                               HttpServletRequest request) {
         if (bindingResult.hasErrors()) {
-            System.out.println("TTTTTT");
             return "infoobjects/info-object-create-update";
         }
-        System.out.println("yyyyyy");
 
         infoObjectService.saveInfoObject(infoObjectDTO, request.getRemoteAddr());
         redirectAttributes.addFlashAttribute("message", "Comment posted successfully!");
