@@ -3,34 +3,7 @@
 <head>
   <title>LAN Communication</title>
   <script>
-    function copyToClipboard(button, text) {
-      // Create a temporary textarea element
-      const textArea = document.createElement("textarea");
-      textArea.value = text;
-      document.body.appendChild(textArea);
-      textArea.select();
 
-      try {
-        // Attempt to execute the copy command
-        const successful = document.execCommand('copy');
-        if (successful) {
-          // Change the button text and add a class
-          button.textContent = 'Copied!';
-          button.classList.add('button-copied');
-
-          // Set a timeout to revert the button back to its original state
-          setTimeout(function() {
-            button.textContent = 'Copy';
-            button.classList.remove('button-copied');
-          }, 2000); // 2 seconds delay
-        } else {
-          console.error('Copy command failed');
-        }
-      } catch (err) {
-        console.error('Error during copy command', err);
-      }
-      document.body.removeChild(textArea);
-    }
   </script>
   <style>
     *,
@@ -258,6 +231,7 @@
       user-select: text;
     }
   </style>
+  <script th:src="@{/js/copyToClipboard.js}"></script>
   <script src="https://unpkg.com/htmx.org@1.9.10" integrity="sha384-D1Kt99CQMDuVetoL1lrYwg5t+9QdHe7NLX/SoJYkXDFfX37iInKRy5xLSi8nO7UC" crossorigin="anonymous"></script>
   <script src="https://unpkg.com/idiomorph/dist/idiomorph-ext.min.js"></script>
 </head>
@@ -284,7 +258,6 @@
                         <a th:href="@{|/?tag=${uniqueTag}|}" th:text="${uniqueTag}"></a>
                     </span>
       </div>
-    </div>
 
     <div id="last-reload-time">Last log load: [[${currentDateTime}]]</div>
     <div th:each="infoObject : ${infoObjectsPage.content}">
@@ -313,17 +286,17 @@
         </div>
       </div>
     </div>
+    </div>
 
     <!-- Pagination -->
     <div class="pagination">
-      <a th:if="${infoObjectsPage.hasPrevious()}" th:href="@{|/?page=1&tag=${tag}|}">&laquo; first</a>
-      <a th:if="${infoObjectsPage.hasPrevious()}" th:href="@{|/?page=${infoObjectsPage.previousPageable().getPageNumber()}&tag=${tag}|}">previous</a>
+      <a th:if="${infoObjectsPage.hasPrevious()}" th:href="@{|/?page=0&tag=${tag}|}">&laquo; first</a>
+      <a th:if="${infoObjectsPage.hasPrevious()}" th:href="@{|/?page=${infoObjectsPage.number - 1}&tag=${tag != null ? tag : ''}|}">previous</a>
       <span>Page [[${infoObjectsPage.number + 1}]] of [[${infoObjectsPage.totalPages}]].</span>
-      <a th:if="${infoObjectsPage.hasNext()}" 
-      th:href="@{|/?page=${infoObjectsPage.nextPageable().getPageNumber()}&tag=${tag != null ? tag : ''}|}">next</a>
-      <a th:if="${infoObjectsPage.hasNext()}" 
-      th:href="@{|/?page=${infoObjectsPage.totalPages}&tag=${tag != null ? tag : ''}|}">last &raquo;</a>
+      <a th:if="${infoObjectsPage.hasNext()}" th:href="@{|/?page=${infoObjectsPage.number + 1}&tag=${tag != null ? tag : ''}|}">next</a>
+      <a th:if="${infoObjectsPage.hasNext()}" th:href="@{|/?page=${infoObjectsPage.totalPages - 1}&tag=${tag != null ? tag : ''}|}">last &raquo;</a>
     </div>
+
   </div>
 
   <!-- Form to submit new InfoObject -->
