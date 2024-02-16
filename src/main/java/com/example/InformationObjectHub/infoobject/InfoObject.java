@@ -22,8 +22,6 @@ public class InfoObject extends BaseEntity {
     private String authorIp;
     private String topic;
     @Column(length = 150)
-    @NotNull
-    @NotBlank
     private String tag;
     @Column(length = 1000)
     private String content;
