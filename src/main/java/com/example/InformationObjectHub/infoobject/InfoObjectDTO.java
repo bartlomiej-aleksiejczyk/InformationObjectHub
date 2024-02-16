@@ -13,10 +13,8 @@ import lombok.experimental.FieldDefaults;
 @Getter
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class InfoObjectDTO {
-    @Size(min = 2, message = "Bajo jajo")
     @NotBlank(message = "Content cannot be empty")
     String content;
-    @NotBlank(message = "Content cannot be empty")
     String topic;
     String tag;
 }
