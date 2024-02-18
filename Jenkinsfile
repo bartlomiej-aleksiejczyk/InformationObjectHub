@@ -37,27 +37,28 @@ pipeline {
         stage('Ensure Traefik is Running') {
             steps {
                 script {
-                    // Check if the traefik container is running
-                    sh """
-                    RUNNING=\$(docker ps --filter "name=^/traefik\$" --format "{{ '{{.Names}}' }}")
+                    // Execute a shell command to check if the Traefik container is running and start it if it isn't
+                    sh '''
+                    RUNNING=$(docker ps --filter "name=^/traefik$" --format "{{.Names}}")
                     if [ "$RUNNING" != "traefik" ]; then
-                      echo "Starting Traefik container..."
-                      docker run -d --name traefik \\
-                        --restart=unless-stopped \\
-                        -p 80:80 \\
-                        -p 8080:8080 \\
-                        -v /var/run/docker.sock:/var/run/docker.sock \\
-                        traefik:v2.5 \\
-                        --api.insecure=true \\
-                        --providers.docker \\
+                    echo "Starting Traefik container..."
+                    docker run -d --name traefik \
+                        --restart=unless-stopped \
+                        -p 80:80 \
+                        -p 8080:8080 \
+                        -v /var/run/docker.sock:/var/run/docker.sock \
+                        traefik:v2.5 \
+                        --api.insecure=true \
+                        --providers.docker \
                         --entrypoints.web.address=:80
                     else
-                      echo "Traefik container is already running."
+                    echo "Traefik container is already running."
                     fi
-                    """
+                    '''
                 }
             }
         }
+
 
         stage('Deploy') {
             steps {
