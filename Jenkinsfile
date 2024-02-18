@@ -42,9 +42,5 @@ pipeline {
     }
 
     post {
-        always {
-            // Previously included docker stop and docker rm commands are removed from here
-            // to allow the container to continue running until the next build
-        }
     }
 }
