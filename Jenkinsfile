@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         // Define your image name here
-        IMAGE_NAME = 'my-application'
+        IMAGE_NAME = "${JOB_NAME}".toLowerCase().replaceAll(/[^a-z0-9._-]/, '-')
         // Define a tag for your image
         IMAGE_TAG = 'latest'
     }
@@ -17,9 +17,43 @@ pipeline {
 
         stage('Build Docker Image') {
             steps {
-// Use the 'script' block directly within 'steps'
+                // Use the 'script' block directly within 'steps'
                 script {
                     docker.build("${env.IMAGE_NAME}:${env.IMAGE_TAG}")
+                }
+            }
+        }
+
+        stage('Get Host IP') {
+            steps {
+                script {
+                    // Using a shell command to get the host IP address. Adjust the command according to your OS and network configuration.
+                    env.HOST_IP = sh(script: "hostname -I | awk '{print $1}'", returnStdout: true).trim()
+                }
+            }
+        }
+
+        stage('Ensure Traefik is Running') {
+            steps {
+                script {
+                    // Check if the traefik container is running
+                    sh """
+                    RUNNING=\$(docker ps --filter "name=^/traefik\$" --format "{{ '{{.Names}}' }}")
+                    if [ "$RUNNING" != "traefik" ]; then
+                      echo "Starting Traefik container..."
+                      docker run -d --name traefik \\
+                        --restart=unless-stopped \\
+                        -p 80:80 \\
+                        -p 8080:8080 \\
+                        -v /var/run/docker.sock:/var/run/docker.sock \\
+                        traefik:v2.5 \\
+                        --api.insecure=true \\
+                        --providers.docker \\
+                        --entrypoints.web.address=:80
+                    else
+                      echo "Traefik container is already running."
+                    fi
+                    """
                 }
             }
         }
@@ -27,15 +61,20 @@ pipeline {
         stage('Deploy') {
             steps {
                 script {
-                    // Ensure commands are correctly structured within the 'script' block
+                // Ensure commands are correctly structured within the 'script' block
                     // Stop and remove any existing container
                     sh "docker stop ${env.IMAGE_NAME} || true"
                     sh "docker rm ${env.IMAGE_NAME} || true"
                     
-                    // Run the Docker container from the built image
-                    // Adjust the docker run command according to your application's needs
-                    // For example, mapping ports or specifying environment variables
-                    sh "docker run -d --restart=unless-stopped --name ${env.IMAGE_NAME} -p 8090:8080 ${env.IMAGE_NAME}:${env.IMAGE_TAG}"
+                    // Run the Docker container with Traefik labels, using the dynamically obtained HOST_IP
+                    sh '''
+                    docker run -d --restart=unless-stopped --name ${env.IMAGE_NAME} \\
+                      -l traefik.enable=true \\
+                      -l traefik.http.routers.${env.IMAGE_NAME}.rule=Host\(`${HOST_IP}`\)\\ && PathPrefix\(`/${env.IMAGE_NAME}`\) \\
+                      -l traefik.http.routers.${env.IMAGE_NAME}.entrypoints=web \\
+                      -l traefik.http.services.${env.IMAGE_NAME}.loadbalancer.server.port=8080 \\
+                      ${env.IMAGE_NAME}:${env.IMAGE_TAG}
+                    '''
                 }
             }
         }
