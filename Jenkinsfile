@@ -29,7 +29,7 @@ pipeline {
                 script {
                     // Using a shell command to get the host IP address. Adjust the command according to your OS and network configuration.
                     // Note the use of double dollar signs ($$) to escape the dollar sign in the Groovy string.
-                    env.HOST_IP = sh(script: "hostname -I | awk '{print $$1}'", returnStdout: true).trim()
+                    env.HOST_IP = sh(script: "hostname -I | awk '{print \$1}'", returnStdout: true).trim()
                 }
             }
         }
