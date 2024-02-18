@@ -34,7 +34,7 @@ pipeline {
                     // Run the Docker container from the built image
                     // Adjust the docker run command according to your application's needs
                     // For example, mapping ports or specifying environment variables
-                    sh "docker run -d --name ${env.IMAGE_NAME} -p 8080:8080 ${env.IMAGE_NAME}:${env.IMAGE_TAG}"
+                    sh "docker run -d --name ${env.IMAGE_NAME} -p 8090:8080 ${env.IMAGE_NAME}:${env.IMAGE_TAG}"
                 }
             }
         }
