@@ -42,6 +42,7 @@ pipeline {
                     RUNNING=$(docker ps --filter "name=^/traefik$" --format "{{.Names}}")
                     if [ "$RUNNING" != "traefik" ]; then
                     echo "Starting Traefik container..."
+                    docker rm traefik || true
                     docker run -d --name traefik \
                         --restart=unless-stopped \
                         -p 80:80 \
