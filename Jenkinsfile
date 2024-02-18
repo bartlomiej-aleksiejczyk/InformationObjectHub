@@ -45,7 +45,7 @@ pipeline {
                     docker run -d --name traefik \
                         --restart=unless-stopped \
                         -p 80:80 \
-                        -p 8080:8080 \
+                        -p 8085:8080 \
                         -v /var/run/docker.sock:/var/run/docker.sock \
                         traefik:v2.5 \
                         --api.insecure=true \
