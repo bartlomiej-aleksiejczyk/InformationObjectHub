@@ -14,7 +14,7 @@ pipeline {
                 checkout scm
             }
         }
-    }
+    
 
 stage('Build Docker Image') {
     steps {
@@ -88,8 +88,9 @@ stage('Build Docker Image') {
                         -l traefik.http.services.${env.IMAGE_NAME}.loadbalancer.server.port=8080 \\
                         ${env.IMAGE_NAME}:${env.IMAGE_TAG}
                         """
+                    }
                 }
-             }
+            }
         }
     }
 
