@@ -64,24 +64,22 @@ pipeline {
         stage('Deploy') {
             steps {
                 script {
-                    // Ensure commands are correctly structured within the 'script' block
-                    // Stop and remove any existing container
                     sh "docker stop ${env.IMAGE_NAME} || true"
                     sh "docker rm ${env.IMAGE_NAME} || true"
-
-                    // Use Groovy's GString interpolation directly for environment variables
-                    // and construct the Traefik label value as a string
-                    def traefikLabel = "traefik.http.routers.${env.IMAGE_NAME}.rule=Host(`" + env.HOST_IP + "`) && PathPrefix(`/" + env.IMAGE_NAME + "`)"
-                    
-                    // Now, execute the docker run command with the constructed label
-                    sh """
-                    docker run -d --restart=unless-stopped --name ${env.IMAGE_NAME} \\
-                    -l traefik.enable=true \\
-                    -l "${traefikLabel}" \\
-                    -l traefik.http.routers.${env.IMAGE_NAME}.entrypoints=web \\
-                    -l traefik.http.services.${env.IMAGE_NAME}.loadbalancer.server.port=8080 \\
+                    // Prepare the Traefik rule with explicit Groovy string interpolation.
+                    // This step ensures that the variables are interpolated into the string before it's passed to the shell command.
+                    def traefikRule = "Host(`${env.HOST_IP}`) && PathPrefix(`/${env.IMAGE_NAME}`)"
+                    echo traefikRule
+                    // Execute the docker run command, injecting the Traefik rule directly.
+                    // The use of triple double quotes with dollar slashy strings ($/) for the Docker command ensures proper handling of special characters.
+                    sh $/
+                    docker run -d --restart=unless-stopped --name ${env.IMAGE_NAME} \
+                    -l traefik.enable=true \
+                    -l "traefik.http.routers.${env.IMAGE_NAME}.rule=${traefikRule}" \
+                    -l traefik.http.routers.${env.IMAGE_NAME}.entrypoints=web \
+                    -l traefik.http.services.${env.IMAGE_NAME}.loadbalancer.server.port=8080 \
                     ${env.IMAGE_NAME}:${env.IMAGE_TAG}
-                    """
+                    $/
                 }
             }
         }
