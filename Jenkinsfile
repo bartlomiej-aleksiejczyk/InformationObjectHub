@@ -73,7 +73,6 @@ pipeline {
                     // and construct the Traefik label value as a string
                     def BACKTICK = "`"
                     def traefikLabel = "traefik.http.routers.${env.IMAGE_NAME}.rule=Host(${BACKTICK}${env.HOST_IP}${BACKTICK}) && PathPrefix(${BACKTICK}${env.IMAGE_NAME}${BACKTICK})"
-                    echo backtick
                     echo traefikLabel
                     // Now, execute the docker run command with the constructed label
                     sh """
