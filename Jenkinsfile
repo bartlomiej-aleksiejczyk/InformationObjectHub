@@ -72,6 +72,7 @@ pipeline {
                     // Inject username and password as environment variables
                         withCredentials([usernamePassword(credentialsId: 'database-config', passwordVariable: 'DB_PASSWORD', usernameVariable: 'DB_USERNAME')]) {
                             // Now, execute the docker run command with the constructed label and injected credentials
+                            echo DB_PASSWORD
                             sh """
                             docker run -d --restart=unless-stopped --name ${env.IMAGE_NAME} \\
                             -e DB_USERNAME='$DB_USERNAME' -e DB_PASSWORD='$DB_PASSWORD' \\
