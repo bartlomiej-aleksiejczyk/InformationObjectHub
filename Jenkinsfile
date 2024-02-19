@@ -79,7 +79,7 @@ stage('Build Docker Image') {
                     
                     // Inject username and password as environment variables
                     // Now, execute the docker run command with the constructed label and injected credentials
-                        withCredentials([usernamePassword(credentialsId: 'your-credentials-id', passwordVariable: 'DB_PASSWORD', usernameVariable: 'DB_USERNAME')]) {
+                        withCredentials([usernamePassword(credentialsId: 'database-config', passwordVariable: 'DB_PASSWORD', usernameVariable: 'DB_USERNAME')]) {
                         sh """
                         docker run -d --restart=unless-stopped --name ${env.IMAGE_NAME} \\
                         -e DB_USERNAME="$DB_USERNAME" -e DB_PASSWORD="$DB_PASSWORD" \
