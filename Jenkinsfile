@@ -14,6 +14,7 @@ pipeline {
                 checkout scm
             }
         }
+    }
 
 stage('Build Docker Image') {
     steps {
@@ -78,21 +79,19 @@ stage('Build Docker Image') {
                     
                     // Inject username and password as environment variables
                     // Now, execute the docker run command with the constructed label and injected credentials
-                    // Use the 'withCredentials' block to obtain database credentials
-                withCredentials([usernamePassword(credentialsId: 'database-config', passwordVariable: 'DB_PASSWORD', usernameVariable: 'DB_USERNAME')]) {
-                    // Now, execute the docker run command with the constructed label and injected credentials
-                    // Note: Environment variables are directly used without Groovy string interpolation to avoid exposing sensitive data
-                    sh '''
-                    docker run -d --restart=unless-stopped --name $IMAGE_NAME \
-                    -e DB_USERNAME="$DB_USERNAME" -e DB_PASSWORD="$DB_PASSWORD" \
-                    -l traefik.enable=true \
-                    -l "traefik.http.routers.''' + "${env.IMAGE_NAME}" + '''.rule=Host(''' + "\`${env.HOST_IP}\`" + ''') && PathPrefix(''' + "\`/${env.IMAGE_NAME}\`" + ''')" \
-                    -l traefik.http.services.''' + "${env.IMAGE_NAME}" + '''.loadbalancer.server.port=8080 \
-                    ''' + "${env.IMAGE_NAME}:${env.IMAGE_TAG}" + '''
-                    '''
+                        withCredentials([usernamePassword(credentialsId: 'your-credentials-id', passwordVariable: 'DB_PASSWORD', usernameVariable: 'DB_USERNAME')]) {
+                        sh """
+                        docker run -d --restart=unless-stopped --name ${env.IMAGE_NAME} \\
+                        -e DB_USERNAME="$DB_USERNAME" -e DB_PASSWORD="$DB_PASSWORD" \
+                        -l traefik.enable=true \\
+                        -l "traefik.http.routers.${env.IMAGE_NAME}.rule=Host(\\`${env.HOST_IP}\\`) && PathPrefix(\\`/${env.IMAGE_NAME}\\`)" \\
+                        -l traefik.http.services.${env.IMAGE_NAME}.loadbalancer.server.port=8080 \\
+                        ${env.IMAGE_NAME}:${env.IMAGE_TAG}
+                        """
                 }
-            }
+             }
         }
-
     }
+
+    
 }
