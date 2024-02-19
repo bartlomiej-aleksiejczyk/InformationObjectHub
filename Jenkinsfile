@@ -74,21 +74,25 @@ stage('Build Docker Image') {
         stage('Deploy') {
             steps {
                 script {
-                    // Ensure commands are correctly structured within the 'script' block
-                    // Stop and remove any existing container
-                    
-                    // Inject username and password as environment variables
-                    // Now, execute the docker run command with the constructed label and injected credentials
-                        sh """
-                        docker run -d --restart=unless-stopped --name ${env.IMAGE_NAME} \\
-                        -l traefik.enable=true \\
-                        -l "traefik.http.routers.${env.IMAGE_NAME}.rule=Host(\\`${env.HOST_IP}\\`) && PathPrefix(\\`/${env.IMAGE_NAME}\\`)" \\
-                        -l traefik.http.services.${env.IMAGE_NAME}.loadbalancer.server.port=8080 \\
-                        ${env.IMAGE_NAME}:${env.IMAGE_TAG}
-                        """
+                    // Inject database username and password as environment variables
+                    withCredentials([
+                        usernamePassword(credentialsId: 'database-config', passwordVariable: 'DB_PASSWORD', usernameVariable: 'DB_USERNAME')
+                    ]) {
+                        // Using single quotes in sh step. Note: Variables inside single quotes won't be interpolated by Groovy.
+                        // Environment variables passed to Docker need to be referenced directly as $VARIABLE in the shell,
+                        // assuming Jenkins automatically exports them to the shell environment
+                        sh '''
+                        docker run -d --restart=unless-stopped --name $IMAGE_NAME \
+                        -e DB_USERNAME="$DB_USERNAME" -e DB_PASSWORD="$DB_PASSWORD" \
+                        -l traefik.enable=true \
+                        -l "traefik.http.routers.$IMAGE_NAME.rule=Host(`$HOST_IP`) && PathPrefix(`/$IMAGE_NAME`)" \
+                        -l traefik.http.services.$IMAGE_NAME.loadbalancer.server.port=8080 \
+                        $IMAGE_NAME:$IMAGE_TAG
+                        '''
                     }
                 }
             }
+        }
     }
 
     
