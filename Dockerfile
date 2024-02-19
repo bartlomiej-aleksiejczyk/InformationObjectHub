@@ -1,6 +1,14 @@
 # Stage 1: Build the application
 FROM maven:3.9.6-eclipse-temurin-21-jammy AS builder
 
+# Define build arguments for database username and password
+ARG DB_USERNAME
+ARG DB_PASSWORD
+
+# Set environment variables for database username and password
+ENV DB_USERNAME=$DB_USERNAME
+ENV DB_PASSWORD=$DB_PASSWORD
+
 # Copy source code to the build container
 COPY src /home/app/src
 COPY pom.xml /home/app
