@@ -20,10 +20,8 @@ stage('Build Docker Image') {
         script {
             // Use the 'withCredentials' block to obtain database credentials
             withCredentials([usernamePassword(credentialsId: 'database-config', passwordVariable: 'DB_PASSWORD', usernameVariable: 'DB_USERNAME')]) {
-                // Ensure the build arguments are correctly quoted
-                def buildArgs = "--build-arg DB_USERNAME='${env.DB_USERNAME}' --build-arg DB_PASSWORD='${env.DB_PASSWORD}'"
-                echo "Building with args: ${buildArgs}" // Debugging line to check the constructed command
-                docker.build("${env.IMAGE_NAME}:${env.IMAGE_TAG}", buildArgs)
+            // Ensure the build arguments are correctly quoted
+            sh "docker build -t ${env.IMAGE_NAME}:${env.IMAGE_TAG} --build-arg DB_USERNAME=${env.DB_USERNAME} --build-arg DB_PASSWORD=${env.DB_PASSWORD} ."
             }
         }
     }
