@@ -21,7 +21,10 @@ stage('Build Docker Image') {
             // Use the 'withCredentials' block to obtain database credentials
             withCredentials([usernamePassword(credentialsId: 'database-config', passwordVariable: 'DB_PASSWORD', usernameVariable: 'DB_USERNAME')]) {
             // Ensure the build arguments are correctly quoted
-            sh ""docker build -t ${env.IMAGE_NAME}:${env.IMAGE_TAG}" + '--build-arg DB_USERNAME=$DB_USERNAME --build-arg DB_PASSWORD=$DB_PASSWORD .'"
+                sh '''
+                # Use environment variables directly without Groovy interpolation
+                docker build -t $IMAGE_NAME:$IMAGE_TAG --build-arg DB_USERNAME=$USER --build-arg DB_PASSWORD=$PASS .
+                '''            
             }
         }
     }
