@@ -68,16 +68,19 @@ pipeline {
                     // Stop and remove any existing container
                     sh "docker stop ${env.IMAGE_NAME} || true"
                     sh "docker rm ${env.IMAGE_NAME} || true"
-                    
-                    // Run the Docker container with Traefik labels, using dynamically obtained HOST_IP and IMAGE_NAME for PathPrefix
-                    sh '''
-                    docker run -d --restart=unless-stopped --name ''' + env.IMAGE_NAME + ''' \\
+
+                    // Define the command using Groovy string interpolation for environment variables
+                    def command = """
+                    docker run -d --restart=unless-stopped --name ${env.IMAGE_NAME} \\
                     -l traefik.enable=true \\
-                    -l "traefik.http.routers.''' + env.IMAGE_NAME + '''.rule=Host(`''' + env.HOST_IP + '''`) && PathPrefix(`/''' + env.IMAGE_NAME + '''`)" \\
-                    -l traefik.http.routers.''' + env.IMAGE_NAME + '''.entrypoints=web \\
-                    -l traefik.http.services.''' + env.IMAGE_NAME + '''.loadbalancer.server.port=8080 \\
-                    ''' + env.IMAGE_NAME + ':' + env.IMAGE_TAG + '''
-                    '''
+                    -l traefik.http.routers.${env.IMAGE_NAME}.rule=Host(\`${env.HOST_IP}\`) && PathPrefix(\`/${env.IMAGE_NAME}\`) \\
+                    -l traefik.http.routers.${env.IMAGE_NAME}.entrypoints=web \\
+                    -l traefik.http.services.${env.IMAGE_NAME}.loadbalancer.server.port=8080 \\
+                    ${env.IMAGE_NAME}:${env.IMAGE_TAG}
+                    """
+
+                    // Execute the command
+                    sh(script: command)
                 }
             }
         }
