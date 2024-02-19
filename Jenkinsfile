@@ -69,18 +69,19 @@ pipeline {
                     sh "docker stop ${env.IMAGE_NAME} || true"
                     sh "docker rm ${env.IMAGE_NAME} || true"
 
-                    // Define the command using Groovy string interpolation for environment variables
-                    def command = """
+                    // Use Groovy's GString interpolation directly for environment variables
+                    // and construct the Traefik label value as a string
+                    def traefikLabel = "traefik.http.routers.${env.IMAGE_NAME}.rule=Host(`" + env.HOST_IP + "`) && PathPrefix(`/" + env.IMAGE_NAME + "`)"
+                    
+                    // Now, execute the docker run command with the constructed label
+                    sh """
                     docker run -d --restart=unless-stopped --name ${env.IMAGE_NAME} \\
                     -l traefik.enable=true \\
-                    -l traefik.http.routers.${env.IMAGE_NAME}.rule=Host(\`${env.HOST_IP}\`) && PathPrefix(\`/${env.IMAGE_NAME}\`) \\
+                    -l "${traefikLabel}" \\
                     -l traefik.http.routers.${env.IMAGE_NAME}.entrypoints=web \\
                     -l traefik.http.services.${env.IMAGE_NAME}.loadbalancer.server.port=8080 \\
                     ${env.IMAGE_NAME}:${env.IMAGE_TAG}
                     """
-
-                    // Execute the command
-                    sh(script: command)
                 }
             }
         }
