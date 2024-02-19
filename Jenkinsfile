@@ -23,7 +23,7 @@ stage('Build Docker Image') {
             // Ensure the build arguments are correctly quoted
                 sh '''
                 # Use environment variables directly without Groovy interpolation
-                docker build -t $IMAGE_NAME:$IMAGE_TAG --build-arg DB_USERNAME=$USER --build-arg DB_PASSWORD=$PASS .
+                docker build -t $IMAGE_NAME:$IMAGE_TAG --build-arg DB_USERNAME=$DB_USERNAME --build-arg DB_PASSWORD=$DB_PASSWORD .
                 '''            
             }
         }
