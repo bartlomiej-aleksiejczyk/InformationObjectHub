@@ -81,6 +81,7 @@ pipeline {
                             ${env.IMAGE_NAME}:${env.IMAGE_TAG}
                             """
                         }
+                }
             }
         }
 
