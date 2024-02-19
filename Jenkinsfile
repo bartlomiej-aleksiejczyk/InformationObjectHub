@@ -69,16 +69,18 @@ pipeline {
                     sh "docker stop ${env.IMAGE_NAME} || true"
                     sh "docker rm ${env.IMAGE_NAME} || true"
                     
-                    // Run the Docker container with Traefik labels, using the dynamically obtained HOST_IP
-                    // Note the change in how variables are handled within the command
-                    sh """
-                    docker run -d --restart=unless-stopped --name ${env.IMAGE_NAME} \\
+                    // Run the Docker container with Traefik labels, using dynamically obtained HOST_IP and IMAGE_NAME for PathPrefix
+                    sh '''
+                    docker run -d --restart=unless-stopped --name ''' + env.IMAGE_NAME + ''' \\
                     -l traefik.enable=true \\
-                    -l traefik.http.routers.${env.IMAGE_NAME}.rule=\\\"Host(`192.168.1.52`) \\\\&\\\\& PathPrefix(`/test`))\\\" \\                    -l traefik.http.services.${env.IMAGE_NAME}.loadbalancer.server.port=8080 \\
-                    ${env.IMAGE_NAME}:${env.IMAGE_TAG}
-                    """
+                    -l "traefik.http.routers.''' + env.IMAGE_NAME + '''.rule=Host(`''' + env.HOST_IP + '''`) && PathPrefix(`/''' + env.IMAGE_NAME + '''`)" \\
+                    -l traefik.http.routers.''' + env.IMAGE_NAME + '''.entrypoints=web \\
+                    -l traefik.http.services.''' + env.IMAGE_NAME + '''.loadbalancer.server.port=8080 \\
+                    ''' + env.IMAGE_NAME + ':' + env.IMAGE_TAG + '''
+                    '''
                 }
             }
         }
+
     }
 }
