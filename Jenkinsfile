@@ -18,6 +18,8 @@ pipeline {
 stage('Build Docker Image') {
     steps {
         script {
+            sh "docker stop ${env.IMAGE_NAME} || true"
+            sh "docker rm ${env.IMAGE_NAME} || true"
             // Use the 'withCredentials' block to obtain database credentials
             withCredentials([usernamePassword(credentialsId: 'database-config', passwordVariable: 'DB_PASSWORD', usernameVariable: 'DB_USERNAME')]) {
             // Ensure the build arguments are correctly quoted
@@ -73,8 +75,6 @@ stage('Build Docker Image') {
                 script {
                     // Ensure commands are correctly structured within the 'script' block
                     // Stop and remove any existing container
-                    sh "docker stop ${env.IMAGE_NAME} || true"
-                    sh "docker rm ${env.IMAGE_NAME} || true"
                     
                     // Inject username and password as environment variables
                     // Now, execute the docker run command with the constructed label and injected credentials
