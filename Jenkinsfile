@@ -71,7 +71,7 @@ pipeline {
 
                     // Use Groovy's GString interpolation directly for environment variables
                     // and construct the Traefik label value as a string
-                    def BACKTICK = "`"
+                    def BACKTICK = "'`'"
                     def traefikLabel = "traefik.http.routers.${env.IMAGE_NAME}.rule=Host(${BACKTICK}${env.HOST_IP}${BACKTICK}) && PathPrefix(${BACKTICK}${env.IMAGE_NAME}${BACKTICK})"
                     echo traefikLabel
                     // Now, execute the docker run command with the constructed label
