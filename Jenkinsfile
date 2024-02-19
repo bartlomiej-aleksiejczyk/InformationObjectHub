@@ -15,18 +15,15 @@ pipeline {
             }
         }
 
-    stage('Build Docker Image') {
-        steps {
-            // Use the 'script' block directly within 'steps'
-            script {
-                // Use the 'withCredentials' block to obtain database credentials
-                withCredentials([usernamePassword(credentialsId: 'database-config', passwordVariable: 'DB_PASSWORD', usernameVariable: 'DB_USERNAME')]) {
-                    // Build Docker image and pass database credentials as build arguments
-                    docker.build("${env.IMAGE_NAME}:${env.IMAGE_TAG}", "--build-arg DB_USERNAME=${DB_USERNAME} --build-arg DB_PASSWORD=${DB_PASSWORD}")
+        stage('Build Docker Image') {
+            steps {
+                script {
+                    withCredentials([usernamePassword(credentialsId: 'database-config', usernameVariable: 'DB_USERNAME', passwordVariable: 'DB_PASSWORD')]) {
+                        docker.build("${env.IMAGE_NAME}:${env.IMAGE_TAG}", "--build-arg DB_USERNAME=${env.DB_USERNAME} --build-arg DB_PASSWORD=${env.DB_PASSWORD}")
+                    }
                 }
             }
         }
-    }
 
 
         stage('Get Host IP') {
