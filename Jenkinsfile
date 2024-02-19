@@ -21,7 +21,7 @@ stage('Build Docker Image') {
             // Use the 'withCredentials' block to obtain database credentials
             withCredentials([usernamePassword(credentialsId: 'database-config', passwordVariable: 'DB_PASSWORD', usernameVariable: 'DB_USERNAME')]) {
             // Ensure the build arguments are correctly quoted
-            sh 'docker build -t ${env.IMAGE_NAME}:${env.IMAGE_TAG} --build-arg DB_USERNAME=$DB_USERNAME --build-arg DB_PASSWORD=$DB_PASSWORD .'
+            sh ""docker build -t ${env.IMAGE_NAME}:${env.IMAGE_TAG}" + '--build-arg DB_USERNAME=$DB_USERNAME --build-arg DB_PASSWORD=$DB_PASSWORD .'"
             }
         }
     }
