@@ -79,10 +79,8 @@ stage('Build Docker Image') {
                     
                     // Inject username and password as environment variables
                     // Now, execute the docker run command with the constructed label and injected credentials
-                        withCredentials([usernamePassword(credentialsId: 'database-config', passwordVariable: 'DB_PASSWORD', usernameVariable: 'DB_USERNAME')]) {
                         sh """
                         docker run -d --restart=unless-stopped --name ${env.IMAGE_NAME} \\
-                        -e DB_USERNAME="$DB_USERNAME" -e DB_PASSWORD="$DB_PASSWORD" \
                         -l traefik.enable=true \\
                         -l "traefik.http.routers.${env.IMAGE_NAME}.rule=Host(\\`${env.HOST_IP}\\`) && PathPrefix(\\`/${env.IMAGE_NAME}\\`)" \\
                         -l traefik.http.services.${env.IMAGE_NAME}.loadbalancer.server.port=8080 \\
@@ -91,7 +89,6 @@ stage('Build Docker Image') {
                     }
                 }
             }
-        }
     }
 
     

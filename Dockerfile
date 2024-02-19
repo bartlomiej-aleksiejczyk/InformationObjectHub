@@ -6,8 +6,8 @@ ARG DB_USERNAME
 ARG DB_PASSWORD
 
 # Set environment variables for database username and password
-ENV DB_USERNAME=$DB_USERNAME
-ENV DB_PASSWORD=$DB_PASSWORD
+ENV DB_USERNAME=${DB_USERNAME}
+ENV DB_PASSWORD=${DB_PASSWORD}
 
 # Copy source code to the build container
 COPY src /home/app/src
@@ -30,6 +30,6 @@ EXPOSE 8080
 
 # Copy the JAR file from the build stage
 COPY --from=builder /home/app/target/*.jar app.jar
-
+COPY --from=builder / .
 # Run the JAR file
 ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
