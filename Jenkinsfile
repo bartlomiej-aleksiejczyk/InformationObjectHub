@@ -74,8 +74,7 @@ pipeline {
                     sh """
                     docker run -d --restart=unless-stopped --name ${env.IMAGE_NAME} \\
                     -l traefik.enable=true \\
-                    -l "traefik.http.routers.${env.IMAGE_NAME}.rule=Host(`192.168.1.52`) && PathPrefix(`test`)" \\
-                    -l traefik.http.services.${env.IMAGE_NAME}.loadbalancer.server.port=8080 \\
+                    -l traefik.http.routers.${env.IMAGE_NAME}.rule=\\\"Host(\`192.168.1.52\`) \\\\&\\\\& PathPrefix(\`/test\`))\\\" \\                    -l traefik.http.services.${env.IMAGE_NAME}.loadbalancer.server.port=8080 \\
                     ${env.IMAGE_NAME}:${env.IMAGE_TAG}
                     """
                 }
