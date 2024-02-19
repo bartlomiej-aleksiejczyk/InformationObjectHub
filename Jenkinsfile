@@ -19,7 +19,11 @@ pipeline {
             steps {
                 // Use the 'script' block directly within 'steps'
                 script {
-                    docker.build("${env.IMAGE_NAME}:${env.IMAGE_TAG}")
+                // Use the 'withCredentials' block to obtain database credentials
+                    withCredentials([usernamePassword(credentialsId: 'database-config', passwordVariable: 'DB_PASSWORD', usernameVariable: 'DB_USERNAME')]) {
+                        // Build Docker image and pass database credentials as build arguments
+                        docker.build("${env.IMAGE_NAME}:${env.IMAGE_TAG}", "--build-arg DB_USERNAME=${DB_USERNAME} --build-arg DB_PASSWORD=${DB_PASSWORD}")
+                    }
                 }
             }
         }
@@ -70,18 +74,14 @@ pipeline {
                     sh "docker rm ${env.IMAGE_NAME} || true"
                     
                     // Inject username and password as environment variables
-                        withCredentials([usernamePassword(credentialsId: 'database-config', passwordVariable: 'DB_PASSWORD', usernameVariable: 'DB_USERNAME')]) {
-                            // Now, execute the docker run command with the constructed label and injected credentials
-                            echo DB_PASSWORD
-                            sh """
-                            docker run -d --restart=unless-stopped --name ${env.IMAGE_NAME} \\
-                            -e DB_USERNAME='$DB_USERNAME' -e DB_PASSWORD='$DB_PASSWORD' \\
-                            -l traefik.enable=true \\
-                            -l "traefik.http.routers.${env.IMAGE_NAME}.rule=Host(\\`${env.HOST_IP}\\`) && PathPrefix(\\`/${env.IMAGE_NAME}\\`)" \\
-                            -l traefik.http.services.${env.IMAGE_NAME}.loadbalancer.server.port=8080 \\
-                            ${env.IMAGE_NAME}:${env.IMAGE_TAG}
-                            """
-                        }
+                    // Now, execute the docker run command with the constructed label and injected credentials
+                    sh """
+                    docker run -d --restart=unless-stopped --name ${env.IMAGE_NAME} \\
+                    -l traefik.enable=true \\
+                    -l "traefik.http.routers.${env.IMAGE_NAME}.rule=Host(\\`${env.HOST_IP}\\`) && PathPrefix(\\`/${env.IMAGE_NAME}\\`)" \\
+                    -l traefik.http.services.${env.IMAGE_NAME}.loadbalancer.server.port=8080 \\
+                    ${env.IMAGE_NAME}:${env.IMAGE_TAG}
+                    """
                 }
             }
         }
