@@ -85,7 +85,7 @@ stage('Build Docker Image') {
                         docker run -d --restart=unless-stopped --name $IMAGE_NAME \
                         -e DB_USERNAME="$DB_USERNAME" -e DB_PASSWORD="$DB_PASSWORD" \
                         -l traefik.enable=true \
-                        -l "traefik.http.routers.$IMAGE_NAME.rule=Host(`$HOST_IP`) && PathPrefix(`/$IMAGE_NAME`)" \
+                        -l "traefik.http.routers.$IMAGE_NAME.rule=Host(``$HOST_IP``) && PathPrefix(``/$IMAGE_NAME``)" \
                         -l traefik.http.services.$IMAGE_NAME.loadbalancer.server.port=8080 \
                         $IMAGE_NAME:$IMAGE_TAG
                         '''
