@@ -20,6 +20,7 @@ pipeline {
 stage('Build Docker Image') {
     steps {
         script {
+            echo SPRING_DB_PROD_URL
             sh "docker stop ${env.IMAGE_NAME} || true"
             sh "docker rm ${env.IMAGE_NAME} || true"
             // Use the 'withCredentials' block to obtain database credentials
