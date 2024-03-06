@@ -6,9 +6,8 @@ pipeline {
         IMAGE_NAME = "${JOB_NAME}".toLowerCase().replaceAll(/[^a-z0-9._-]/, '-')
         // Define a tag for your image
         IMAGE_TAG = 'latest'
-        LOCAL_DBSPRING_DB_PROD_URL_URL = "${env.SPRING_DB_PROD_URL}"
-
-    }
+        SPRING_DB_PROD_URL = "${env.SPRING_DB_PROD_URL}"
+        }
 
     stages {
         stage('Checkout Code') {
