@@ -15,7 +15,7 @@ pipeline {
             }
         }
     
- 
+
 stage('Build Docker Image') {
     steps {
         script {
@@ -26,7 +26,7 @@ stage('Build Docker Image') {
             // Ensure the build arguments are correctly quoted
                 sh '''
                 # Use environment variables directly without Groovy interpolation
-                docker build -t $IMAGE_NAME:$IMAGE_TAG --build-arg DB_USERNAME=$DB_USERNAME --build-arg DB_PASSWORD=$DB_PASSWORD --build-arg DB_PROD_URL=${env.DB_PROD_URL} .
+                docker build -t $IMAGE_NAME:$IMAGE_TAG --build-arg DB_USERNAME=$DB_USERNAME --build-arg DB_PASSWORD=$DB_PASSWORD --build-arg SPRING_DB_PROD_URL=${env.SPRING_DB_PROD_URL} .
                 '''            
             }
         }
@@ -83,7 +83,7 @@ stage('Build Docker Image') {
                         // assuming Jenkins automatically exports them to the shell environment
                         sh '''
                         docker run -d --restart=unless-stopped --name $IMAGE_NAME \
-                        -e DB_USERNAME="$DB_USERNAME" -e DB_PASSWORD="$DB_PASSWORD" \
+                        -e DB_USERNAME="$DB_USERNAME" -e DB_PASSWORD="$DB_PASSWORD" -e SPRING_DB_PROD_URL=$env.SPRING_DB_PROD_URL \
                         -l traefik.enable=true \
                         -l "traefik.http.routers.$IMAGE_NAME.rule=Host(\\`$HOST_IP\\`) && PathPrefix(\\`/$IMAGE_NAME\\`)" \
                         -l traefik.http.services.$IMAGE_NAME.loadbalancer.server.port=8080 \
