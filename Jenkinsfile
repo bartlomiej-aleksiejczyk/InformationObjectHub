@@ -7,7 +7,7 @@ pipeline {
         // Define a tag for your image
         IMAGE_TAG = 'latest'
         SPRING_DB_PROD_URL = "${env.SPRING_DB_PROD_URL}"
-        }
+    }
 
     stages {
         stage('Checkout Code') {
