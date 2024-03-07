@@ -22,7 +22,7 @@ import java.util.Optional;
 public class InfoObjectController {
     private final InfoObjectService infoObjectService;
 
-    @GetMapping("/")
+    @GetMapping("/test")
     public String index(Model model, @RequestParam(required = false) String tag,
                         @RequestParam(defaultValue = "0") int page,
                         @RequestParam(defaultValue = "10") int size) {
