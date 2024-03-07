@@ -4,10 +4,12 @@ FROM maven:3.9.6-eclipse-temurin-21-jammy AS builder
 # Define build arguments for database username and password
 ARG DB_USERNAME
 ARG DB_PASSWORD
+ARG SPRING_DB_PROD_URL
 
 # Set environment variables for database username and password
 ENV DB_USERNAME=${DB_USERNAME}
 ENV DB_PASSWORD=${DB_PASSWORD}
+ENV SPRING_DB_PROD_URL=${SPRING_DB_PROD_URL}
 
 # Copy source code to the build container
 COPY src /home/app/src
