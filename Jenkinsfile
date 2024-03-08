@@ -86,7 +86,7 @@ stage('Build Docker Image') {
                         sh '''
                         docker run -d --restart=unless-stopped --name $IMAGE_NAME \
                         -e DB_USERNAME="$DB_USERNAME" -e DB_PASSWORD="$DB_PASSWORD" -e SPRING_DB_PROD_URL="$SPRING_DB_PROD_URL" -e
-IMAGE_NAME="$IMAGE_NAME" -e \
+IMAGE_NAME="$IMAGE_NAME"\
                         -l traefik.enable=true \
                         -l "traefik.http.routers.$IMAGE_NAME.rule=Host(\\`$HOST_IP\\`) && PathPrefix(\\`/$IMAGE_NAME\\`)" \
                         -l traefik.http.services.$IMAGE_NAME.loadbalancer.server.port=8080 \
