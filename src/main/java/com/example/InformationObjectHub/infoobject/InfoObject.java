@@ -21,6 +21,6 @@ public class InfoObject extends BaseEntity {
     private String topic;
     @Column(length = 150)
     private String tag;
-    @Column(length = 100000)
+    @Column(length = 1000000)
     private String content;
 }
