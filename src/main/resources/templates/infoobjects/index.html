@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title>LAN Communication</title>
+    <script></script>
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+      body {
+        font-family: "Courier New", Courier, monospace;
+        background-color: #1a1a1a;
+        color: #f5f5f5;
+        margin: 0;
+        font-size: 1rem;
+      }
+      input,
+      textarea {
+        font-family: "Courier New", Courier, monospace;
+        font-size: 1rem;
+      }
+      .container {
+        align-items: flex-start;
+        display: flex;
+        padding: 20px;
+        gap: 20px;
+      }
+      .info-objects,
+      .form-container {
+        background-color: #333;
+        padding: 20px;
+        border-radius: 8px;
+        color: #fff;
+        box-shadow: 3px 3px 5px 0 rgba(0, 0, 0, 0.5);
+      }
+      .info-objects {
+        width: 70%;
+        margin-right: 10px;
+      }
+      .form-container {
+        justify-content: start;
+        width: 30%;
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        max-height: 50%;
+      }
+      .form-container__form {
+        display: flex;
+        flex-direction: column;
+      }
+      .form__label {
+        display: block;
+        margin-bottom: 5px;
+        color: #ccc;
+        width: 100%;
+      }
+      .form__input[type="text"],
+      .form__textarea {
+        padding: 10px 20px; /* Increase padding for a more substantial button */
+        margin: 10px 0;
+        background-color: #222;
+        border: 2px solid #444;
+        border-radius: 4px;
+        color: #ddd;
+        width: 100%;
+        max-width: 100%;
+        min-width: 100%;
+      }
+      .form__textarea {
+        height: 10rem;
+      }
+      .form__input[type="submit"] {
+        background-color: #146c43; /* A more muted button color for retro feel */
+        color: #ffffff;
+        padding: 10px 20px; /* Increase padding for a more substantial button */
+        margin: 10px 0;
+        border: 2px solid #4caf50; /* Add solid border to make it pop */
+        border-radius: 3px; /* Smaller border-radius for a vintage look */
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-weight: bold;
+        text-transform: uppercase; /* Uppercase text for a more commanding button label */
+        font-size: 0.875rem; /* Smaller font size for that vintage typewriter look */
+        letter-spacing: 1px; /* Increase letter spacing */
+        box-shadow: inset 0 0 0 0 #4caf50; /* Inner shadow for a pressed-button effect */
+        outline: none; /* Remove outline */
+        min-width: 120px;
+        width: 100%;
+      }
+      .form__input[type="submit"]:hover {
+        background-color: #198754; /* Darker shade on hover for tactile feedback */
+        box-shadow: inset 0 0 0 2px #4caf50; /* Increase inner shadow size on hover */
+        color: #daf7dc; /* Lighter text color on hover for contrast */
+        width: 100%;
+      }
+      .form__input[type="submit"]:active {
+        background-color: #198754; /* Green background to indicate active state */
+        box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.2); /* Deeper inset shadow to simulate button press */
+        transform: translateY(1px); /* Move button down to simulate press */
+        width: 100%;
+      }
+      .info-object-card {
+        background-color: #252525;
+        border: 1px solid #444;
+        border-radius: 5px;
+        margin-bottom: 15px;
+        padding: 15px;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+      }
+      .form-section {
+        margin-bottom: 10px;
+        width: 100%;
+      }
+      h4,
+      h5 {
+        margin: 5px 0;
+        color: #adbcff;
+      }
+      p {
+        color: #d1d1d1;
+      }
+
+      .pagination {
+        color: #adbcff;
+        text-align: center;
+      }
+      a {
+        color: #6290c8;
+        text-decoration: none;
+        padding: 2px 5px; /* Adds padding for better clickability */
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+      .pagination .current {
+        margin: 0 15px;
+      }
+      button {
+        background-color: #146c43; /* A more muted button color for retro feel */
+        color: #ffffff;
+        padding: 10px 20px; /* Increase padding for a more substantial button */
+        margin: 10px 0;
+        border: 2px solid #4caf50; /* Add solid border to make it pop */
+        border-radius: 3px; /* Smaller border-radius for a vintage look */
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-weight: bold;
+        text-transform: uppercase; /* Uppercase text for a more commanding button label */
+        font-size: 0.875rem; /* Smaller font size for that vintage typewriter look */
+        letter-spacing: 1px; /* Increase letter spacing */
+        box-shadow: inset 0 0 0 0 #4caf50; /* Inner shadow for a pressed-button effect */
+        outline: none; /* Remove outline */
+        min-width: 120px;
+      }
+
+      button:hover {
+        background-color: #198754; /* Darker shade on hover for tactile feedback */
+        box-shadow: inset 0 0 0 2px #4caf50; /* Increase inner shadow size on hover */
+        color: #daf7dc; /* Lighter text color on hover for contrast */
+      }
+
+      button:active {
+        background-color: #198754; /* Green background to indicate active state */
+        box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.2); /* Deeper inset shadow to simulate button press */
+        transform: translateY(1px); /* Move button down to simulate press */
+      }
+      .button-copied {
+        background-color: #198754 !important; /* More saturated green for successful copy */
+        color: #fff;
+      }
+
+      .button-copied:hover {
+        background-color: #198754 !important; /* Slightly darker green on hover */
+      }
+      .remove-button {
+        background-color: #a52a2a; /* A retro red color for remove */
+        color: #ffffff;
+        padding: 10px 20px;
+        margin: 10px 0;
+        border: 2px solid #ff6347; /* Tomato color border */
+        border-radius: 3px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-weight: bold;
+        text-transform: uppercase;
+        font-size: 0.875rem;
+        letter-spacing: 1px;
+        box-shadow: inset 0 0 0 0 #ff6347;
+        outline: none;
+        min-width: 120px;
+      }
+
+      .remove-button:hover {
+        background-color: #8b1a1a; /* Darker shade on hover */
+        box-shadow: inset 0 0 0 2px #ff6347;
+        color: #fad4d4; /* Lighter red text color on hover */
+      }
+
+      .remove-button:active {
+        background-color: #ff6347; /* Tomato color to indicate active state */
+        box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.2);
+        transform: translateY(1px);
+      }
+      .button-container {
+        display: flex;
+        justify-content: start;
+        gap: 25px;
+      }
+      .header-container {
+        display: flex;
+        justify-content: space-between;
+      }
+      .info-object-tag {
+        display: block;
+        background-color: #444;
+        color: #9acd32;
+        padding: 3px 8px;
+        margin-top: 10px;
+        border: 1px solid #666;
+        border-radius: 4px;
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        width: fit-content;
+        align-self: flex-start;
+      }
+      .content {
+        white-space: pre-wrap;
+        user-select: text;
+      }
+    </style>
+    <script th:src="@{/js/copyToClipboard.js}"></script>
+    <script
+      src="https://unpkg.com/htmx.org@1.9.10"
+      integrity="sha384-D1Kt99CQMDuVetoL1lrYwg5t+9QdHe7NLX/SoJYkXDFfX37iInKRy5xLSi8nO7UC"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://unpkg.com/idiomorph/dist/idiomorph-ext.min.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <div
+        class="info-objects"
+        hx-ext="morph"
+        hx-get=""
+        hx-trigger="every 3s"
+        hx-target="#hx-swappable"
+        hx-swap="morph:outerHTML"
+        hx-select="#hx-swappable"
+      >
+        <div id="hx-swappable">
+          <form th:action="@{/}" method="get">
+            <input
+              type="text"
+              name="tag"
+              placeholder="Search by tag..."
+              th:value="${tag}"
+            />
+            <input type="submit" value="Search" />
+          </form>
+
+          <div>
+            <strong>Available Tags:</strong>
+            <span th:each="uniqueTag : ${uniqueTags}">
+              <a th:href="@{|/?tag=${uniqueTag}|}" th:text="${uniqueTag}"></a>
+            </span>
+          </div>
+
+          <div id="last-reload-time">Last log load: [[${currentDateTime}]]</div>
+          <div th:each="infoObject : ${infoObjectsPage.content}">
+            <div
+              class="info-object-card box"
+              th:id="${'info-object-' + infoObject.id}"
+            >
+              <div class="header-container">
+                <div>
+                  <h4 th:text="${'Author: ' + infoObject.authorIp}">
+                    Author IP
+                  </h4>
+                  <h5
+                    th:if="${infoObject.topic}"
+                    th:text="${'Topic: ' + infoObject.topic}"
+                  >
+                    Topic
+                  </h5>
+                </div>
+                <div th:if="${!#strings.isEmpty(infoObject.tag)}">
+                  <span
+                    class="info-object-tag"
+                    th:text="${'Tag: ' + infoObject.tag}"
+                    >Tag</span
+                  >
+                </div>
+              </div>
+              <p th:text="${infoObject.content}" class="content">Content</p>
+              <div class="button-container">
+                <button
+                  th:data-content="${infoObject.content}"
+                  onclick="copyToClipboard(this, this.getAttribute('data-content'))"
+                >
+                  Copy
+                </button>
+                <button
+                  class="remove-button"
+                  th:hx-delete="@{/info-object/__${infoObject.id}__}"
+                  th:hx-target="|#info-object-${infoObject.id}|"
+                  hx-swap="outerHTML"
+                  hx-confirm="Are you sure you wish to delete this Information Object?"
+                  type="button"
+                >
+                  Remove
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="pagination">
+          <a
+            th:if="${infoObjectsPage.hasPrevious()}"
+            th:href="@{|/?page=0&tag=${tag}|}"
+            >&laquo; first</a
+          >
+          <a
+            th:if="${infoObjectsPage.hasPrevious()}"
+            th:href="@{|/?page=${infoObjectsPage.number - 1}&tag=${tag != null ? tag : ''}|}"
+            >previous</a
+          >
+          <span
+            >Page [[${infoObjectsPage.number + 1}]] of
+            [[${infoObjectsPage.totalPages}]].</span
+          >
+          <a
+            th:if="${infoObjectsPage.hasNext()}"
+            th:href="@{|/?page=${infoObjectsPage.number + 1}&tag=${tag != null ? tag : ''}|}"
+            >next</a
+          >
+          <a
+            th:if="${infoObjectsPage.hasNext()}"
+            th:href="@{|/?page=${infoObjectsPage.totalPages - 1}&tag=${tag != null ? tag : ''}|}"
+            >last &raquo;</a
+          >
+        </div>
+      </div>
+
+      <div class="form-container">
+        <form
+          th:action="@{/info-object}"
+          th:object="${infoObjectDto}"
+          method="post"
+          class="form-container__form"
+        >
+          <div class="form-section">
+            <label for="topic" class="form__label">Topic:</label>
+            <input
+              type="text"
+              id="topic"
+              th:field="*{topic}"
+              placeholder="Enter Topic"
+              class="form__input"
+            />
+            <div
+              th:if="${#fields.hasErrors('topic')}"
+              th:errors="*{topic}"
+              class="error-message"
+            >
+              Topic Error
+            </div>
+          </div>
+          <div class="form-section">
+            <label for="tag" class="form__label">Tag:</label>
+            <input
+              type="text"
+              id="tag"
+              th:field="*{tag}"
+              placeholder="Enter Tag"
+              class="form__input"
+            />
+            <div
+              th:if="${#fields.hasErrors('tag')}"
+              th:errors="*{tag}"
+              class="error-message"
+            >
+              Tag Error
+            </div>
+          </div>
+          <div class="form-section">
+            <label for="content" class="form__label">Content:</label>
+            <textarea
+              id="content"
+              th:field="*{content}"
+              placeholder="Enter Content"
+              class="form__textarea"
+            ></textarea>
+            <div
+              th:if="${#fields.hasErrors('content')}"
+              th:errors="*{content}"
+              class="error-message"
+            >
+              Content Error
+            </div>
+          </div>
+          <input type="submit" value="Submit InfoObject" class="form__input" />
+        </form>
+      </div>
+    </div>
+  </body>
+</html>

@@ -24,8 +24,8 @@ public class InfoObjectController {
 
     @GetMapping("/")
     public String index(Model model, @RequestParam(required = false) String tag,
-                        @RequestParam(defaultValue = "0") int page,
-                        @RequestParam(defaultValue = "10") int size) {
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
         Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "modifiedAt"));
         model.addAttribute("currentDateTime", DateTimeFormatter.ofPattern("y-MM-dd HH:mm:ss")
                 .format(java.time.LocalDateTime.now()));
@@ -33,7 +33,7 @@ public class InfoObjectController {
         model.addAttribute("infoObjectsPage", infoObjectService.findAllInfoObjects(tag, pageable));
         model.addAttribute("infoObjectDto", new InfoObjectDTO());
         model.addAttribute("tag", tag);
-        return "infoobjects/django-clone";
+        return "infoobjects/index";
     }
 
     @GetMapping("/all/")
@@ -43,6 +43,7 @@ public class InfoObjectController {
         model.addAttribute("infoObjectsPage", infoObjectsPage);
         return "index"; // points to src/main/resources/templates/index.html
     }
+
     @GetMapping("/info-object")
     public String showInfoObjectForm(Model model) {
         model.addAttribute("infoObjectDto", new InfoObjectDTO());
@@ -51,9 +52,9 @@ public class InfoObjectController {
 
     @PostMapping("/info-object")
     public String postInfoObject(@Valid @ModelAttribute("infoObjectDto") InfoObjectDTO infoObjectDTO,
-                              BindingResult bindingResult,
-                              RedirectAttributes redirectAttributes,
-                              HttpServletRequest request) {
+            BindingResult bindingResult,
+            RedirectAttributes redirectAttributes,
+            HttpServletRequest request) {
         if (bindingResult.hasErrors()) {
             return "infoobjects/info-object-create-update";
         }
@@ -76,8 +77,9 @@ public class InfoObjectController {
     }
 
     @PostMapping("/info-object/edit/{id}")
-    public String updateInfoObject(@PathVariable Long id, @Valid @ModelAttribute("infoObjectDto") InfoObjectDTO infoObjectDto,
-                                   BindingResult result, RedirectAttributes redirectAttributes) {
+    public String updateInfoObject(@PathVariable Long id,
+            @Valid @ModelAttribute("infoObjectDto") InfoObjectDTO infoObjectDto,
+            BindingResult result, RedirectAttributes redirectAttributes) {
         if (result.hasErrors()) {
             return "infoobjects/info-object-create-update";
         }
@@ -89,5 +91,6 @@ public class InfoObjectController {
     @DeleteMapping("/info-object/{id}")
     public ResponseEntity<String> deleteInfoObject(@PathVariable Long id, RedirectAttributes redirectAttributes) {
         infoObjectService.removeInfoObject(id);
-        return ResponseEntity.ok().body("InfoObject removed successfully!");    }
+        return ResponseEntity.ok().body("InfoObject removed successfully!");
+    }
 }

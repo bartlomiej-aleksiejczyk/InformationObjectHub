@@ -1,6 +1,5 @@
 package com.example.InformationObjectHub.infoobject;
 
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
@@ -17,10 +16,10 @@ import com.example.InformationObjectHub.common.BaseEntity;
 @Setter
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class InfoObject extends BaseEntity {
-    private String authorIp;
-    private String topic;
+    String authorIp;
+    String topic;
     @Column(length = 150)
-    private String tag;
+    String tag;
     @Column(length = 1000000)
-    private String content;
+    String content;
 }
