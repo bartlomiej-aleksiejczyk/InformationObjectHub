@@ -36,20 +36,6 @@ public class InfoObjectController {
         return "infoobjects/index";
     }
 
-    @GetMapping("/all/")
-    public String all(Model model, @RequestParam(required = false) String tag, Pageable pageable) {
-        // Pagination and optional tag filtering logic here
-        Page<InfoObject> infoObjectsPage = infoObjectService.findAllInfoObjects(tag, pageable);
-        model.addAttribute("infoObjectsPage", infoObjectsPage);
-        return "index"; // points to src/main/resources/templates/index.html
-    }
-
-    @GetMapping("/info-object")
-    public String showInfoObjectForm(Model model) {
-        model.addAttribute("infoObjectDto", new InfoObjectDTO());
-        return "infoobjects/info-object-create-update"; // Assuming you have a commentForm.html Thymeleaf template
-    }
-
     @PostMapping("/info-object")
     public String postInfoObject(@Valid @ModelAttribute("infoObjectDto") InfoObjectDTO infoObjectDTO,
             BindingResult bindingResult,
@@ -71,7 +57,6 @@ public class InfoObjectController {
             model.addAttribute("infoObject", infoObjectOptional.get());
             return "infoobjects/info-object-detail";
         } else {
-            // Handle the case where the InfoObject is not found
             return "redirect:/";
         }
     }
