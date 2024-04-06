@@ -24,7 +24,6 @@ services:
 
   springboot-server:
     build:
-      context: ./client
       dockerfile: Dockerfile
     environment:
       - SPRING_SINGLE_LOGIN=admin
