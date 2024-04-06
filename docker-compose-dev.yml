@@ -20,7 +20,7 @@ services:
       timeout: 5s
       retries: 5
     networks:
-      - webnet_resume
+      - infoobjecthub
 
   springboot-server:
     build:
@@ -38,6 +38,11 @@ services:
       - "127.0.0.1:8080:8080"
     depends_on:
       - postgres
+    networks:
+      - infoobjecthub
+
+networks:
+  infoobjecthub:
 
 volumes:
   postgres_data:
