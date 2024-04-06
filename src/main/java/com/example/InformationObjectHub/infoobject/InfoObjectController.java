@@ -50,18 +50,7 @@ public class InfoObjectController {
         return "redirect:/";
     }
 
-    @GetMapping("/info-object/{id}")
-    public String showInfoObject(@PathVariable Long id, Model model) {
-        Optional<InfoObject> infoObjectOptional = infoObjectService.findById(id);
-        if (infoObjectOptional.isPresent()) {
-            model.addAttribute("infoObject", infoObjectOptional.get());
-            return "infoobjects/info-object-detail";
-        } else {
-            return "redirect:/";
-        }
-    }
-
-    @PostMapping("/info-object/edit/{id}")
+    @PostMapping("/info-object/{id}")
     public String updateInfoObject(@PathVariable Long id,
             @Valid @ModelAttribute("infoObjectDto") InfoObjectDTO infoObjectDto,
             BindingResult result, RedirectAttributes redirectAttributes) {
