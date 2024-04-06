@@ -15,14 +15,13 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.format.DateTimeFormatter;
-import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor
 public class InfoObjectController {
     private final InfoObjectService infoObjectService;
 
-    @GetMapping("/")
+    @GetMapping("/infoobject")
     public String index(Model model, @RequestParam(required = false) String tag,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size) {
