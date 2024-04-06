@@ -14,7 +14,7 @@ The goal of this project is to facilitate communication between users across LAN
 
 ```bash
 git clone https://github.com/bartlomiej-aleksiejczyk/InformationObjectHub.git
-cd your-repository-directory
+cd InformationObjectHub
 ```
 
 ### Running the Application
