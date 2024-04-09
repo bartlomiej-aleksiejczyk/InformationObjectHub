@@ -8,7 +8,7 @@ public class CommonController {
 
     @GetMapping("/")
     public String index() {
-        return "redirect:/infoobject";
+        return "redirect:/info-object";
 
     }
 }

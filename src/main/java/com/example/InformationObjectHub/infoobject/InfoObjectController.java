@@ -21,7 +21,7 @@ import java.time.format.DateTimeFormatter;
 public class InfoObjectController {
     private final InfoObjectService infoObjectService;
 
-    @GetMapping("/infoobject")
+    @GetMapping("/info-object")
     public String index(Model model, @RequestParam(required = false) String tag,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size) {
@@ -32,7 +32,7 @@ public class InfoObjectController {
         model.addAttribute("infoObjectsPage", infoObjectService.findAllInfoObjects(tag, pageable));
         model.addAttribute("infoObjectDto", new InfoObjectDTO());
         model.addAttribute("tag", tag);
-        return "infoobjects/index";
+        return "info-object/index";
     }
 
     @PostMapping("/info-object")
@@ -41,7 +41,7 @@ public class InfoObjectController {
             RedirectAttributes redirectAttributes,
             HttpServletRequest request) {
         if (bindingResult.hasErrors()) {
-            return "infoobjects/info-object-create-update";
+            return "info-objects/info-object-create-update";
         }
 
         infoObjectService.saveInfoObject(infoObjectDTO, request.getRemoteAddr());
