@@ -90,10 +90,11 @@
 
       .form__input[type="text"],
       .form__textarea {
-        padding: 0.5rem 1rem;
-        margin: 10px 0;
+        padding: 0.5rem;
+        margin: 0.7rem 0;
         background-color: #222;
         border: 2px solid #444;
+        font-size: 1rem;
         border-radius: 4px;
         color: #ddd;
         width: 100%;
@@ -292,6 +293,9 @@
         body {
           font-size: 2rem;
         }
+      .form__input[type="text"],
+      .form__textarea {
+        font-size: 2rem;
       }
     </style>
     <script th:src="@{/js/copyToClipboard.js}"></script>
