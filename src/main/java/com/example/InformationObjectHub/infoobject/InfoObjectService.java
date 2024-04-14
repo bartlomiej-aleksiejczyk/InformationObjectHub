@@ -65,4 +65,3 @@ public class InfoObjectService {
         infoObjectRepository.deleteById(id);
     }
 }
-
