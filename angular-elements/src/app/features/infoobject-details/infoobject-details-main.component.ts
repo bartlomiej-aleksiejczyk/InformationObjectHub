@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
+import { InfoObjectService } from './services/infoobject.service';
 
 @Component({
   selector: 'app-infoobject-details-main',
@@ -21,6 +22,10 @@ export class InfoobjectDetailsMainComponent {
 
   buttonText: string = 'Copy';
 
+  isVisible: boolean = true;
+
+  constructor(private infoObjectService: InfoObjectService) {}
+
   copyToClipboard(content: string) {
     navigator.clipboard.writeText(content).then(
       () => {
@@ -32,7 +37,16 @@ export class InfoobjectDetailsMainComponent {
     );
   }
 
-  deleteInfoObject() {
-    console.log('Delete URL: ', this.deleteUrl);
+  deleteInfoObject(deleteUrl: string) {
+    console.log(this.deleteUrl);
+    if (deleteUrl) {
+      this.infoObjectService.deleteInfoObject(deleteUrl).then((success) => {
+        if (success) {
+          this.isVisible = false;
+        } else {
+          console.error('Failed to delete the object');
+        }
+      });
+    }
   }
 }
