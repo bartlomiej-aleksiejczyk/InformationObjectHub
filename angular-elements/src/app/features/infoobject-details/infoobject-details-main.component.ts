@@ -17,7 +17,7 @@ export class InfoobjectDetailsMainComponent {
   @Input() authorIp: string = '';
   @Input() tag: string = '';
   @Input() dialogueContent: string = '';
-  @Input() infoObjectLinks: string[] = [];
+  @Input() infoobjectLinks: string[] = [];
   @Input() todoContent: string = '';
 
   buttonText: string = 'Copy';
@@ -37,16 +37,18 @@ export class InfoobjectDetailsMainComponent {
     );
   }
 
-  deleteInfoObject(deleteUrl: string) {
+  deleteInfoObject() {
     console.log(this.deleteUrl);
-    if (deleteUrl) {
-      this.infoObjectService.deleteInfoObject(deleteUrl).then((success) => {
-        if (success) {
-          this.isVisible = false;
-        } else {
-          console.error('Failed to delete the object');
-        }
-      });
+    if (this.deleteUrl) {
+      this.infoObjectService
+        .deleteInfoObject(this.deleteUrl)
+        .then((success) => {
+          if (success) {
+            this.isVisible = false;
+          } else {
+            console.error('Failed to delete the object');
+          }
+        });
     }
   }
 }
