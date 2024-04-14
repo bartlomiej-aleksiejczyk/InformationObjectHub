@@ -10,7 +10,9 @@
   </div>
   <p class="content">{{ content }}</p>
   <div class="button-container">
-    <button (click)="copyToClipboard(content)">Copy</button>
+    @if (content !== '') {
+    <button (click)="copyToClipboard(content)">{{ buttonText }}</button>
+    }
     <button class="remove-button" (click)="deleteInfoObject()">Remove</button>
   </div>
 </div>

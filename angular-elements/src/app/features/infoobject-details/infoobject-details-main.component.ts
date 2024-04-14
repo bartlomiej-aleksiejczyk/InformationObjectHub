@@ -19,9 +19,15 @@ export class InfoobjectDetailsMainComponent {
   @Input() infoObjectLinks: string[] = [];
   @Input() todoContent: string = '';
 
+  buttonText: string = 'Copy';
+
   copyToClipboard(content: string) {
     navigator.clipboard.writeText(content).then(
-      () => console.log('Content copied!'),
+      () => {
+        console.log('Content copied!');
+        this.buttonText = 'Copied!';
+        setTimeout(() => (this.buttonText = 'Copy'), 1000);
+      },
       (err) => console.error('Failed to copy: ', err)
     );
   }
