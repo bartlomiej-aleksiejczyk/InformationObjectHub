@@ -4,11 +4,12 @@ import { InfoObjectService } from './services/infoobject.service';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Subscription, catchError, of } from 'rxjs';
 import { tap } from 'rxjs/operators';
+import { InfoobjectEditModalComponent } from './components/infoobject-edit-modal/infoobject-edit-modal.component';
 
 @Component({
   selector: 'app-infoobject-details-main',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, InfoobjectEditModalComponent],
   templateUrl: './infoobject-details-main.component.html',
   styleUrl: './infoobject-details-main.component.scss',
 })
@@ -28,52 +29,26 @@ export class InfoobjectDetailsMainComponent {
   deleteButtonText: string = 'Delete';
 
   isVisible: boolean = true;
-  infoObjectForm: FormGroup;
   isEditable: boolean = false;
   isSaving: boolean = false;
   isDeleting: boolean = false;
   deleteError: string = '';
+  isEditModalOpen: boolean = false;
 
-  constructor(private infoObjectService: InfoObjectService) {
-    this.infoObjectForm = new FormGroup({
-      content: new FormControl(''),
-      topic: new FormControl(''),
-      tag: new FormControl(''),
-    });
+  constructor(private infoObjectService: InfoObjectService) {}
+
+  openEditModal(): void {
+    this.isEditModalOpen = true;
+    document.body.style.overflow = 'hidden';
   }
 
-  toggleEdit(): void {
-    this.isEditable = !this.isEditable;
-    if (this.isEditable) {
-      this.infoObjectForm.setValue({
-        content: this.content,
-        topic: this.topic,
-        tag: this.tag,
-      });
-    }
+  closeEditModal(): void {
+    this.isEditModalOpen = false;
+    document.body.style.overflow = 'auto'; // Enable scroll on body
   }
 
-  cancelEdit(): void {
-    this.isEditable = false;
-  }
-
-  saveChanges(): void {
-    if (this.infoObjectForm.valid) {
-      this.isSaving = true;
-      this.infoObjectService
-        .updateInfoObject(this.infoObjectId, this.infoObjectForm.value)
-        .subscribe({
-          next: (response) => {
-            console.log('Update successful');
-            this.toggleEdit();
-            this.isSaving = false;
-          },
-          error: (error) => {
-            console.error('Update failed', error);
-            this.isSaving = false;
-          },
-        });
-    }
+  handleSave(updatedInfoObject: any): void {
+    console.log('Received data to save:', updatedInfoObject);
   }
 
   copyToClipboard(content: string) {

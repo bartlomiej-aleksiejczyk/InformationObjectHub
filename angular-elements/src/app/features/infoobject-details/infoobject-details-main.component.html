@@ -12,21 +12,37 @@
   <p class="content">{{ content }}</p>
   <div class="button-container">
     @if (content !== '') {
-    <button (click)="copyToClipboard(content)">{{ buttonText }}</button>
-    }
-    <button
-      class="remove-button"
-      (click)="deleteInfoObject()"
-      [disabled]="isDeleting"
-    >
-      <ng-container *ngIf="!isDeleting && !deleteError">{{
-        deleteButtonText
-      }}</ng-container>
-      @if (isDeleting){
-      <span class="spinner"></span>
-      }
-      <ng-container *ngIf="deleteError">{{ deleteError }}</ng-container>
+    <button class="copy-button" (click)="copyToClipboard(content)">
+      {{ buttonText }}
     </button>
+    }
+    <div class="action-buttons">
+      <button (click)="openEditModal()">Edit</button>
+      <button
+        class="remove-button"
+        (click)="deleteInfoObject()"
+        [disabled]="isDeleting"
+      >
+        <ng-container *ngIf="!isDeleting && !deleteError">{{
+          deleteButtonText
+        }}</ng-container>
+        @if (isDeleting){
+        <span class="spinner"></span>
+        }
+        <ng-container *ngIf="deleteError">{{ deleteError }}</ng-container>
+      </button>
+    </div>
   </div>
 </div>
+<app-infoobject-edit-modal
+  [infoObjectId]="infoObjectId"
+  [content]="content"
+  [topic]="topic"
+  [tag]="tag"
+  [isVisible]="isEditModalOpen"
+  (close)="isEditModalOpen = false"
+  (save)="handleSave($event)"
+>
+</app-infoobject-edit-modal>
+
 }
