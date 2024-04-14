@@ -27,7 +27,6 @@ export class InfoobjectDetailsMainComponent {
   }
 
   deleteInfoObject() {
-    // Perform HTTP DELETE request or handle via parent component
     console.log('Delete URL: ', this.deleteUrl);
   }
 }
