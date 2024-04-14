@@ -53,7 +53,6 @@ public class InfoObjectService {
             existingInfoObject.setTopic(infoObjectDTO.getTopic());
             existingInfoObject.setTag(Optional.ofNullable(infoObjectDTO.getTag())
                     .map(String::toUpperCase).orElse(null));
-            // No need to set authorIp for updates
             infoObjectRepository.save(existingInfoObject);
         } else {
             throw new IllegalArgumentException("InfoObject with id " + id + " not found");
