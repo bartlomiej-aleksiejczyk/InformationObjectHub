@@ -1,1 +1,16 @@
-<p>infoobject-details-main works!</p>
+<div class="info-object-card">
+  <div class="header-container">
+    <div>
+      <h4>Author: {{ authorIp }}</h4>
+      <h5 *ngIf="topic">Topic: {{ topic }}</h5>
+    </div>
+    <div *ngIf="tag">
+      <span class="info-object-tag">Tag: {{ tag }}</span>
+    </div>
+  </div>
+  <p class="content">{{ content }}</p>
+  <div class="button-container">
+    <button (click)="copyToClipboard(content)">Copy</button>
+    <button class="remove-button" (click)="deleteInfoObject()">Remove</button>
+  </div>
+</div>
