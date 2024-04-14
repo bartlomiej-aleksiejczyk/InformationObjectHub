@@ -14,7 +14,19 @@
     @if (content !== '') {
     <button (click)="copyToClipboard(content)">{{ buttonText }}</button>
     }
-    <button class="remove-button" (click)="deleteInfoObject()">Remove</button>
+    <button
+      class="remove-button"
+      (click)="deleteInfoObject()"
+      [disabled]="isDeleting"
+    >
+      <ng-container *ngIf="!isDeleting && !deleteError">{{
+        deleteButtonText
+      }}</ng-container>
+      @if (isDeleting){
+      <span class="spinner"></span>
+      }
+      <ng-container *ngIf="deleteError">{{ deleteError }}</ng-container>
+    </button>
   </div>
 </div>
 }

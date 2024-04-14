@@ -184,3 +184,36 @@ h5 {
     width: 100%;
   }
 }
+
+.spinner {
+  margin: 0.2rem;
+  border: 8px solid rgba(0, 0, 0, 0.1);
+  border-top: 8px solid $text-color-secondary;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  animation: spin 0.8s linear infinite;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+input[readonly],
+textarea[readonly] {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+input,
+textarea {
+  background-color: #fff;
+  cursor: text;
+}
