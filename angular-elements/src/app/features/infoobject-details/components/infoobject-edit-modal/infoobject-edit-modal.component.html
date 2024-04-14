@@ -1,0 +1,23 @@
+@if (isVisible) {
+<div class="modal">
+  <div class="modal-content">
+    <form [formGroup]="form">
+      <div>
+        <label for="topic">Topic:</label>
+        <input type="text" id="topic" formControlName="topic" />
+      </div>
+      <div>
+        <label for="tag">Tag:</label>
+        <input type="text" id="tag" formControlName="tag" />
+      </div>
+      <div>
+        <label for="content">Content:</label>
+        <textarea id="content" formControlName="content"></textarea>
+      </div>
+      <button type="button" (click)="onSave()">Save</button>
+      <button type="button" (click)="onClose()">Cancel</button>
+    </form>
+  </div>
+</div>
+
+}
