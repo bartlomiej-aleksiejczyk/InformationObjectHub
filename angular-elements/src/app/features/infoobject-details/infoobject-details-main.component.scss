@@ -172,6 +172,9 @@ h5 {
   user-select: text;
 }
 @media (max-width: 1000px) {
+  :host {
+    font-size: 2rem;
+  }
   button {
     font-size: 2rem;
     width: 100%;
