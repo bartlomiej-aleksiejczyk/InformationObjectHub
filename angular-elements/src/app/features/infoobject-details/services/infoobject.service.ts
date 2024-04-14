@@ -9,7 +9,6 @@ export class InfoObjectService {
   constructor(private http: HttpClient) {}
 
   async deleteInfoObject(url: string): Promise<boolean> {
-    console.log('test');
     try {
       await firstValueFrom(
         this.http.delete<string>(url, { responseType: 'text' as 'json' })
@@ -19,5 +18,9 @@ export class InfoObjectService {
       console.error('Delete failed: ', error);
       return false;
     }
+  }
+
+  updateInfoObject(id: string, data: any) {
+    return this.http.put(`/api/info-objects/${id}`, data);
   }
 }
