@@ -3,6 +3,7 @@ package com.example.InformationObjectHub.infoobject;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doNothing;
@@ -90,6 +91,33 @@ public class InfoObjectServiceTest {
         infoObjectService.saveInfoObject(dto, authorIp);
 
         verify(infoObjectRepository).save(any(InfoObject.class));
+    }
+
+    @Test
+    public void testUpdateInfoObjectFound() {
+        InfoObjectDTO dto = new InfoObjectDTO("New Topic", "New Content", "New Tag");
+        Long id = 1L;
+        InfoObject existingInfoObject = new InfoObject();
+        when(infoObjectRepository.findById(id)).thenReturn(Optional.of(existingInfoObject));
+        doNothing().when(infoObjectRepository).save(any(InfoObject.class));
+
+        infoObjectService.updateInfoObject(id, dto);
+
+        verify(infoObjectRepository).save(existingInfoObject);
+        assertEquals("NEW TAG", existingInfoObject.getTag()); // Assuming the tag is converted to upper case
+    }
+
+    @Test
+    public void testUpdateInfoObjectNotFound() {
+        InfoObjectDTO dto = new InfoObjectDTO("New Topic", "New Content", "New Tag");
+        Long id = 1L;
+        when(infoObjectRepository.findById(id)).thenReturn(Optional.empty());
+
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            infoObjectService.updateInfoObject(id, dto);
+        });
+
+        assertEquals("InfoObject with id 1 not found", exception.getMessage());
     }
 
 }
