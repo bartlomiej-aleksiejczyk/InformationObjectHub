@@ -1,21 +1,42 @@
 @if (isVisible) {
-<div class="modal">
-  <div class="modal-content">
-    <form [formGroup]="form">
+<div class="modal-overlay">
+  <div class="modal-container">
+    <form [formGroup]="form" class="modal-form">
       <div>
-        <label for="topic">Topic:</label>
-        <input type="text" id="topic" formControlName="topic" />
+        <label for="topic" class="modal-label">Topic:</label>
+        <input
+          type="text"
+          id="topic"
+          formControlName="topic"
+          class="modal-input"
+        />
       </div>
       <div>
-        <label for="tag">Tag:</label>
-        <input type="text" id="tag" formControlName="tag" />
+        <label for="tag" class="modal-label">Tag:</label>
+        <input type="text" id="tag" formControlName="tag" class="modal-input" />
       </div>
       <div>
-        <label for="content">Content:</label>
-        <textarea id="content" formControlName="content"></textarea>
+        <label for="content" class="modal-label">Content:</label>
+        <textarea
+          id="content"
+          formControlName="content"
+          class="modal-textarea"
+        ></textarea>
       </div>
-      <button type="button" (click)="onSave()">Save</button>
-      <button type="button" (click)="onClose()">Cancel</button>
+      <button
+        type="button"
+        (click)="onSave()"
+        class="modal-button modal-button--save"
+      >
+        Save
+      </button>
+      <button
+        type="button"
+        (click)="onClose()"
+        class="modal-button modal-button--cancel"
+      >
+        Cancel
+      </button>
     </form>
   </div>
 </div>
