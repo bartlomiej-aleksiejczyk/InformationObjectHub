@@ -1,0 +1,32 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()" class="form-form">
+  <div>
+    <label for="topic" class="form-label">Topic:</label>
+    <input type="text" id="topic" formControlName="topic" class="form-input" />
+  </div>
+  <div>
+    <label for="tag" class="form-label">Tag:</label>
+    <input type="text" id="tag" formControlName="tag" class="form-input" />
+  </div>
+  <div>
+    <label for="content" class="form-label">Content:</label>
+    <textarea
+      id="content"
+      formControlName="content"
+      class="form-textarea"
+    ></textarea>
+  </div>
+  <button
+    type="button"
+    (click)="onSave()"
+    class="form-button form-button--save"
+  >
+    Save
+  </button>
+  <!-- <button
+    type="button"
+    (click)="onClose()"
+    class="form-button form-button--cancel"
+  >
+    Cancel
+  </button> -->
+</form>

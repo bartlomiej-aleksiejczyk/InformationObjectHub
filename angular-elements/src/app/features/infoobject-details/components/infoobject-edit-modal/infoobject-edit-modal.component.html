@@ -1,44 +1,19 @@
 @if (isVisible) {
 <div class="modal-overlay">
   <div class="modal-container">
-    <form [formGroup]="form" class="modal-form">
-      <div>
-        <label for="topic" class="modal-label">Topic:</label>
-        <input
-          type="text"
-          id="topic"
-          formControlName="topic"
-          class="modal-input"
-        />
-      </div>
-      <div>
-        <label for="tag" class="modal-label">Tag:</label>
-        <input type="text" id="tag" formControlName="tag" class="modal-input" />
-      </div>
-      <div>
-        <label for="content" class="modal-label">Content:</label>
-        <textarea
-          id="content"
-          formControlName="content"
-          class="modal-textarea"
-        ></textarea>
-      </div>
-      <button
-        type="button"
-        (click)="onSave()"
-        class="modal-button modal-button--save"
+    <app-infoobject-form
+      [topic]="topic"
+      [tag]="tag"
+      [content]="content"
+      (formSubmit)="onSave($event)"
+    >
       >
-        Save
-      </button>
-      <button
-        type="button"
-        (click)="onClose()"
-        class="modal-button modal-button--cancel"
-      >
-        Cancel
-      </button>
-    </form>
+    </app-infoobject-form>
+    <button
+      type="button"
+      class="modal-close-button"
+      (click)="onClose()"
+    ></button>
   </div>
 </div>
-
 }
