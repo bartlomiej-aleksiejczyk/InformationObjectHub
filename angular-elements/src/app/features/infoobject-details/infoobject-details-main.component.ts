@@ -14,7 +14,7 @@ import { InfoobjectEditModalComponent } from './components/infoobject-edit-modal
   styleUrl: './infoobject-details-main.component.scss',
 })
 export class InfoobjectDetailsMainComponent {
-  @Input() infoObjectId: string = '';
+  @Input() infoobjectId: string = '';
   @Input() deleteUrl: string = '';
   @Input() editUrl: string = '';
   @Input() content: string = '';
