@@ -38,7 +38,7 @@ public class InfoObjectServiceTest {
     @Test
     public void testFindAllInfoObjectsWithTag() {
         Pageable pageable = Pageable.unpaged();
-        InfoObject infoObject = new InfoObject(); // Assume InfoObject has a constructor
+        InfoObject infoObject = new InfoObject();
         Page<InfoObject> expectedPage = new PageImpl<>(Arrays.asList(infoObject));
         when(infoObjectRepository.findByTag("testTag", pageable)).thenReturn(expectedPage);
 
@@ -84,9 +84,10 @@ public class InfoObjectServiceTest {
 
     @Test
     public void testSaveInfoObject() {
-        InfoObjectDTO dto = new InfoObjectDTO("Topic", "Content", "Tag");
-        String authorIp = "192.168.0.1";
-        doNothing().when(infoObjectRepository).save(any(InfoObject.class));
+        InfoObjectDTO dto = new InfoObjectDTO("Temat", "Treść", "Tag");
+        String authorIp = "192.168.21.37";
+        InfoObject savedInfoObject = new InfoObject();
+        when(infoObjectRepository.save(any(InfoObject.class))).thenReturn(savedInfoObject);
 
         infoObjectService.saveInfoObject(dto, authorIp);
 
@@ -95,21 +96,21 @@ public class InfoObjectServiceTest {
 
     @Test
     public void testUpdateInfoObjectFound() {
-        InfoObjectDTO dto = new InfoObjectDTO("New Topic", "New Content", "New Tag");
+        InfoObjectDTO dto = new InfoObjectDTO("Nowy Temat", "Kontent2", "Tag2");
         Long id = 1L;
         InfoObject existingInfoObject = new InfoObject();
         when(infoObjectRepository.findById(id)).thenReturn(Optional.of(existingInfoObject));
-        doNothing().when(infoObjectRepository).save(any(InfoObject.class));
+        when(infoObjectRepository.save(any(InfoObject.class))).thenReturn(existingInfoObject);
 
         infoObjectService.updateInfoObject(id, dto);
 
         verify(infoObjectRepository).save(existingInfoObject);
-        assertEquals("NEW TAG", existingInfoObject.getTag()); // Assuming the tag is converted to upper case
+        assertEquals("TAG2", existingInfoObject.getTag());
     }
 
     @Test
     public void testUpdateInfoObjectNotFound() {
-        InfoObjectDTO dto = new InfoObjectDTO("New Topic", "New Content", "New Tag");
+        InfoObjectDTO dto = new InfoObjectDTO("Temat3", "Kontnent3", "tag3");
         Long id = 1L;
         when(infoObjectRepository.findById(id)).thenReturn(Optional.empty());
 
