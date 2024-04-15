@@ -28,7 +28,6 @@ $border-color-editable: #6290c8;
 @mixin button-style($background-color, $hover-bg-color, $border-color) {
   background-color: $background-color;
   color: $text-color-primary;
-  padding: 10px 20px;
   margin: 10px 0;
   border: 2px solid $border-color;
   border-radius: 3px;
@@ -115,6 +114,7 @@ $border-color-editable: #6290c8;
 }
 
 .button-container {
+  gap: 25px;
   display: flex;
   justify-content: space-between;
 }
@@ -177,11 +177,9 @@ button,
   }
   button {
     font-size: 2rem;
-    width: 100%;
   }
   .remove-button {
     font-size: 2rem;
-    width: 100%;
   }
 }
 
