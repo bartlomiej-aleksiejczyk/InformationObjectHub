@@ -1,3 +1,6 @@
 databaseChangeLog:
   - include:
       file: classpath:/db/changelog/changes/0001_initial_schema.sql
+  - include:
+      file: classpath:/db/changelog/changes/0002_information_object_hub_add_todo_content.sql
+      context: information-object-hub
