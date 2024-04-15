@@ -22,31 +22,31 @@
 
 .form-label {
   display: block;
-  margin-bottom: 5px; // Consistent margin-bottom with .form-container
-  color: #ccc; // Grey color for a lighter tone
+  margin-bottom: 5px;
+  color: #ccc;
   width: 100%;
 }
 
 .form-input,
 .form-textarea {
-  padding: 0.5rem; // Padding to match .form-container
-  background-color: #222; // Darker background
-  border: 2px solid #444; // Solid border with a slightly lighter tone
+  padding: 0.5rem;
+  background-color: #222;
+  border: 2px solid #444;
   font-size: 1rem;
   border-radius: 4px;
-  color: #ddd; // Light grey text
-  width: 100%; // Full-width inputs
+  color: #ddd;
+  width: 100%;
 }
 
 .form-textarea {
-  height: 10rem; // Set specific height for textarea
+  height: 10rem;
 }
 
 .form-button {
   padding: 0.5rem;
   margin-bottom: auto;
-  background-color: #146c43; // Primary button color
-  border: 2px solid #444; // Consistent with other inputs
+  background-color: #146c43;
+  border: 2px solid #444;
   font-size: 1rem;
   border-radius: 4px;
   color: #ffffff;
@@ -60,13 +60,13 @@
 
 .form-button:hover,
 .form-button:active {
-  background-color: #198754; // Lighter green on hover
-  color: #daf7dc; // Very light green text on hover
+  background-color: #198754;
+  color: #daf7dc;
 }
 
 @media (max-width: 1000px) {
   .form {
-    flex-direction: column; // Ensures the flex direction is column on smaller screens
-    width: 100%; // Full width on smaller screens
+    flex-direction: column;
+    width: 100%;
   }
 }
