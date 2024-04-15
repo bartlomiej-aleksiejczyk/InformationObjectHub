@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormType } from './utils/form-type';
 
 @Component({
   selector: 'app-infoobject-form',
@@ -9,9 +10,10 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
   styleUrl: './infoobject-form.component.scss',
 })
 export class InfoobjectFormComponent {
-  @Input() content!: string;
-  @Input() topic!: string;
-  @Input() tag!: string;
+  @Input() content: string = '';
+  @Input() topic: string = '';
+  @Input() tag: string = '';
+  @Input() formType?: FormType;
   @Output() formSubmit = new EventEmitter<any>();
 
   form: FormGroup = new FormGroup({
@@ -21,7 +23,7 @@ export class InfoobjectFormComponent {
   });
 
   ngOnChanges(): void {
-    this.form.setValue({
+    this.form.patchValue({
       content: this.content,
       topic: this.topic,
       tag: this.tag,
@@ -29,7 +31,7 @@ export class InfoobjectFormComponent {
   }
 
   onSave(): void {
-    this.formSubmit.emit(this.form.value); // Emits form data to parent component
+    this.formSubmit.emit(this.form.value);
   }
 
   onSubmit(): void {
