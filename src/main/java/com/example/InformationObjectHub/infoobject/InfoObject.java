@@ -33,4 +33,6 @@ public class InfoObject extends BaseEntity {
     @ElementCollection
     @CollectionTable(name = "iinfoobject_links", joinColumns = @JoinColumn(name = "infoobject_id"))
     List<String> infoobjectLinks = new ArrayList<>();
+    @Column(length = 1000000)
+    String todoContent;
 }

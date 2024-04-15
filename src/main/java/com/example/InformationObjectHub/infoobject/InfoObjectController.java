@@ -61,9 +61,4 @@ public class InfoObjectController {
         return "redirect:/";
     }
 
-    @DeleteMapping("/info-object/{id}")
-    public ResponseEntity<String> deleteInfoObject(@PathVariable Long id, RedirectAttributes redirectAttributes) {
-        infoObjectService.removeInfoObject(id);
-        return ResponseEntity.ok().body("InfoObject removed successfully!");
-    }
 }
