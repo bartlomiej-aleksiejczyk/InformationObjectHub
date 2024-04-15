@@ -4,6 +4,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -78,4 +80,16 @@ public class InfoObjectServiceTest {
         assertFalse(result.isPresent());
         verify(infoObjectRepository).findById(id);
     }
+
+    @Test
+    public void testSaveInfoObject() {
+        InfoObjectDTO dto = new InfoObjectDTO("Topic", "Content", "Tag");
+        String authorIp = "192.168.0.1";
+        doNothing().when(infoObjectRepository).save(any(InfoObject.class));
+
+        infoObjectService.saveInfoObject(dto, authorIp);
+
+        verify(infoObjectRepository).save(any(InfoObject.class));
+    }
+
 }
