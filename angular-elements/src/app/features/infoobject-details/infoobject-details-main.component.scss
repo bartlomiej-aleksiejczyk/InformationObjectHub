@@ -25,39 +25,31 @@ $border-color-editable: #6290c8;
   font-size: 1rem;
 }
 
-@mixin button-style($background-color) {
+@mixin button-style($background-color, $hover-bg-color, $border-color) {
   background-color: $background-color;
   color: $text-color-primary;
   padding: 10px 20px;
   margin: 10px 0;
-  border: 2px solid $button-border-color;
+  border: 2px solid $border-color;
   border-radius: 3px;
   cursor: pointer;
   transition: all 0.3s ease;
   font-weight: bold;
   text-transform: uppercase;
   letter-spacing: 1px;
-  box-shadow: inset 0 0 0 0 $button-border-color;
+  box-shadow: inset 0 0 0 0 $border-color;
   outline: none;
   min-width: 120px;
-
   &:hover {
-    background-color: $button-hover-background-color;
-    box-shadow: inset 0 0 0 2px $button-border-color;
+    background-color: $hover-bg-color;
+    box-shadow: inset 0 0 0 2px $border-color;
     color: #daf7dc;
   }
-
   &:active {
-    background-color: $button-hover-background-color;
+    background-color: $hover-bg-color;
     box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.2);
     transform: translateY(1px);
   }
-}
-
-h4,
-h5 {
-  color: $text-color-header;
-  font-size: 1rem;
 }
 
 .container {
@@ -116,8 +108,6 @@ h5 {
   border-radius: 4px;
   color: $text-color-primary;
   width: 100%;
-  max-width: 100%;
-  min-width: 100%;
 }
 
 .form__textarea {
@@ -128,46 +118,34 @@ h5 {
   display: flex;
   justify-content: space-between;
 }
+
 .action-buttons {
   display: flex;
   justify-content: end;
   gap: 25px;
 }
 
-button {
-  @include button-style($button-background-color);
-}
 button,
-.form__input[type="submit"] {
-  @include button-style($button-background-color);
-}
-.copy-button {
-  @include button-style($copy-button-background-color);
-  border: 2px solid $copy-button-border-color;
-  box-shadow: inset 0 0 0 0 $copy-button-border-color;
-  transition: background-color 0.3s, border-color 0.3s;
-  &:hover {
-    background-color: $copy-button-hover-background-color;
-    box-shadow: inset 0 0 0 2px $copy-button-hover-border-color;
-  }
-
-  &:active {
-    background-color: $copy-button-active-background-color;
-    border: solid $copy-button-active-border-color;
-  }
-}
+.form__input[type="submit"],
+.copy-button,
 .remove-button {
-  @include button-style(#a52a2a);
-  border: 2px solid #ff6347;
+  @include button-style(
+    $button-background-color,
+    $button-hover-background-color,
+    $button-border-color
+  );
+}
 
-  &:hover {
-    background-color: #8b1a1a;
-    box-shadow: inset 0 0 0 2px $error-color;
-    color: #fad4d4;
-  }
-  &:active {
-    background-color: $error-color;
-  }
+.copy-button {
+  @include button-style(
+    $copy-button-background-color,
+    $copy-button-hover-background-color,
+    $copy-button-border-color
+  );
+}
+
+.remove-button {
+  @include button-style(#a52a2a, #8b1a1a, #ff6347);
 }
 
 .header-container {
@@ -192,6 +170,7 @@ button,
   white-space: pre-wrap;
   user-select: text;
 }
+
 @media (max-width: 1000px) {
   :host {
     font-size: 2rem;
@@ -214,15 +193,13 @@ button,
   width: 14px;
   height: 14px;
   animation: spin 0.8s linear infinite;
-  display: inline-block;
-  vertical-align: middle;
 }
 
 @keyframes spin {
-  from {
+  0% {
     transform: rotate(0deg);
   }
-  to {
+  100% {
     transform: rotate(360deg);
   }
 }
@@ -257,14 +234,8 @@ textarea {
 
   .form-group {
     margin-bottom: 10px;
-
-    label {
-      color: $text-color-secondary;
-    }
-
     input,
     textarea {
-      width: 100%;
       padding: 0.5rem;
       font-size: 1rem;
       border-radius: 4px;
