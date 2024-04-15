@@ -1,11 +1,14 @@
 package com.example.InformationObjectHub.infoobject;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.Arrays;
+import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -53,5 +56,26 @@ public class InfoObjectServiceTest {
         assertNotNull(result);
         assertEquals(1, result.getTotalElements());
         verify(infoObjectRepository).findAll(pageable);
+    }
+
+    @Test
+    public void testFindByIdFound() {
+        Long id = 1L;
+        Optional<InfoObject> expected = Optional.of(new InfoObject());
+        when(infoObjectRepository.findById(id)).thenReturn(expected);
+
+        Optional<InfoObject> result = infoObjectService.findById(id);
+        assertTrue(result.isPresent());
+        verify(infoObjectRepository).findById(id);
+    }
+
+    @Test
+    public void testFindByIdNotFound() {
+        Long id = 1L;
+        when(infoObjectRepository.findById(id)).thenReturn(Optional.empty());
+
+        Optional<InfoObject> result = infoObjectService.findById(id);
+        assertFalse(result.isPresent());
+        verify(infoObjectRepository).findById(id);
     }
 }
