@@ -22,12 +22,44 @@ export class InfoobjectFormComponent {
     tag: new FormControl(''),
   });
 
+  fieldVisibility = {
+    content: true,
+    topic: true,
+    tag: true,
+  };
+
+  updateFieldVisibility(): void {
+    switch (this.formType) {
+      case FormType.textForm:
+        this.fieldVisibility = {
+          content: true,
+          topic: false,
+          tag: false,
+        };
+        break;
+      case FormType.todoForm:
+        this.fieldVisibility = {
+          content: true,
+          topic: true,
+          tag: true,
+        };
+        break;
+      default:
+        if (this.content) this.fieldVisibility.content = true;
+        if (this.topic) this.fieldVisibility.topic = true;
+        if (this.tag) this.fieldVisibility.tag = true;
+    }
+  }
+
+
   ngOnChanges(): void {
     this.form.patchValue({
       content: this.content,
       topic: this.topic,
       tag: this.tag,
+      formType: this.formType,
     });
+    this.updateFieldVisibility();
   }
 
   onSave(): void {
@@ -37,4 +69,6 @@ export class InfoobjectFormComponent {
   onSubmit(): void {
     this.formSubmit.emit(this.form.value);
   }
+
+
 }
