@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { InfoobjectFormComponent } from '../../../../shared/components/infoobject-form/infoobject-form.component';
+import { InfoobjectFormComponent } from '../../../../shared/infoobject-form/infoobject-form.component';
 
 @Component({
   selector: 'app-infoobject-edit-modal',
@@ -36,7 +36,7 @@ export class InfoobjectEditModalComponent {
     });
   }
 
-  onSubmit(): void {}
+  onSubmit(): void { }
 
   onSave(data: any): void {
     this.save.emit(data);

@@ -1,5 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { Subscription } from 'rxjs';
+import { InfoobjectFormStoreService } from './services/infoobject-form-store.service';
 import { FormType } from './utils/form-type';
 
 @Component({
@@ -7,7 +9,7 @@ import { FormType } from './utils/form-type';
   standalone: true,
   imports: [ReactiveFormsModule],
   templateUrl: './infoobject-form.component.html',
-  styleUrl: './infoobject-form.component.scss',
+  styleUrls: ['./infoobject-form.component.scss'],
 })
 export class InfoobjectFormComponent {
   @Input() content: string = '';
@@ -16,17 +18,25 @@ export class InfoobjectFormComponent {
   @Input() formType?: FormType;
   @Output() formSubmit = new EventEmitter<any>();
 
-  form: FormGroup = new FormGroup({
-    content: new FormControl(''),
-    topic: new FormControl(''),
-    tag: new FormControl(''),
-  });
-
+  form: FormGroup;
   fieldVisibility = {
     content: true,
     topic: true,
     tag: true,
   };
+
+  constructor(private formStore: InfoobjectFormStoreService) {
+    this.form = this.formStore.getForm();
+  }
+
+  ngOnChanges(): void {
+    this.formStore.patchFormValues({
+      content: this.content,
+      topic: this.topic,
+      tag: this.tag,
+    });
+    this.updateFieldVisibility();
+  }
 
   updateFieldVisibility(): void {
     switch (this.formType) {
@@ -52,23 +62,7 @@ export class InfoobjectFormComponent {
   }
 
 
-  ngOnChanges(): void {
-    this.form.patchValue({
-      content: this.content,
-      topic: this.topic,
-      tag: this.tag,
-      formType: this.formType,
-    });
-    this.updateFieldVisibility();
-  }
-
   onSave(): void {
     this.formSubmit.emit(this.form.value);
   }
-
-  onSubmit(): void {
-    this.formSubmit.emit(this.form.value);
-  }
-
-
 }
