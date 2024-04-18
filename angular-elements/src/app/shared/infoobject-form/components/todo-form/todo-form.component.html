@@ -1,1 +1,11 @@
-<p>todo-form works!</p>
+<div
+  *ngFor="let todo of todosFormArray.controls; let i = index"
+  [formGroupName]="i"
+>
+  <input formControlName="content" placeholder="Todo content" />
+  <input type="checkbox" formControlName="isDone" /> Completed
+  <button (click)="removeTodo(i)">Remove</button>
+  <button (click)="moveTodo(i, 'up')">Move Up</button>
+  <button (click)="moveTodo(i, 'down')">Move Down</button>
+</div>
+<button (click)="addTodo()">Add Todo</button>
