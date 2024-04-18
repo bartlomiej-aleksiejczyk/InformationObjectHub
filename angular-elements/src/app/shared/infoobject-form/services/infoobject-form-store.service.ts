@@ -1,21 +1,23 @@
 import { Injectable } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { Todo } from '../components/todo-form/utils/todo';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class InfoobjectFormStoreService {
   private form!: FormGroup;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private formBuilder: FormBuilder) {
     this.initializeForm();
   }
 
   private initializeForm(): void {
-    this.form = this.fb.group({
+    this.form = this.formBuilder.group({
       content: [''],
       topic: [''],
       tag: [''],
+      todos: this.formBuilder.array([]),
     });
   }
 
@@ -23,7 +25,12 @@ export class InfoobjectFormStoreService {
     return this.form;
   }
 
-  patchFormValues(values: { content?: string, topic?: string, tag?: string }): void {
+  patchFormValues(values: {
+    content?: string;
+    topic?: string;
+    tag?: string;
+    todos?: Todo[];
+  }): void {
     this.form.patchValue(values);
   }
 }
