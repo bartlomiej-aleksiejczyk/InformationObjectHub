@@ -1,6 +1,6 @@
 <div
   *ngFor="let todo of todosFormArray.controls; let i = index"
-  [formGroupName]="i"
+  [formGroup]="getFormGroup(todo)"
 >
   <input formControlName="content" placeholder="Todo content" />
   <input type="checkbox" formControlName="isDone" /> Completed
