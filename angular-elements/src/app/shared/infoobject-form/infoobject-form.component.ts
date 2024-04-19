@@ -3,11 +3,12 @@ import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { InfoobjectFormStoreService } from './services/infoobject-form-store.service';
 import { FormType } from './utils/form-type';
 import { Todo } from './components/todo-form/utils/todo';
+import { TodoFormComponent } from './components/todo-form/todo-form.component';
 
 @Component({
   selector: 'app-infoobject-form',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, TodoFormComponent],
   templateUrl: './infoobject-form.component.html',
   styleUrls: ['./infoobject-form.component.scss'],
 })
@@ -67,7 +68,7 @@ export class InfoobjectFormComponent {
     }
   }
 
-  onSave(): void {
+  onSubmit(): void {
     this.formSubmit.emit(this.form.value);
   }
 }
