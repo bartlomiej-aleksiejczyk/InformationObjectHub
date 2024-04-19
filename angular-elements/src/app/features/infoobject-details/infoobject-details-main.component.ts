@@ -1,10 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { InfoObjectService } from './services/infoobject.service';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Subscription, catchError, of } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { InfoobjectEditModalComponent } from './components/infoobject-edit-modal/infoobject-edit-modal.component';
+import { Todo } from '../../shared/infoobject-form/components/todo-form/utils/todo';
 
 @Component({
   selector: 'app-infoobject-details-main',
@@ -13,7 +14,7 @@ import { InfoobjectEditModalComponent } from './components/infoobject-edit-modal
   templateUrl: './infoobject-details-main.component.html',
   styleUrl: './infoobject-details-main.component.scss',
 })
-export class InfoobjectDetailsMainComponent {
+export class InfoobjectDetailsMainComponent implements OnInit {
   @Input() infoobjectId: string = '';
   @Input() deleteUrl: string = '';
   @Input() editUrl: string = '';
@@ -28,6 +29,7 @@ export class InfoobjectDetailsMainComponent {
   buttonText: string = 'Copy';
   deleteButtonText: string = 'Delete';
 
+  todos: Todo[] = [];
   isVisible: boolean = true;
   isEditable: boolean = false;
   isSaving: boolean = false;
@@ -36,6 +38,21 @@ export class InfoobjectDetailsMainComponent {
   isEditModalOpen: boolean = false;
 
   constructor(private infoObjectService: InfoObjectService) {}
+
+  ngOnInit(): void {
+    this.parseTodoContent();
+  }
+
+  parseTodoContent(): void {
+    if (this.todoContent) {
+      try {
+        this.todos = JSON.parse(this.todoContent);
+        console.log(this.todos);
+      } catch (error) {
+        console.error('Error parsing todoContent:', error);
+      }
+    }
+  }
 
   openEditModal(): void {
     this.isEditModalOpen = true;
