@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { Subscription } from 'rxjs';
+import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { InfoobjectFormStoreService } from './services/infoobject-form-store.service';
 import { FormType } from './utils/form-type';
+import { Todo } from './components/todo-form/utils/todo';
 
 @Component({
   selector: 'app-infoobject-form',
@@ -15,6 +15,7 @@ export class InfoobjectFormComponent {
   @Input() content: string = '';
   @Input() topic: string = '';
   @Input() tag: string = '';
+  @Input() todos: Todo[] = [];
   @Input() formType?: FormType;
   @Output() formSubmit = new EventEmitter<any>();
 
@@ -23,6 +24,7 @@ export class InfoobjectFormComponent {
     content: true,
     topic: true,
     tag: true,
+    todos: true,
   };
 
   constructor(private formStore: InfoobjectFormStoreService) {
@@ -34,6 +36,7 @@ export class InfoobjectFormComponent {
       content: this.content,
       topic: this.topic,
       tag: this.tag,
+      todos: this.todos,
     });
     this.updateFieldVisibility();
   }
@@ -43,8 +46,9 @@ export class InfoobjectFormComponent {
       case FormType.textForm:
         this.fieldVisibility = {
           content: true,
-          topic: false,
-          tag: false,
+          topic: true,
+          tag: true,
+          todos: false,
         };
         break;
       case FormType.todoForm:
@@ -52,15 +56,16 @@ export class InfoobjectFormComponent {
           content: true,
           topic: true,
           tag: true,
+          todos: true,
         };
         break;
       default:
         if (this.content) this.fieldVisibility.content = true;
         if (this.topic) this.fieldVisibility.topic = true;
         if (this.tag) this.fieldVisibility.tag = true;
+        if (this.todos) this.fieldVisibility.todos = true;
     }
   }
-
 
   onSave(): void {
     this.formSubmit.emit(this.form.value);
