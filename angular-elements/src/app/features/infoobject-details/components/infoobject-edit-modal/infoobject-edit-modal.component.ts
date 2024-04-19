@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { InfoobjectFormComponent } from '../../../../shared/infoobject-form/infoobject-form.component';
+import { Todo } from '../../../../shared/infoobject-form/components/todo-form/utils/todo';
 
 @Component({
   selector: 'app-infoobject-edit-modal',
@@ -14,6 +15,7 @@ export class InfoobjectEditModalComponent {
   @Input() content!: string;
   @Input() topic!: string;
   @Input() tag!: string;
+  @Input() todos!: Todo[];
   @Input() isVisible!: boolean;
   @Output() close = new EventEmitter<void>();
   @Output() save = new EventEmitter<any>();
@@ -36,7 +38,7 @@ export class InfoobjectEditModalComponent {
     });
   }
 
-  onSubmit(): void { }
+  onSubmit(): void {}
 
   onSave(data: any): void {
     this.save.emit(data);
