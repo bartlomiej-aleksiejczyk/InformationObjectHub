@@ -107,3 +107,9 @@ $danger-color: #f44336;
     }
   }
 }
+
+.todo__list-item--placeholder {
+  background-color: darken($card-background, 10%);
+  border: dashed 2px $accent-color;
+  opacity: 0.5;
+}

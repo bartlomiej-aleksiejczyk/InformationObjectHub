@@ -8,11 +8,24 @@ import {
 } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { InfoobjectFormStoreService } from '../../services/infoobject-form-store.service';
+import {
+  CdkDragDrop,
+  moveItemInArray,
+  DragDropModule,
+  CdkDragPlaceholder,
+  CdkDragPreview,
+} from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-todo-form',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    DragDropModule,
+    CdkDragPreview,
+    CdkDragPlaceholder,
+  ],
   templateUrl: './todo-form.component.html',
   styleUrls: ['./todo-form.component.scss'],
 })
@@ -58,13 +71,11 @@ export class TodoFormComponent implements OnInit {
     this.todosFormArray.removeAt(index);
   }
 
-  moveTodo(index: number, direction: 'up' | 'down') {
-    const currentIndex = index;
-    const newIndex = direction === 'up' ? index - 1 : index + 1;
-    if (newIndex < 0 || newIndex >= this.todosFormArray.length) return;
-
-    const currentGroup = this.todosFormArray.at(currentIndex);
-    this.todosFormArray.removeAt(currentIndex);
-    this.todosFormArray.insert(newIndex, currentGroup);
+  onDrop(event: CdkDragDrop<string[]>) {
+    moveItemInArray(
+      this.todosFormArray.controls,
+      event.previousIndex,
+      event.currentIndex
+    );
   }
 }

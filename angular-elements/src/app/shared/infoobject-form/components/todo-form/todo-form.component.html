@@ -3,30 +3,72 @@
     <h1 class="todo__title">My Tasks</h1>
     <button (click)="addTodo()" class="todo__add-button">Add Todo</button>
   </div>
-  <div class="todo__list">
+  <div cdkDropList class="todo__list" (cdkDropListDropped)="onDrop($event)">
     <div
       *ngFor="let todo of todosFormArray.controls; let i = index"
       [formGroup]="getFormGroup(todo)"
-      class="todo__list-item"
+      cdkDrag
     >
-      <input
-        type="checkbox"
-        formControlName="isDone"
-        class="todo__list-item--checkbox"
-      />
-      <input
-        formControlName="content"
-        placeholder="Todo content"
-        class="todo__list-item--input-text"
-      />
-      <button (click)="removeTodo(i)" class="todo__button todo__button--danger">
-        <svg width="24px" height="24px" viewBox="0 0 24 24" class="todo__icon">
-          <path
-            fill="#FFFFFF"
-            d="M19 6.41L17.59 5L12 10.59L6.41 5L5 6.41L10.59 12L5 17.59L6.41 19L12 13.41L17.59 19L19 17.59L13.41 12L19 6.41z"
-          />
-        </svg>
-      </button>
+      <div class="todo__list-item">
+        <input
+          type="checkbox"
+          formControlName="isDone"
+          class="todo__list-item--checkbox"
+        />
+        <input
+          formControlName="content"
+          placeholder="Todo content"
+          class="todo__list-item--input-text"
+        />
+        <button
+          (click)="removeTodo(i)"
+          class="todo__button todo__button--danger"
+        >
+          <svg
+            width="24px"
+            height="24px"
+            viewBox="0 0 24 24"
+            class="todo__icon"
+          >
+            <path
+              fill="#FFFFFF"
+              d="M19 6.41L17.59 5L12 10.59L6.41 5L5 6.41L10.59 12L5 17.59L6.41 19L12 13.41L17.59 19L19 17.59L13.41 12L19 6.41z"
+            />
+          </svg>
+        </button>
+      </div>
+      <div></div>
+      <div
+        class="todo__list-item todo__list-item--placeholder"
+        *cdkDragPlaceholder
+      >
+        <input
+          type="checkbox"
+          formControlName="isDone"
+          class="todo__list-item--checkbox"
+        />
+        <input
+          formControlName="content"
+          placeholder="Todo content"
+          class="todo__list-item--input-text"
+        />
+        <button
+          (click)="removeTodo(i)"
+          class="todo__button todo__button--danger"
+        >
+          <svg
+            width="24px"
+            height="24px"
+            viewBox="0 0 24 24"
+            class="todo__icon"
+          >
+            <path
+              fill="#FFFFFF"
+              d="M19 6.41L17.59 5L12 10.59L6.41 5L5 6.41L10.59 12L5 17.59L6.41 19L12 13.41L17.59 19L19 17.59L13.41 12L19 6.41z"
+            />
+          </svg>
+        </button>
+      </div>
     </div>
   </div>
 </div>
