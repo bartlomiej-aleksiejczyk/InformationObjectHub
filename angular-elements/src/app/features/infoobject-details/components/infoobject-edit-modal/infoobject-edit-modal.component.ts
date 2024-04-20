@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { InfoobjectFormComponent } from '../../../../shared/infoobject-form/infoobject-form.component';
-import { Todo } from '../../../../shared/infoobject-form/components/todo-form/utils/todo';
+import { Todo } from '../../../../shared/models/todo';
 
 @Component({
   selector: 'app-infoobject-edit-modal',

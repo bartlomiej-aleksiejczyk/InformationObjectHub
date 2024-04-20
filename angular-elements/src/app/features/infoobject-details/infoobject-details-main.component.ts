@@ -5,7 +5,7 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Subscription, catchError, of } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { InfoobjectEditModalComponent } from './components/infoobject-edit-modal/infoobject-edit-modal.component';
-import { Todo } from '../../shared/infoobject-form/components/todo-form/utils/todo';
+import { Todo } from '../../shared/models/todo';
 
 @Component({
   selector: 'app-infoobject-details-main',
