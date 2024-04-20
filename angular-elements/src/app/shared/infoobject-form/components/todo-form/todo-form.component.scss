@@ -1,0 +1,110 @@
+// Base colors and aesthetics
+$background-color: #121212;
+$card-background: #333;
+$text-color: #e0e0e0;
+$accent-color: #4caf50;
+$danger-color: #f44336;
+
+.todo {
+  max-width: 600px;
+  margin: 0 auto;
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+
+  &__title {
+    color: $text-color;
+    font-size: 24px;
+  }
+
+  &__list {
+    list-style: none;
+    padding: 0;
+  }
+
+  &__list-item {
+    background-color: $card-background;
+    margin-bottom: 10px;
+    padding: 10px 15px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+    &--input-text {
+      flex-grow: 1;
+      background-color: #222;
+      border: none;
+      color: $text-color;
+      padding: 8px 10px;
+      font-size: 16px;
+      border-radius: 8px;
+      margin-right: 10px; // Added margin to separate from the button
+      &:focus {
+        outline: none;
+        box-shadow: 0 0 0 3px rgba($accent-color, 0.5);
+      }
+    }
+
+    &--checkbox {
+      accent-color: $accent-color;
+      transform: scale(1.5); // Made checkbox larger
+      margin-right: 10px; // Adjusted margin to separate from the text input
+      order: -1; // Moves checkbox to the left
+    }
+  }
+
+  &__actions {
+    display: flex;
+    align-items: center;
+  }
+
+  &__button {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    width: 32px; // Compact size
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s, transform 0.3s;
+
+    &:hover {
+      background-color: rgba(244, 67, 54, 0.2); // Subtle hover effect
+      transform: scale(1.1);
+    }
+
+    &--danger {
+      .todo__icon {
+        fill: $text-color; // Use text color for a more subdued look
+        transition: fill 0.3s;
+      }
+
+      &:hover {
+        .todo__icon {
+          fill: darken($text-color, 20%); // Darken on hover for feedback
+        }
+      }
+    }
+  }
+  &__add-button {
+    background-color: $accent-color;
+    color: $background-color;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 2px;
+    border: 2px solid darken($accent-color, 20%);
+    cursor: pointer;
+
+    &:hover {
+      background-color: darken($accent-color, 15%);
+      border-color: lighten($accent-color, 10%);
+    }
+  }
+}
