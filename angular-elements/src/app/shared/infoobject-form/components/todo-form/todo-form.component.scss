@@ -1,4 +1,3 @@
-// Base colors and aesthetics
 $background-color: #121212;
 $card-background: #333;
 $text-color: #e0e0e0;
@@ -44,7 +43,7 @@ $danger-color: #f44336;
       padding: 8px 10px;
       font-size: 16px;
       border-radius: 8px;
-      margin-right: 10px; // Added margin to separate from the button
+      margin-right: 10px;
       &:focus {
         outline: none;
         box-shadow: 0 0 0 3px rgba($accent-color, 0.5);
@@ -53,9 +52,9 @@ $danger-color: #f44336;
 
     &--checkbox {
       accent-color: $accent-color;
-      transform: scale(1.5); // Made checkbox larger
-      margin-right: 10px; // Adjusted margin to separate from the text input
-      order: -1; // Moves checkbox to the left
+      transform: scale(1.5);
+      margin-right: 10px;
+      order: -1;
     }
   }
 
@@ -68,7 +67,7 @@ $danger-color: #f44336;
     background: transparent;
     border: none;
     cursor: pointer;
-    width: 32px; // Compact size
+    width: 32px;
     height: 32px;
     display: flex;
     align-items: center;
@@ -76,19 +75,19 @@ $danger-color: #f44336;
     transition: background-color 0.3s, transform 0.3s;
 
     &:hover {
-      background-color: rgba(244, 67, 54, 0.2); // Subtle hover effect
+      background-color: rgba(244, 67, 54, 0.2);
       transform: scale(1.1);
     }
 
     &--danger {
       .todo__icon {
-        fill: $text-color; // Use text color for a more subdued look
+        fill: $text-color;
         transition: fill 0.3s;
       }
 
       &:hover {
         .todo__icon {
-          fill: darken($text-color, 20%); // Darken on hover for feedback
+          fill: darken($text-color, 20%);
         }
       }
     }
