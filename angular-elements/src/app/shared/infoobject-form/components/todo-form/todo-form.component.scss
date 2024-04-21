@@ -1,20 +1,20 @@
 // TODO Convert px to rems
 @use "../../../../styles/colors";
+@use "../../../../styles/design-variables";
 
 .todo {
-  max-width: 600px;
   margin: 0 auto;
 
   &__header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 20px;
+    margin-bottom: 1rem;
   }
 
   &__title {
     color: colors.$text-color-primary;
-    font-size: 24px;
+    font-size: 1.5rem;
   }
 
   &__list {
@@ -24,9 +24,9 @@
 
   &__list-item {
     background-color: colors.$background-color-secondary;
-    margin-bottom: 10px;
-    padding: 10px 15px;
-    border-radius: 8px;
+    margin-bottom: 0.7rem;
+    padding: 0.7rem 1rem;
+    border-radius: design-variables.$breakpoint-md;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -38,7 +38,9 @@
       border: none;
       color: colors.$text-color-primary;
       padding: 8px 10px;
-      font-size: 16px;
+      font-size: 1rem;
+      width: 100%;
+      text-overflow: ellipsis;
       border-radius: 8px;
       margin-right: 10px;
       &:focus {
@@ -93,7 +95,7 @@
     background-color: colors.$accent-color;
     color: colors.$background-color-primary;
     padding: 10px 20px;
-    font-size: 16px;
+    font-size: 1rem;
     border-radius: 2px;
     border: 2px solid darken(colors.$accent-color, 20%);
     cursor: pointer;
