@@ -5,13 +5,18 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Subscription, catchError, of } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { InfoobjectEditModalComponent } from './components/infoobject-edit-modal/infoobject-edit-modal.component';
-import { Todo } from '../../shared/models/todo';
+import { Todo } from '../../core/models/todo';
 import { InfoobjectTodoPreviewComponent } from './components/infoobject-todo-preview/infoobject-todo-preview.component';
 
 @Component({
   selector: 'app-infoobject-details-main',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, InfoobjectEditModalComponent, InfoobjectTodoPreviewComponent],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    InfoobjectEditModalComponent,
+    InfoobjectTodoPreviewComponent,
+  ],
   templateUrl: './infoobject-details-main.component.html',
   styleUrl: './infoobject-details-main.component.scss',
 })
@@ -38,7 +43,7 @@ export class InfoobjectDetailsMainComponent implements OnInit {
   deleteError: string = '';
   isEditModalOpen: boolean = false;
 
-  constructor(private infoObjectService: InfoObjectService) { }
+  constructor(private infoObjectService: InfoObjectService) {}
 
   ngOnInit(): void {
     this.parseTodoContent();

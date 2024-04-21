@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { InfoobjectFormStoreService } from './services/infoobject-form-store.service';
 import { FormType } from './utils/form-type';
-import { Todo } from '../models/todo';
+import { Todo } from '../../core/models/todo';
 import { TodoFormComponent } from './components/todo-form/todo-form.component';
 
 @Component({

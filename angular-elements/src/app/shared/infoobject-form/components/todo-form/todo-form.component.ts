@@ -47,7 +47,6 @@ export class TodoFormComponent implements OnInit {
     if (!this.form.get('todos')) {
       this.form.setControl('todos', this.formBuilder.array([]));
     }
-    console.log(this.form.controls['todos'].value);
   }
 
   get todosFormArray(): FormArray {
