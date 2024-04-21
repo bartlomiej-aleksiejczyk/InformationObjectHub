@@ -1,6 +1,7 @@
 @use "../../styles/colors";
 //TODO: Extract inline colors to global style variables
 //TODO: convert px to rem
+//TODO: Add scss with font sizes
 
 :host {
   font-family: "Courier New", Courier, monospace;
@@ -138,10 +139,10 @@ button,
 }
 
 .info-object-tag {
-  background-color: #444;
+  background-color: colors.$border-color-primary;
   color: #9acd32;
   padding: 3px 8px;
-  margin-top: 10px;
+  margin-top: 1rem;
   border: 1px solid colors.$border-color-primary;
   border-radius: 4px;
   text-transform: uppercase;
@@ -160,6 +161,7 @@ button,
     font-size: 2rem;
   }
   button {
+    padding: 1rem;
     font-size: 2rem;
   }
   .remove-button {
@@ -210,7 +212,7 @@ textarea {
   background-color: #252525;
   border: 1px solid colors.$border-color-primary;
   border-radius: 5px;
-  padding: 15px 15px 5px 15px;
+  padding: 1rem;
   margin-bottom: 0px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
 
