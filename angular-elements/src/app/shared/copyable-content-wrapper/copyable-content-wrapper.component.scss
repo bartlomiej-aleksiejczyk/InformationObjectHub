@@ -1,0 +1,54 @@
+@use "../../styles/colors";
+@use "../../styles/common";
+
+.copy-frame {
+  color: colors.$text-color-primary;
+  margin: 1rem 0;
+  &__header {
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: colors.$background-color-secondary;
+
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+  }
+
+  &__header-info {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    color: colors.$text-color-header;
+  }
+
+  &__content-type {
+    margin: 0 1rem;
+    max-width: 40%;
+    overflow: hidden;
+    font-weight: bold;
+    text-overflow: ellipsis;
+  }
+
+  &__content-type--modifier {
+    margin: 0 1rem;
+  }
+
+  &__content {
+    padding: 1rem;
+    overflow: auto;
+    min-height: 5rem;
+    background-color: colors.$background-color-primary;
+
+    border-bottom-left-radius: 3px;
+    border-bottom-right-radius: 3px;
+  }
+
+  &__copy-button {
+    @include common.button-style(
+      colors.$copy-button-background-color,
+      colors.$copy-button-hover-background-color,
+      colors.$copy-button-border-color
+    );
+  }
+}
