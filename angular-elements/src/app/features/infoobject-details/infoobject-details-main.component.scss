@@ -1,39 +1,15 @@
 @use "../../styles/colors";
+@use "../../styles/common";
+
 //TODO: Extract inline colors to global style variables
 //TODO: convert px to rem
-//TODO: Add scss with font sizes
+//TODO: Extract font sized to global scss with font sizes
+//TODO: EExtract variables to global scss with font sizes
 
 :host {
   font-family: "Courier New", Courier, monospace;
   color: colors.$text-color-primary;
   font-size: 1rem;
-}
-
-@mixin button-style($background-color, $hover-bg-color, $border-color) {
-  background-color: $background-color;
-  color: colors.$text-color-primary;
-  margin: 10px 0;
-  border: 2px solid $border-color;
-  border-radius: 3px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  font-weight: bold;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  box-shadow: inset 0 0 0 0 $border-color;
-  outline: none;
-  min-width: 120px;
-  min-height: 2.5rem;
-  &:hover {
-    background-color: $hover-bg-color;
-    box-shadow: inset 0 0 0 2px $border-color;
-    color: #daf7dc;
-  }
-  &:active {
-    background-color: $hover-bg-color;
-    box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.2);
-    transform: translateY(1px);
-  }
 }
 
 .container {
@@ -114,7 +90,7 @@ button,
 .form__input[type="submit"],
 .copy-button,
 .remove-button {
-  @include button-style(
+  @include common.button-style(
     colors.$button-background-color,
     colors.$button-hover-background-color,
     colors.$accent-color
@@ -122,7 +98,7 @@ button,
 }
 
 .copy-button {
-  @include button-style(
+  @include common.button-style(
     colors.$copy-button-background-color,
     colors.$copy-button-hover-background-color,
     colors.$copy-button-border-color
@@ -130,7 +106,7 @@ button,
 }
 
 .remove-button {
-  @include button-style(#a52a2a, #8b1a1a, #ff6347);
+  @include common.button-style(#a52a2a, #8b1a1a, #ff6347);
 }
 
 .header-container {

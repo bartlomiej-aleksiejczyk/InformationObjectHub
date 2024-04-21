@@ -8,6 +8,7 @@ import { InfoobjectEditModalComponent } from './components/infoobject-edit-modal
 import { Todo } from '../../core/models/todo';
 import { InfoobjectTodoPreviewComponent } from './components/infoobject-todo-preview/infoobject-todo-preview.component';
 import { MarkdownUtils } from './utils/MarkdownUtils';
+import { CopyableContentWrapperComponent } from '../../shared/copyable-content-wrapper/copyable-content-wrapper.component';
 
 @Component({
   selector: 'app-infoobject-details-main',
@@ -17,6 +18,7 @@ import { MarkdownUtils } from './utils/MarkdownUtils';
     ReactiveFormsModule,
     InfoobjectEditModalComponent,
     InfoobjectTodoPreviewComponent,
+    CopyableContentWrapperComponent,
   ],
   templateUrl: './infoobject-details-main.component.html',
   styleUrl: './infoobject-details-main.component.scss',
@@ -33,7 +35,6 @@ export class InfoobjectDetailsMainComponent implements OnInit {
   @Input() infoobjectLinks: string[] = [];
   @Input() todoContent: string = '';
 
-  buttonText: string = 'Copy';
   deleteButtonText: string = 'Delete';
 
   todos: Todo[] = [];
@@ -73,17 +74,6 @@ export class InfoobjectDetailsMainComponent implements OnInit {
 
   handleSave(updatedInfoObject: any): void {
     console.log('Received data to save:', updatedInfoObject);
-  }
-
-  copyToClipboard(content: string) {
-    navigator.clipboard.writeText(content).then(
-      () => {
-        console.log('Content copied!');
-        this.buttonText = 'Copied!';
-        setTimeout(() => (this.buttonText = 'Copy'), 1000);
-      },
-      (err) => console.error('Failed to copy: ', err)
-    );
   }
 
   downloadAsMarkdown() {

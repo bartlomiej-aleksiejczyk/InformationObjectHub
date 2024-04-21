@@ -11,14 +11,11 @@
     </div>
     }
   </div>
-  <p class="content">{{ content }}</p>
+  <app-copyable-content-wrapper [copyData]="content">
+    <p class="content">{{ content }}</p>
+  </app-copyable-content-wrapper>
   <app-infoobject-todo-preview [todos]="todos"></app-infoobject-todo-preview>
   <div class="button-container">
-    @if (content !== '') {
-    <button class="copy-button" (click)="copyToClipboard(content)">
-      {{ buttonText }}
-    </button>
-    }
     <button (click)="downloadAsMarkdown()" class="download-button">
       Download as Markdown
     </button>
