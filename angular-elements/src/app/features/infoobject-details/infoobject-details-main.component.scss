@@ -132,19 +132,6 @@ button,
   user-select: text;
 }
 
-@media (max-width: 1000px) {
-  :host {
-    font-size: 2rem;
-  }
-  button {
-    padding: 1rem;
-    font-size: 2rem;
-  }
-  .remove-button {
-    font-size: 2rem;
-  }
-}
-
 .spinner {
   margin: 0.2rem;
   border: 8px solid rgba(0, 0, 0, 0.1);
