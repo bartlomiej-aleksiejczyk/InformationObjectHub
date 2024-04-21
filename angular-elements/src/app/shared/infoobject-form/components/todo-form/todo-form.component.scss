@@ -1,8 +1,5 @@
-$background-color: #121212;
-$card-background: #333;
-$text-color: #e0e0e0;
-$accent-color: #4caf50;
-$danger-color: #f44336;
+// TODO Convert px to rems
+@use "../../../../styles/colors";
 
 .todo {
   max-width: 600px;
@@ -16,7 +13,7 @@ $danger-color: #f44336;
   }
 
   &__title {
-    color: $text-color;
+    color: colors.$text-color-primary;
     font-size: 24px;
   }
 
@@ -26,7 +23,7 @@ $danger-color: #f44336;
   }
 
   &__list-item {
-    background-color: $card-background;
+    background-color: colors.$background-color-secondary;
     margin-bottom: 10px;
     padding: 10px 15px;
     border-radius: 8px;
@@ -37,21 +34,21 @@ $danger-color: #f44336;
 
     &--input-text {
       flex-grow: 1;
-      background-color: #222;
+      background-color: colors.$background-color-tertiary;
       border: none;
-      color: $text-color;
+      color: colors.$text-color-primary;
       padding: 8px 10px;
       font-size: 16px;
       border-radius: 8px;
       margin-right: 10px;
       &:focus {
         outline: none;
-        box-shadow: 0 0 0 3px rgba($accent-color, 0.5);
+        box-shadow: 0 0 0 3px rgba(colors.$accent-color, 0.5);
       }
     }
 
     &--checkbox {
-      accent-color: $accent-color;
+      accent-color: colors.$accent-color;
       transform: scale(1.5);
       margin-right: 10px;
       order: -1;
@@ -81,35 +78,35 @@ $danger-color: #f44336;
 
     &--danger {
       .todo__icon {
-        fill: $text-color;
+        fill: colors.$text-color-primary;
         transition: fill 0.3s;
       }
 
       &:hover {
         .todo__icon {
-          fill: darken($text-color, 20%);
+          fill: darken(colors.$text-color-primary, 20%);
         }
       }
     }
   }
   &__add-button {
-    background-color: $accent-color;
-    color: $background-color;
+    background-color: colors.$accent-color;
+    color: colors.$background-color-primary;
     padding: 10px 20px;
     font-size: 16px;
     border-radius: 2px;
-    border: 2px solid darken($accent-color, 20%);
+    border: 2px solid darken(colors.$accent-color, 20%);
     cursor: pointer;
 
     &:hover {
-      background-color: darken($accent-color, 15%);
-      border-color: lighten($accent-color, 10%);
+      background-color: darken(colors.$accent-color, 15%);
+      border-color: lighten(colors.$accent-color, 10%);
     }
   }
 }
 
 .todo__list-item--placeholder {
-  background-color: darken($card-background, 10%);
-  border: dashed 2px $accent-color;
+  background-color: darken(colors.$background-color-secondary, 10%);
+  border: dashed 2px colors.$accent-color;
   opacity: 0.5;
 }

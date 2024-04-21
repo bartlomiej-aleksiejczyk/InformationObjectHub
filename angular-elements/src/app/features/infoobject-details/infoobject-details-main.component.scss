@@ -1,33 +1,16 @@
-$background-color-primary: #1a1a1a;
-$text-color-header: #adbcff;
-$text-color-primary: #f5f5f5;
-$text-color-secondary: #ccc;
-$background-color-secondary: #333;
-$background-color-tertiary: #222;
-$border-color-primary: #444;
-$button-background-color: #146c43;
-$button-hover-background-color: #198754;
-$button-border-color: #4caf50;
-
-$copy-button-background-color: #7c87a3;
-$copy-button-hover-background-color: #637291;
-$copy-button-active-background-color: #4a566b;
-$copy-button-border-color: #657191;
-$copy-button-hover-border-color: #505c75;
-$copy-button-active-border-color: #404c61;
-
-$error-color: #ff6347;
-$border-color-editable: #6290c8;
+@use "../../styles/colors";
+//TODO: Extract inline colors to global style variables
+//TODO: convert px to rem
 
 :host {
   font-family: "Courier New", Courier, monospace;
-  color: $text-color-primary;
+  color: colors.$text-color-primary;
   font-size: 1rem;
 }
 
 @mixin button-style($background-color, $hover-bg-color, $border-color) {
   background-color: $background-color;
-  color: $text-color-primary;
+  color: colors.$text-color-primary;
   margin: 10px 0;
   border: 2px solid $border-color;
   border-radius: 3px;
@@ -65,10 +48,10 @@ $border-color-editable: #6290c8;
 
 .info-objects,
 .form-container {
-  background-color: $background-color-secondary;
+  background-color: colors.$background-color-secondary;
   padding: 20px;
   border-radius: 8px;
-  color: $text-color-primary;
+  color: colors.$text-color-primary;
   box-shadow: 3px 3px 5px 0 rgba(0, 0, 0, 0.5);
 }
 
@@ -94,7 +77,7 @@ $border-color-editable: #6290c8;
 .form__label {
   display: block;
   margin-bottom: 5px;
-  color: $text-color-secondary;
+  color: colors.$text-color-secondary;
   width: 100%;
 }
 
@@ -102,11 +85,11 @@ $border-color-editable: #6290c8;
 .form__textarea {
   padding: 0.5rem;
   margin: 0.7rem 0;
-  background-color: $background-color-tertiary;
-  border: 2px solid $border-color-primary;
+  background-color: colors.$background-color-tertiary;
+  border: 2px solid colors.$border-color-primary;
   font-size: 1rem;
   border-radius: 4px;
-  color: $text-color-primary;
+  color: colors.$text-color-primary;
   width: 100%;
 }
 
@@ -131,17 +114,17 @@ button,
 .copy-button,
 .remove-button {
   @include button-style(
-    $button-background-color,
-    $button-hover-background-color,
-    $button-border-color
+    colors.$button-background-color,
+    colors.$button-hover-background-color,
+    colors.$accent-color
   );
 }
 
 .copy-button {
   @include button-style(
-    $copy-button-background-color,
-    $copy-button-hover-background-color,
-    $copy-button-border-color
+    colors.$copy-button-background-color,
+    colors.$copy-button-hover-background-color,
+    colors.$copy-button-border-color
   );
 }
 
@@ -159,7 +142,7 @@ button,
   color: #9acd32;
   padding: 3px 8px;
   margin-top: 10px;
-  border: 1px solid $border-color-primary;
+  border: 1px solid colors.$border-color-primary;
   border-radius: 4px;
   text-transform: uppercase;
   letter-spacing: 0.5px;
@@ -187,7 +170,7 @@ button,
 .spinner {
   margin: 0.2rem;
   border: 8px solid rgba(0, 0, 0, 0.1);
-  border-top: 8px solid $text-color-secondary;
+  border-top: 8px solid colors.$text-color-secondary;
   border-radius: 50%;
   width: 14px;
   height: 14px;
@@ -217,15 +200,15 @@ textarea {
 
 .editable-input {
   background-color: #fff;
-  border: 2px solid $border-color-editable;
+  border: 2px solid colors.$border-color-editable;
   &:focus {
-    border-color: darken($border-color-editable, 10%);
+    border-color: darken(colors.$border-color-editable, 10%);
   }
 }
 
 .info-object-card {
   background-color: #252525;
-  border: 1px solid $border-color-primary;
+  border: 1px solid colors.$border-color-primary;
   border-radius: 5px;
   padding: 15px 15px 5px 15px;
   margin-bottom: 0px;
@@ -238,7 +221,7 @@ textarea {
       padding: 0.5rem;
       font-size: 1rem;
       border-radius: 4px;
-      color: $text-color-primary;
+      color: colors.$text-color-primary;
     }
   }
 }
