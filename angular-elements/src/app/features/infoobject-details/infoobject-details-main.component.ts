@@ -7,6 +7,7 @@ import { tap } from 'rxjs/operators';
 import { InfoobjectEditModalComponent } from './components/infoobject-edit-modal/infoobject-edit-modal.component';
 import { Todo } from '../../core/models/todo';
 import { InfoobjectTodoPreviewComponent } from './components/infoobject-todo-preview/infoobject-todo-preview.component';
+import { MarkdownUtils } from './utils/MarkdownUtils';
 
 @Component({
   selector: 'app-infoobject-details-main',
@@ -67,7 +68,7 @@ export class InfoobjectDetailsMainComponent implements OnInit {
 
   closeEditModal(): void {
     this.isEditModalOpen = false;
-    document.body.style.overflow = 'auto'; // Enable scroll on body
+    document.body.style.overflow = 'auto';
   }
 
   handleSave(updatedInfoObject: any): void {
@@ -82,6 +83,25 @@ export class InfoobjectDetailsMainComponent implements OnInit {
         setTimeout(() => (this.buttonText = 'Copy'), 1000);
       },
       (err) => console.error('Failed to copy: ', err)
+    );
+  }
+
+  downloadAsMarkdown() {
+    const markdown = MarkdownUtils.formatAsMarkdown({
+      authorIp: this.authorIp,
+      topic: this.topic,
+      content: this.content,
+      tag: this.tag,
+      todos: this.todos,
+    });
+    MarkdownUtils.downloadMarkdown(
+      markdown,
+      // TODO: Consider case of todo infoobject and markdown infoobject
+      `${
+        this.topic
+          ? MarkdownUtils.getTitleFromTopic(this.topic)
+          : MarkdownUtils.getTitleFromContent(this.content)
+      }.md`
     );
   }
 

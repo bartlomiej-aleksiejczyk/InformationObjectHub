@@ -5,9 +5,11 @@
       <h4>Author: {{ authorIp }}</h4>
       <h5 *ngIf="topic">Topic: {{ topic }}</h5>
     </div>
-    <div *ngIf="tag">
-      <span class="info-object-tag">Tag: {{ tag }}</span>
+    @if (tag){
+    <div class="info-object-tag">
+      <span>Tag: {{ tag }}</span>
     </div>
+    }
   </div>
   <p class="content">{{ content }}</p>
   <app-infoobject-todo-preview [todos]="todos"></app-infoobject-todo-preview>
@@ -17,22 +19,37 @@
       {{ buttonText }}
     </button>
     }
+    <button (click)="downloadAsMarkdown()" class="download-button">
+      Download as Markdown
+    </button>
     <div class="action-buttons">
       <button (click)="openEditModal()">Edit</button>
-      <button class="remove-button" (click)="deleteInfoObject()" [disabled]="isDeleting">
-        <ng-container *ngIf="!isDeleting && !deleteError">{{
-          deleteButtonText
-          }}</ng-container>
-        @if (isDeleting){
+      <button
+        class="remove-button"
+        (click)="deleteInfoObject()"
+        [disabled]="isDeleting"
+      >
+        @if (!isDeleting && !deleteError) {
+        {{ deleteButtonText }}
+        } @if (isDeleting){
         <span class="spinner"></span>
+        } @if (deleteError) {
+        {{ deleteError }}
         }
-        <ng-container *ngIf="deleteError">{{ deleteError }}</ng-container>
       </button>
     </div>
   </div>
 </div>
-<app-infoobject-edit-modal [infoObjectId]="infoobjectId" [content]="content" [topic]="topic" [tag]="tag" [todos]="todos"
-  [isVisible]="isEditModalOpen" (close)="isEditModalOpen = false" (save)="handleSave($event)">
+<app-infoobject-edit-modal
+  [infoObjectId]="infoobjectId"
+  [content]="content"
+  [topic]="topic"
+  [tag]="tag"
+  [todos]="todos"
+  [isVisible]="isEditModalOpen"
+  (close)="isEditModalOpen = false"
+  (save)="handleSave($event)"
+>
 </app-infoobject-edit-modal>
 
 }
