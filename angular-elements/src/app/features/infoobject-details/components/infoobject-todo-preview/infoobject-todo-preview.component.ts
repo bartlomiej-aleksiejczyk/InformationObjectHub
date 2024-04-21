@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { Todo } from '../../../../shared/models/todo';
 
 @Component({
   selector: 'app-infoobject-todo-preview',
@@ -7,6 +8,12 @@ import { Component } from '@angular/core';
   templateUrl: './infoobject-todo-preview.component.html',
   styleUrl: './infoobject-todo-preview.component.scss'
 })
-export class InfoobjectTodoPreviewComponent {
+export class InfoobjectTodoPreviewComponent implements OnInit {
+  @Input() todos: Todo[] = [];
 
+  constructor() { }
+
+  ngOnInit(): void {
+  }
 }
+
