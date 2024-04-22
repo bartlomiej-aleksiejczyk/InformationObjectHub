@@ -13,13 +13,10 @@ import { SafeHtmlPipe } from '../../../../shared/pipes/safe-html/safe-html.pipe'
 export class InfoobjectMarkdownPreviewComponent implements OnInit {
   @Input() markdownContent: string = '';
   renderedMarkdown: string = '<br/>';
-  constructor() {
-    console.log(this.markdownContent);
-  }
+
   ngOnInit(): void {
     this.renderedMarkdown = MarkdownDisplayUtils.parseMarkdownToHTML(
       this.markdownContent
     );
-    console.log(this.renderedMarkdown);
   }
 }

@@ -18,7 +18,6 @@ export class CopyableContentWrapperComponent {
   copyToClipboard() {
     navigator.clipboard.writeText(this.copyData).then(
       () => {
-        console.log('Content copied!');
         this.buttonText = 'Copied!';
         setTimeout(() => (this.buttonText = 'Copy'), 1000);
       },

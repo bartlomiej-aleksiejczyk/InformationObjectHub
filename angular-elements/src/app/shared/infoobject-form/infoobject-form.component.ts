@@ -17,12 +17,14 @@ export class InfoobjectFormComponent {
   @Input() topic: string = '';
   @Input() tag: string = '';
   @Input() todos: Todo[] = [];
+  @Input() markdownContent: string = '';
   @Input() formType?: FormType;
   @Output() formSubmit = new EventEmitter<any>();
 
   form: FormGroup;
   fieldVisibility = {
     content: true,
+    markdownContent: true,
     topic: true,
     tag: true,
     todos: true,
@@ -35,6 +37,7 @@ export class InfoobjectFormComponent {
   ngOnChanges(): void {
     this.formStore.patchFormValues({
       content: this.content,
+      markdownContent: this.markdownContent,
       topic: this.topic,
       tag: this.tag,
       todos: this.todos,
@@ -47,6 +50,7 @@ export class InfoobjectFormComponent {
       case FormType.textForm:
         this.fieldVisibility = {
           content: true,
+          markdownContent: false,
           topic: true,
           tag: true,
           todos: false,
@@ -55,6 +59,16 @@ export class InfoobjectFormComponent {
       case FormType.todoForm:
         this.fieldVisibility = {
           content: true,
+          markdownContent: false,
+          topic: true,
+          tag: true,
+          todos: true,
+        };
+        break;
+      case FormType.markdownForm:
+        this.fieldVisibility = {
+          content: false,
+          markdownContent: true,
           topic: true,
           tag: true,
           todos: true,
@@ -62,6 +76,7 @@ export class InfoobjectFormComponent {
         break;
       default:
         if (this.content) this.fieldVisibility.content = true;
+        if (this.markdownContent) this.fieldVisibility.markdownContent = true;
         if (this.topic) this.fieldVisibility.topic = true;
         if (this.tag) this.fieldVisibility.tag = true;
         if (this.todos) this.fieldVisibility.todos = true;

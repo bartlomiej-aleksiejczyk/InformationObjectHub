@@ -26,6 +26,15 @@
         class="form-textarea"
       ></textarea>
     </div>
+    } @if (fieldVisibility.markdownContent){
+    <div>
+      <label for="content" class="form-label">Markdown content:</label>
+      <textarea
+        id="markdownContent"
+        formControlName="markdownContent"
+        class="form-textarea"
+      ></textarea>
+    </div>
     } @if (fieldVisibility.todos){
     <app-todo-form></app-todo-form>
     }

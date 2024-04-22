@@ -15,6 +15,7 @@ export class InfoobjectFormStoreService {
   private initializeForm(): void {
     this.form = this.formBuilder.group({
       content: [''],
+      markdownContent: [''],
       topic: [''],
       tag: [''],
       todos: this.formBuilder.array([]),
@@ -27,12 +28,14 @@ export class InfoobjectFormStoreService {
 
   patchFormValues(values: {
     content?: string;
+    markdownContent?: string;
     topic?: string;
     tag?: string;
     todos?: Todo[];
   }): void {
     this.form.patchValue({
       content: values.content,
+      markdownContent: values.markdownContent,
       topic: values.topic,
       tag: values.tag,
     });
@@ -41,7 +44,7 @@ export class InfoobjectFormStoreService {
   }
   private setTodos(todos?: Todo[]): void {
     const todoArray = this.form.get('todos') as FormArray;
-    todoArray.clear(); // Clear existing entries in the form array
+    todoArray.clear();
 
     if (todos) {
       todos.forEach((todo) => {

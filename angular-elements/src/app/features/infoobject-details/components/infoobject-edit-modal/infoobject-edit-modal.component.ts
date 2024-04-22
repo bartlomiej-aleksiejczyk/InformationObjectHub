@@ -10,12 +10,14 @@ import { Todo } from '../../../../core/models/todo';
   templateUrl: './infoobject-edit-modal.component.html',
   styleUrl: './infoobject-edit-modal.component.scss',
 })
+//TODO: Remove ! near inputs
 export class InfoobjectEditModalComponent {
   @Input() infoObjectId!: string;
   @Input() content!: string;
   @Input() topic!: string;
   @Input() tag!: string;
   @Input() todos!: Todo[];
+  @Input() markdownContent!: string;
   @Input() isVisible!: boolean;
   @Output() close = new EventEmitter<void>();
   @Output() save = new EventEmitter<any>();
@@ -25,6 +27,7 @@ export class InfoobjectEditModalComponent {
   constructor() {
     this.form = new FormGroup({
       content: new FormControl(''),
+      markdownContent: new FormControl(''),
       topic: new FormControl(''),
       tag: new FormControl(''),
     });
@@ -33,6 +36,7 @@ export class InfoobjectEditModalComponent {
   ngOnChanges(): void {
     this.form.setValue({
       content: this.content,
+      markdownContent: new FormControl(''),
       topic: this.topic,
       tag: this.tag,
     });

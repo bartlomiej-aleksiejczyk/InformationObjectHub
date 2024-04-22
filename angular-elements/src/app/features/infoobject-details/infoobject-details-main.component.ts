@@ -56,7 +56,6 @@ export class InfoobjectDetailsMainComponent implements OnInit {
     if (this.todoContent) {
       try {
         this.todos = JSON.parse(this.todoContent);
-        console.log(this.todos);
       } catch (error) {
         console.error('Error parsing todoContent:', error);
       }
@@ -84,6 +83,7 @@ export class InfoobjectDetailsMainComponent implements OnInit {
       content: this.content,
       tag: this.tag,
       todos: this.todos,
+      markdownContent: this.markdownContent,
     });
     MarkdownUtils.downloadMarkdown(
       markdown,

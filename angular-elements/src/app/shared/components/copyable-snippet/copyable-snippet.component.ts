@@ -25,8 +25,6 @@ export class CopyableSnippetComponent implements OnInit, AfterViewInit {
   constructor(private elementRef: ElementRef) {}
 
   ngOnInit(): void {
-    console.log('snippet', this.codeSnippet);
-
     this.deserializedCode = HtmlAttributeSerializer.deserialize(
       this.codeSnippet
     );

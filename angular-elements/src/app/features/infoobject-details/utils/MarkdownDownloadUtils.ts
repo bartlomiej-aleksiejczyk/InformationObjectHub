@@ -7,13 +7,15 @@ export class MarkdownUtils {
     content: string;
     tag?: string;
     todos?: Todo[];
+    markdownContent?: string;
   }): string {
     let markdown = `# ${infoObject.topic ?? 'No Title'}\n\n`;
     markdown += `### Author: ${infoObject.authorIp}\n`;
-    if (infoObject.tag) {
-      markdown += `### Tag: ${infoObject.tag}\n`;
-    }
-    markdown += `\n${infoObject.content.replace(/(?:\r\n|\r|\n)/g, '\n\n')}`;
+    if (infoObject.tag) markdown += `### Tag: ${infoObject.tag}\n`;
+    if (infoObject.markdownContent)
+      markdown += `\n${infoObject.markdownContent}`;
+    if (infoObject.content)
+      markdown += `\n${infoObject.content.replace(/(?:\r\n|\r|\n)/g, '\n\n')}`;
     if (infoObject.todos && infoObject.todos.length > 0) {
       markdown += `\n### Todos\n`;
       infoObject.todos.forEach((todo) => {
