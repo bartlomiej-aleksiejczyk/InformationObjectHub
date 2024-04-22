@@ -1,6 +1,5 @@
-package com.example.InformationObjectHub.infoobject;
+package com.example.InformationObjectHub.infoobject.dtos;
 
-import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -10,8 +9,8 @@ import lombok.experimental.FieldDefaults;
 @Getter
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class InfoObjectDTO {
-    @NotBlank(message = "Content cannot be empty")
     String content;
     String topic;
     String tag;
+
 }
