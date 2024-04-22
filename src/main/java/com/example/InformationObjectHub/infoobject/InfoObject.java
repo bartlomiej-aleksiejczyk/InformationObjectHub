@@ -29,6 +29,8 @@ public class InfoObject extends BaseEntity {
     @Column(length = 1000000)
     String content;
     @Column(length = 1000000)
+    String markdownContent;
+    @Column(length = 1000000)
     String dialogueContent;
     @ElementCollection
     @CollectionTable(name = "iinfoobject_links", joinColumns = @JoinColumn(name = "infoobject_id"))
