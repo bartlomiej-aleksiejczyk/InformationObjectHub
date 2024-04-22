@@ -1,18 +1,26 @@
-import { Marked } from "marked";
-import { markedHighlight } from "marked-highlight";
+import { Marked, MarkedOptions } from 'marked';
+import { markedHighlight } from 'marked-highlight';
+import { HtmlAttributeSerializer } from '../../../shared/utils/HtmlAttributeSerializer';
 import hljs from 'highlight.js';
 
 export class MarkdownDisplayUtils {
-    static parseMarkdownToHTML(markdown: string): string {
-        const marked = new Marked(
-            markedHighlight({
-                langPrefix: 'hljs language-',
-                highlight(code, lang, info) {
-                    const language = hljs.getLanguage(lang) ? lang : 'jsx';
-                    return hljs.highlight(code, { language }).value;
-                }
-            })
-        );
-        return marked.parse(markdown, { async: false }) as string;
-    }
+  static parseMarkdownToHTML(markdown: string): string {
+    const marked = new Marked();
+    const renderer = {
+      code(code: string, infostring: string | undefined) {
+        return `
+              <copyable-snippet
+              language="${infostring ?? 'plaintext'}"
+              code-snippet="${HtmlAttributeSerializer.serialize(
+                code
+              )}"></copyable-snippet>
+      `;
+      },
+    };
+    marked.use({ renderer });
+    const options: MarkedOptions = {
+      async: false,
+    };
+    return marked.parse(markdown, options) as string;
+  }
 }

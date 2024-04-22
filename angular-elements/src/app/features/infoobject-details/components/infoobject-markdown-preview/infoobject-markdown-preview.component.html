@@ -1,3 +1,4 @@
+<!-- TODO: Add some form of sanitization, this is vulnerable -->
 <app-copyable-content-wrapper [copyData]="markdownContent">
-    <div [innerHTML]="renderedMarkdown"></div>
+  <div [innerHTML]="renderedMarkdown | safeHtml"></div>
 </app-copyable-content-wrapper>

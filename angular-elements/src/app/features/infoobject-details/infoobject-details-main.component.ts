@@ -1,16 +1,13 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import { InfoObjectService } from './services/infoobject.service';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { Subscription, catchError, of } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { ReactiveFormsModule } from '@angular/forms';
 import { InfoobjectEditModalComponent } from './components/infoobject-edit-modal/infoobject-edit-modal.component';
 import { Todo } from '../../core/models/todo';
 import { InfoobjectTodoPreviewComponent } from './components/infoobject-todo-preview/infoobject-todo-preview.component';
 import { MarkdownUtils } from './utils/MarkdownDownloadUtils';
-import { CopyableContentWrapperComponent } from '../../shared/copyable-content-wrapper/copyable-content-wrapper.component';
-import { MarkdownDisplayUtils } from './utils/MarkdownDisplayUtils';
-import { InfoobjectMarkdownPreviewComponent } from "./components/infoobject-markdown-preview/infoobject-markdown-preview.component";
+import { CopyableContentWrapperComponent } from '../../shared/components/copyable-content-wrapper/copyable-content-wrapper.component';
+import { InfoobjectMarkdownPreviewComponent } from './components/infoobject-markdown-preview/infoobject-markdown-preview.component';
 
 @Component({
   selector: 'app-infoobject-details-main',
@@ -23,8 +20,8 @@ import { InfoobjectMarkdownPreviewComponent } from "./components/infoobject-mark
     InfoobjectEditModalComponent,
     InfoobjectTodoPreviewComponent,
     CopyableContentWrapperComponent,
-    InfoobjectMarkdownPreviewComponent
-  ]
+    InfoobjectMarkdownPreviewComponent,
+  ],
 })
 export class InfoobjectDetailsMainComponent implements OnInit {
   @Input() infoobjectId: string = '';
@@ -49,7 +46,7 @@ export class InfoobjectDetailsMainComponent implements OnInit {
   deleteError: string = '';
   isEditModalOpen: boolean = false;
 
-  constructor(private infoObjectService: InfoObjectService) { }
+  constructor(private infoObjectService: InfoObjectService) {}
 
   ngOnInit(): void {
     this.parseTodoContent();
@@ -91,9 +88,10 @@ export class InfoobjectDetailsMainComponent implements OnInit {
     MarkdownUtils.downloadMarkdown(
       markdown,
       // TODO: Consider case of todo infoobject and markdown infoobject
-      `${this.topic
-        ? MarkdownUtils.getTitleFromTopic(this.topic)
-        : MarkdownUtils.getTitleFromContent(this.content)
+      `${
+        this.topic
+          ? MarkdownUtils.getTitleFromTopic(this.topic)
+          : MarkdownUtils.getTitleFromContent(this.content)
       }.md`
     );
   }
