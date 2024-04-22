@@ -11,21 +11,26 @@
     </div>
     }
   </div>
+
+  @if (content) {
   <app-copyable-content-wrapper [copyData]="content">
     <p class="content">{{ content }}</p>
   </app-copyable-content-wrapper>
+  }
+
+  @if (markdownContent) {
+  <app-infoobject-markdown-preview [markdownContent]="markdownContent"></app-infoobject-markdown-preview>
+  }
+  @if (todos.length !==0) {
   <app-infoobject-todo-preview [todos]="todos"></app-infoobject-todo-preview>
+  }
   <div class="button-container">
     <button (click)="downloadAsMarkdown()" class="download-button">
       Download as Markdown
     </button>
     <div class="action-buttons">
       <button (click)="openEditModal()">Edit</button>
-      <button
-        class="remove-button"
-        (click)="deleteInfoObject()"
-        [disabled]="isDeleting"
-      >
+      <button class="remove-button" (click)="deleteInfoObject()" [disabled]="isDeleting">
         @if (!isDeleting && !deleteError) {
         {{ deleteButtonText }}
         } @if (isDeleting){
@@ -37,16 +42,8 @@
     </div>
   </div>
 </div>
-<app-infoobject-edit-modal
-  [infoObjectId]="infoobjectId"
-  [content]="content"
-  [topic]="topic"
-  [tag]="tag"
-  [todos]="todos"
-  [isVisible]="isEditModalOpen"
-  (close)="isEditModalOpen = false"
-  (save)="handleSave($event)"
->
+<app-infoobject-edit-modal [infoObjectId]="infoobjectId" [content]="content" [topic]="topic" [tag]="tag" [todos]="todos"
+  [isVisible]="isEditModalOpen" (close)="isEditModalOpen = false" (save)="handleSave($event)">
 </app-infoobject-edit-modal>
 
 }

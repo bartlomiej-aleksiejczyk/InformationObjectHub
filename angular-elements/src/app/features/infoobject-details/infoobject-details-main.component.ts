@@ -7,21 +7,24 @@ import { tap } from 'rxjs/operators';
 import { InfoobjectEditModalComponent } from './components/infoobject-edit-modal/infoobject-edit-modal.component';
 import { Todo } from '../../core/models/todo';
 import { InfoobjectTodoPreviewComponent } from './components/infoobject-todo-preview/infoobject-todo-preview.component';
-import { MarkdownUtils } from './utils/MarkdownUtils';
+import { MarkdownUtils } from './utils/MarkdownDownloadUtils';
 import { CopyableContentWrapperComponent } from '../../shared/copyable-content-wrapper/copyable-content-wrapper.component';
+import { MarkdownDisplayUtils } from './utils/MarkdownDisplayUtils';
+import { InfoobjectMarkdownPreviewComponent } from "./components/infoobject-markdown-preview/infoobject-markdown-preview.component";
 
 @Component({
   selector: 'app-infoobject-details-main',
   standalone: true,
+  templateUrl: './infoobject-details-main.component.html',
+  styleUrl: './infoobject-details-main.component.scss',
   imports: [
     CommonModule,
     ReactiveFormsModule,
     InfoobjectEditModalComponent,
     InfoobjectTodoPreviewComponent,
     CopyableContentWrapperComponent,
-  ],
-  templateUrl: './infoobject-details-main.component.html',
-  styleUrl: './infoobject-details-main.component.scss',
+    InfoobjectMarkdownPreviewComponent
+  ]
 })
 export class InfoobjectDetailsMainComponent implements OnInit {
   @Input() infoobjectId: string = '';
@@ -34,6 +37,7 @@ export class InfoobjectDetailsMainComponent implements OnInit {
   @Input() dialogueContent: string = '';
   @Input() infoobjectLinks: string[] = [];
   @Input() todoContent: string = '';
+  @Input() markdownContent: string = '';
 
   deleteButtonText: string = 'Delete';
 
@@ -45,7 +49,7 @@ export class InfoobjectDetailsMainComponent implements OnInit {
   deleteError: string = '';
   isEditModalOpen: boolean = false;
 
-  constructor(private infoObjectService: InfoObjectService) {}
+  constructor(private infoObjectService: InfoObjectService) { }
 
   ngOnInit(): void {
     this.parseTodoContent();
@@ -87,10 +91,9 @@ export class InfoobjectDetailsMainComponent implements OnInit {
     MarkdownUtils.downloadMarkdown(
       markdown,
       // TODO: Consider case of todo infoobject and markdown infoobject
-      `${
-        this.topic
-          ? MarkdownUtils.getTitleFromTopic(this.topic)
-          : MarkdownUtils.getTitleFromContent(this.content)
+      `${this.topic
+        ? MarkdownUtils.getTitleFromTopic(this.topic)
+        : MarkdownUtils.getTitleFromContent(this.content)
       }.md`
     );
   }
