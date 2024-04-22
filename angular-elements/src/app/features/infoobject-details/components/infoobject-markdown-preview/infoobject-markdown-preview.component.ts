@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { MarkdownDisplayUtils } from '../../utils/MarkdownDisplayUtils';
+import { MarkdownDisplayUtils } from '../../utils/markdown-display-utils';
 import { CopyableContentWrapperComponent } from '../../../../shared/components/copyable-content-wrapper/copyable-content-wrapper.component';
 import { SafeHtmlPipe } from '../../../../shared/pipes/safe-html/safe-html.pipe';
 

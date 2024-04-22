@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
-import { Todo } from '../../../core/models/todo';
+import { Todo } from '../models/todo';
 
 @Injectable({
   providedIn: 'root',

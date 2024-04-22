@@ -1,6 +1,6 @@
 import { Marked, MarkedOptions } from 'marked';
 import { markedHighlight } from 'marked-highlight';
-import { HtmlAttributeSerializer } from '../../../shared/utils/HtmlAttributeSerializer';
+import { HtmlAttributeSerializer } from '../../../shared/utils/html-attribute-serializer';
 import hljs from 'highlight.js';
 
 export class MarkdownDisplayUtils {

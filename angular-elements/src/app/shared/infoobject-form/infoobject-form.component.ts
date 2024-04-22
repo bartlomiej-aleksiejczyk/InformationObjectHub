@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { InfoobjectFormStoreService } from './services/infoobject-form-store.service';
-import { FormType } from './models/form-type';
-import { Todo } from '../../core/models/todo';
+import { FormType } from '../../core/models/form-type';
+import { Todo } from './models/todo';
 import { TodoFormComponent } from './components/todo-form/todo-form.component';
 
 @Component({
@@ -23,11 +23,11 @@ export class InfoobjectFormComponent {
 
   form: FormGroup;
   fieldVisibility = {
-    content: true,
-    markdownContent: true,
-    topic: true,
-    tag: true,
-    todos: true,
+    content: false,
+    markdownContent: false,
+    topic: false,
+    tag: false,
+    todos: false,
   };
 
   constructor(private formStore: InfoobjectFormStoreService) {
@@ -43,6 +43,7 @@ export class InfoobjectFormComponent {
       todos: this.todos,
     });
     this.updateFieldVisibility();
+    console.log(this.fieldVisibility);
   }
 
   updateFieldVisibility(): void {

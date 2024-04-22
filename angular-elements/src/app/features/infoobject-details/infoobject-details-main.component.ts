@@ -5,7 +5,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { InfoobjectEditModalComponent } from './components/infoobject-edit-modal/infoobject-edit-modal.component';
 import { Todo } from '../../core/models/todo';
 import { InfoobjectTodoPreviewComponent } from './components/infoobject-todo-preview/infoobject-todo-preview.component';
-import { MarkdownUtils } from './utils/MarkdownDownloadUtils';
+import { MarkdownUtils } from './utils/markdown-download-utils';
 import { CopyableContentWrapperComponent } from '../../shared/components/copyable-content-wrapper/copyable-content-wrapper.component';
 import { InfoobjectMarkdownPreviewComponent } from './components/infoobject-markdown-preview/infoobject-markdown-preview.component';
 

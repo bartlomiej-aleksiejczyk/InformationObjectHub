@@ -6,7 +6,7 @@ import {
   OnInit,
 } from '@angular/core';
 import hljs from 'highlight.js';
-import { HtmlAttributeSerializer } from '../../utils/HtmlAttributeSerializer';
+import { HtmlAttributeSerializer } from '../../utils/html-attribute-serializer';
 
 @Component({
   selector: 'app-copyable-snippet',
