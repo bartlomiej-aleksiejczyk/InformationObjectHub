@@ -3,18 +3,27 @@ package com.example.InformationObjectHub.infoobject;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+
+import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties.Pageable;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import com.example.InformationObjectHub.infoobject.dtos.InfoObjectDTO;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -25,6 +34,24 @@ import java.util.Map;
 public class InfoObjectRestController {
 
     private final InfoObjectService infoObjectService;
+
+    @GetMapping
+    public ResponseEntity<Page<InfoObject>> getInfoObjects(
+            @RequestParam(required = false) String tag,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+        PageRequest pageRequest = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "modifiedAt"));
+        Page<InfoObject> infoObjects = infoObjectService.findAllInfoObjects(tag, pageRequest);
+        return ResponseEntity.ok(infoObjects);
+    }
+
+    @PostMapping
+    public ResponseEntity<String> createInfoObject(
+            @Valid @RequestBody InfoObjectDTO infoObjectDTO,
+            HttpServletRequest request) {
+        infoObjectService.saveInfoObject(infoObjectDTO, request.getRemoteAddr());
+        return ResponseEntity.status(HttpStatus.CREATED).body("Info object created successfully!");
+    }
 
     @PostMapping("/api/info-object")
     public ResponseEntity<Object> postInfoObject(@Valid @RequestBody InfoObjectDTO infoObjectDTO,
@@ -50,14 +77,9 @@ public class InfoObjectRestController {
     }
 
     @PutMapping("/info-object/{id}")
-    public String updateInfoObject(@PathVariable Long id,
-            @Valid @RequestBody InfoObjectDTO infoObjectDto,
-            BindingResult result, RedirectAttributes redirectAttributes) {
-        if (result.hasErrors()) {
-            return "infoobjects/info-object-create-update";
-        }
+    public ResponseEntity<String> updateInfoObject(@PathVariable Long id,
+            @Valid @RequestBody InfoObjectDTO infoObjectDto) {
         infoObjectService.updateInfoObject(id, infoObjectDto);
-        redirectAttributes.addFlashAttribute("message", "InfoObject updated successfully!");
-        return "redirect:/";
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
