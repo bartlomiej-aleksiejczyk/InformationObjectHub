@@ -59,7 +59,7 @@ export class InfoobjectFormComponent {
         break;
       case FormType.todoForm:
         this.fieldVisibility = {
-          content: true,
+          content: false,
           markdownContent: false,
           topic: true,
           tag: true,
@@ -72,7 +72,7 @@ export class InfoobjectFormComponent {
           markdownContent: true,
           topic: true,
           tag: true,
-          todos: true,
+          todos: false,
         };
         break;
       default:

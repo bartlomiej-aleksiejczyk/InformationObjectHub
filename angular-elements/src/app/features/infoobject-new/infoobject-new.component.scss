@@ -1,21 +1,78 @@
-.tab-container {
-  display: flex;
-  justify-content: space-around;
-  margin-bottom: 20px;
+@use "../../styles/colors";
+@use "../../styles/design-variables";
+
+// Todo: remove font repetition
+// Todo: Add responsiveness to buttons, accommodate them for more form types
+:host {
+  font-family: "Courier New", Courier, monospace;
+  color: colors.$text-color-primary;
 }
 
-button {
-  padding: 10px;
+.tab-container {
+  background-color: colors.$background-color-primary;
+  display: flex;
+  align-items: stretch;
+  flex-direction: row;
+  margin-bottom: 0;
+}
+
+.new-infoobject-container {
+  background-color: colors.$background-color-secondary;
+  border-bottom-left-radius: design-variables.$border-radius-base;
+  border-bottom-right-radius: design-variables.$border-radius-base;
+  padding: 1.25rem;
+}
+
+.tab-container__tab {
+  font-size: 1rem;
+  flex: 1 1 auto;
+  margin: 1rem 0.1rem 0;
+  width: 100%;
+  padding: 1rem;
   border: none;
-  background-color: #ccc;
+  color: colors.$text-color-secondary;
+  background-color: colors.$background-color-quaternary;
+  border-top-left-radius: design-variables.$border-radius-base;
+  border-top-right-radius: design-variables.$border-radius-base;
   cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+
+  &:last-of-type {
+    margin-right: 0.5rem;
+  }
+  &:first-of-type {
+    margin-left: 0.5rem;
+  }
 
   &.active {
-    background-color: #666;
-    color: white;
+    color: colors.$text-color-primary;
+    background-color: colors.$background-color-secondary;
+    animation: tabActivate 0.5s forwards;
+  }
+
+  &:not(.active):hover {
+    background-color: lighten(colors.$background-color-quaternary, 1.5);
+    animation: tabHover 0.3s forwards;
   }
 }
 
-button:hover {
-  background-color: #aaa;
+@keyframes tabHover {
+  from {
+    background-color: colors.$background-color-quaternary;
+  }
+  to {
+    background-color: lighten(colors.$background-color-quaternary, 1.5);
+  }
+}
+
+@keyframes tabActivate {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(10px);
+  }
+  100% {
+    transform: translateY(0);
+  }
 }

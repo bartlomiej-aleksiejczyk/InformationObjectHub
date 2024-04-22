@@ -3,10 +3,12 @@
 
 <div class="todo">
   <div class="todo__header">
-    <h1 class="todo__title">My Tasks</h1>
+    <h1 class="todo__title">Todo Tasks</h1>
     <button (click)="addTodo()" class="todo__add-button">Add Todo</button>
   </div>
   <div cdkDropList class="todo__list" (cdkDropListDropped)="onDrop($event)">
+    <!-- TODO: Redo to new @for syntax -->
+    <!-- TODO: Add @empty fallback -->
     <div
       *ngFor="let todo of todosFormArray.controls; let i = index"
       [formGroup]="getFormGroup(todo)"

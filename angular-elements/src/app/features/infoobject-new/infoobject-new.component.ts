@@ -1,17 +1,19 @@
 import { Component } from '@angular/core';
 import { FormType } from '../../core/models/form-type';
+import { InfoobjectFormComponent } from '../../shared/infoobject-form/infoobject-form.component';
 
 @Component({
   selector: 'app-infoobject-new',
   standalone: true,
-  imports: [],
+  imports: [InfoobjectFormComponent],
   templateUrl: './infoobject-new.component.html',
   styleUrl: './infoobject-new.component.scss',
 })
 export class InfoobjectNewComponent {
   activeFormType: FormType = FormType.textForm;
+  FormType = FormType;
 
-  setFormType(formType: FormType): void {
+  setActiveFormType(formType: FormType): void {
     this.activeFormType = formType;
   }
 }

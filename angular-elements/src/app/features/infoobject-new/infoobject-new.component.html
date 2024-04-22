@@ -1,22 +1,26 @@
 <div class="tab-container">
   <button
-    (click)="setFormType(FormType.textForm)"
+    class="tab-container__tab"
+    (click)="setActiveFormType(FormType.textForm)"
     [class.active]="activeFormType === FormType.textForm"
   >
     Text Form
   </button>
   <button
-    (click)="setFormType(FormType.todoForm)"
+    class="tab-container__tab"
+    (click)="setActiveFormType(FormType.todoForm)"
     [class.active]="activeFormType === FormType.todoForm"
   >
     Todo Form
   </button>
   <button
-    (click)="setFormType(FormType.markdownForm)"
+    class="tab-container__tab"
+    (click)="setActiveFormType(FormType.markdownForm)"
     [class.active]="activeFormType === FormType.markdownForm"
   >
     Markdown Form
   </button>
 </div>
-
-<app-infoobject-form [formType]="activeFormType"></app-infoobject-form>
+<div class="new-infoobject-container">
+  <app-infoobject-form [formType]="activeFormType"></app-infoobject-form>
+</div>
