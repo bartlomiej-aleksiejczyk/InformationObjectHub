@@ -13,8 +13,10 @@ import lombok.experimental.FieldDefaults;
 
 import java.util.ArrayList;
 import java.util.List;
+import org.hibernate.type.descriptor.java.JavaType;
 
 import com.example.InformationObjectHub.common.BaseEntity;
+import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
 
 @Entity
 @Table(name = "info_objects")
@@ -35,6 +37,7 @@ public class InfoObject extends BaseEntity {
     @ElementCollection
     @CollectionTable(name = "iinfoobject_links", joinColumns = @JoinColumn(name = "infoobject_id"))
     List<String> infoobjectLinks = new ArrayList<>();
-    @Column(length = 1000000)
-    String todoContent;
+    @Type(JavaType.class)
+    @Column(columnDefinition = "JSONB")
+    List<TodoContent> todoContentList;
 }
