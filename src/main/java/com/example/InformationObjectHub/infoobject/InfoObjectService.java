@@ -45,7 +45,7 @@ public class InfoObjectService {
         infoObject.setTag(Optional.ofNullable(infoObjectDTO.getTag())
                 .map(String::toUpperCase).orElse(null));
         infoObject.setAuthorIp(authorIp);
-        return InfoObjectMapper.toDto(infoObjectRepository.save(infoObjectRepository.save(infoObject)));
+        return InfoObjectMapper.toDto(infoObjectRepository.save(infoObject));
     }
 
     @Transactional
