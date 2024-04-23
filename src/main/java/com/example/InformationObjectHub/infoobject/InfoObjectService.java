@@ -6,7 +6,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.example.InformationObjectHub.infoobject.InfoObjectMapper\;
 import com.example.InformationObjectHub.infoobject.dtos.InfoObjectDTO;
+import com.example.InformationObjectHub.infoobject.dtos.InfoObjectResponseDTO;
 
 import java.util.List;
 
@@ -18,11 +20,11 @@ public class InfoObjectService {
     private final InfoObjectRepository infoObjectRepository;
 
     @Transactional(readOnly = true)
-    public Page<InfoObject> findAllInfoObjects(String tag, Pageable pageable) {
+    public Page<InfoObjectResponseDTO> findAllInfoObjects(String tag, Pageable pageable) {
         if (tag != null && !tag.isEmpty()) {
-            return infoObjectRepository.findByTag(tag, pageable);
+            return InfoObjectMapper.toDtoPage(infoObjectRepository.findByTag(tag, pageable));
         } else {
-            return infoObjectRepository.findAll(pageable);
+            return InfoObjectMapper.toDtoPage(infoObjectRepository.findAll(pageable));
         }
     }
 

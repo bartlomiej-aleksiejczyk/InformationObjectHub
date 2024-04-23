@@ -2,6 +2,7 @@ package com.example.InformationObjectHub.infoobject;
 
 import org.springframework.data.domain.Page;
 
+import com.example.InformationObjectHub.infoobject.dtos.InfoObjectDTO;
 import com.example.InformationObjectHub.infoobject.dtos.InfoObjectResponseDTO;
 
 public class InfoObjectMapper {
