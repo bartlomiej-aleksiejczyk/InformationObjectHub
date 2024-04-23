@@ -9,19 +9,26 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Optional;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.MockedStatic;
+import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 
-public class InfoObjectServiceTest {
+import com.example.InformationObjectHub.infoobject.dtos.InfoObjectDTO;
+import com.example.InformationObjectHub.infoobject.dtos.InfoObjectResponseDTO;
+
+class InfoObjectServiceTest {
 
     @Mock
     private InfoObjectRepository infoObjectRepository;
@@ -29,39 +36,59 @@ public class InfoObjectServiceTest {
     @InjectMocks
     private InfoObjectService infoObjectService;
 
+    private MockedStatic<InfoObjectMapper> mockedInfoObjectMapper;
+
     @BeforeEach
     public void setUp() {
         MockitoAnnotations.openMocks(this);
+        mockedInfoObjectMapper = Mockito.mockStatic(InfoObjectMapper.class);
+    }
+
+    @AfterEach
+    public void tearDown() {
+        mockedInfoObjectMapper.close();
     }
 
     @Test
-    public void testFindAllInfoObjectsWithTag() {
+    void testFindAllInfoObjectsWithTag() {
         Pageable pageable = Pageable.unpaged();
         InfoObject infoObject = new InfoObject();
-        Page<InfoObject> expectedPage = new PageImpl<>(Arrays.asList(infoObject));
-        when(infoObjectRepository.findByTag("testTag", pageable)).thenReturn(expectedPage);
+        InfoObjectResponseDTO dto = new InfoObjectResponseDTO(1L, "topic", "tag", "content", null, null, "127.0.0.1",
+                LocalDateTime.now(), LocalDateTime.now());
+        Page<InfoObject> entityPage = new PageImpl<>(Arrays.asList(infoObject));
+        Page<InfoObjectResponseDTO> dtoPage = new PageImpl<>(Arrays.asList(dto));
 
-        Page<InfoObject> result = infoObjectService.findAllInfoObjects("testTag", pageable);
+        when(infoObjectRepository.findByTag("testTag", pageable)).thenReturn(entityPage);
+        mockedInfoObjectMapper.when(() -> InfoObjectMapper.toDtoPage(entityPage)).thenReturn(dtoPage);
+
+        Page<InfoObjectResponseDTO> result = infoObjectService.findAllInfoObjects("testTag", pageable);
         assertNotNull(result);
         assertEquals(1, result.getTotalElements());
         verify(infoObjectRepository).findByTag("testTag", pageable);
+        mockedInfoObjectMapper.verify(() -> InfoObjectMapper.toDtoPage(entityPage));
     }
 
     @Test
-    public void testFindAllInfoObjectsNoTag() {
+    void testFindAllInfoObjectsNoTag() {
         Pageable pageable = Pageable.unpaged();
         InfoObject infoObject = new InfoObject();
-        Page<InfoObject> expectedPage = new PageImpl<>(Arrays.asList(infoObject));
-        when(infoObjectRepository.findAll(pageable)).thenReturn(expectedPage);
+        InfoObjectResponseDTO dto = new InfoObjectResponseDTO(1L, "topic", "tag", "content", null, null, "127.0.0.1",
+                LocalDateTime.now(), LocalDateTime.now());
+        Page<InfoObject> entityPage = new PageImpl<>(Arrays.asList(infoObject));
+        Page<InfoObjectResponseDTO> dtoPage = new PageImpl<>(Arrays.asList(dto));
 
-        Page<InfoObject> result = infoObjectService.findAllInfoObjects(null, pageable);
+        when(infoObjectRepository.findAll(pageable)).thenReturn(entityPage);
+        mockedInfoObjectMapper.when(() -> InfoObjectMapper.toDtoPage(entityPage)).thenReturn(dtoPage);
+
+        Page<InfoObjectResponseDTO> result = infoObjectService.findAllInfoObjects(null, pageable);
         assertNotNull(result);
         assertEquals(1, result.getTotalElements());
         verify(infoObjectRepository).findAll(pageable);
+        mockedInfoObjectMapper.verify(() -> InfoObjectMapper.toDtoPage(entityPage));
     }
 
     @Test
-    public void testFindByIdFound() {
+    void testFindByIdFound() {
         Long id = 1L;
         Optional<InfoObject> expected = Optional.of(new InfoObject());
         when(infoObjectRepository.findById(id)).thenReturn(expected);
@@ -72,7 +99,7 @@ public class InfoObjectServiceTest {
     }
 
     @Test
-    public void testFindByIdNotFound() {
+    void testFindByIdNotFound() {
         Long id = 1L;
         when(infoObjectRepository.findById(id)).thenReturn(Optional.empty());
 
@@ -82,8 +109,8 @@ public class InfoObjectServiceTest {
     }
 
     @Test
-    public void testSaveInfoObject() {
-        InfoObjectDTO dto = new InfoObjectDTO("Temat", "Treść", "Tag");
+    void testSaveInfoObject() {
+        InfoObjectDTO dto = new InfoObjectDTO("Topic", "Tag", "Content", "Markdown", "Dialogue", null, null);
         String authorIp = "192.168.21.37";
         InfoObject savedInfoObject = new InfoObject();
         when(infoObjectRepository.save(any(InfoObject.class))).thenReturn(savedInfoObject);
@@ -94,8 +121,8 @@ public class InfoObjectServiceTest {
     }
 
     @Test
-    public void testUpdateInfoObjectFound() {
-        InfoObjectDTO dto = new InfoObjectDTO("Nowy Temat", "Kontent2", "Tag2");
+    void testUpdateInfoObjectFound() {
+        InfoObjectDTO dto = new InfoObjectDTO("Topic", "Tag2", "Content", "Markdown", "Dialogue", null, null);
         Long id = 1L;
         InfoObject existingInfoObject = new InfoObject();
         when(infoObjectRepository.findById(id)).thenReturn(Optional.of(existingInfoObject));
@@ -108,8 +135,8 @@ public class InfoObjectServiceTest {
     }
 
     @Test
-    public void testUpdateInfoObjectNotFound() {
-        InfoObjectDTO dto = new InfoObjectDTO("Temat3", "Kontnent3", "tag3");
+    void testUpdateInfoObjectNotFound() {
+        InfoObjectDTO dto = new InfoObjectDTO("Topic", "Tag", "Content", "Markdown", "Dialogue", null, null);
         Long id = 1L;
         when(infoObjectRepository.findById(id)).thenReturn(Optional.empty());
 
