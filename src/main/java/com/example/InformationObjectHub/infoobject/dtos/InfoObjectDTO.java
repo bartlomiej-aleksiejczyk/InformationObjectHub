@@ -1,16 +1,22 @@
 package com.example.InformationObjectHub.infoobject.dtos;
 
+import java.util.List;
+
+import com.example.InformationObjectHub.infoobject.TodoContent;
+
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
-@NoArgsConstructor
-@AllArgsConstructor
 @Setter
 @Getter
+@Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class InfoObjectDTO {
-    String content;
     String topic;
     String tag;
-
+    String content;
+    String markdownContent;
+    String dialogueContent;
+    List<String> infoobjectLinks;
+    List<TodoContent> todoContentList;
 }
