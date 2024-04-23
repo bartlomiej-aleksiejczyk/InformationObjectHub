@@ -39,21 +39,21 @@ public class InfoObjectRestController {
     @Operation(summary = "Create a new info object", description = "Creates a new info object and assigns the IP address of the client")
     @ApiResponse(responseCode = "201", description = "Info object created successfully", content = @Content(mediaType = "application/json", schema = @Schema(implementation = InfoObjectResponseDTO.class)))
     @PostMapping
-    public ResponseEntity<String> createInfoObject(
+    public ResponseEntity<InfoObjectResponseDTO> createInfoObject(
             @Valid @RequestBody InfoObjectDTO infoObjectDTO,
             HttpServletRequest request) {
         String clientIpAddress = request.getRemoteAddr();
-        infoObjectService.saveInfoObject(infoObjectDTO, clientIpAddress);
-        return ResponseEntity.status(HttpStatus.CREATED).body("Info object created successfully!");
+        InfoObjectResponseDTO infoObject = infoObjectService.saveInfoObject(infoObjectDTO, clientIpAddress);
+        return ResponseEntity.status(HttpStatus.CREATED).body(infoObject);
     }
 
     @Operation(summary = "Update an info object", description = "Updates an existing info object")
     @ApiResponse(responseCode = "200", description = "Info object updated successfully")
     @PutMapping("/info-object/{id}")
-    public ResponseEntity<String> updateInfoObject(@PathVariable Long id,
+    public ResponseEntity<InfoObjectResponseDTO> updateInfoObject(@PathVariable Long id,
             @Valid @RequestBody InfoObjectDTO infoObjectDto) {
-        infoObjectService.updateInfoObject(id, infoObjectDto);
-        return new ResponseEntity<>("Info object updated successfully", HttpStatus.OK);
+        InfoObjectResponseDTO infoObject = infoObjectService.updateInfoObject(id, infoObjectDto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(infoObject);
     }
 
     @Operation(summary = "Delete an info object", description = "Deletes an info object by ID")
@@ -61,6 +61,7 @@ public class InfoObjectRestController {
     @DeleteMapping("/info-object/{id}")
     public ResponseEntity<String> deleteInfoObject(@PathVariable Long id) {
         infoObjectService.removeInfoObject(id);
-        return new ResponseEntity<>("Info object deleted successfully", HttpStatus.NO_CONTENT);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Info object deleted successfully");
+
     }
 }

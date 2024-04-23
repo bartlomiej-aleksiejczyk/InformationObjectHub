@@ -6,7 +6,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.example.InformationObjectHub.infoobject.InfoObjectMapper\;
 import com.example.InformationObjectHub.infoobject.dtos.InfoObjectDTO;
 import com.example.InformationObjectHub.infoobject.dtos.InfoObjectResponseDTO;
 
@@ -39,18 +38,18 @@ public class InfoObjectService {
     }
 
     @Transactional
-    public void saveInfoObject(InfoObjectDTO infoObjectDTO, String authorIp) {
+    public InfoObjectResponseDTO saveInfoObject(InfoObjectDTO infoObjectDTO, String authorIp) {
         InfoObject infoObject = new InfoObject();
         infoObject.setContent(infoObjectDTO.getContent());
         infoObject.setTopic(infoObjectDTO.getTopic());
         infoObject.setTag(Optional.ofNullable(infoObjectDTO.getTag())
                 .map(String::toUpperCase).orElse(null));
         infoObject.setAuthorIp(authorIp);
-        infoObjectRepository.save(infoObject);
+        return InfoObjectMapper.toDto(infoObjectRepository.save(infoObjectRepository.save(infoObject)));
     }
 
     @Transactional
-    public void updateInfoObject(Long id, InfoObjectDTO infoObjectDTO) {
+    public InfoObjectResponseDTO updateInfoObject(Long id, InfoObjectDTO infoObjectDTO) {
         Optional<InfoObject> infoObjectOptional = infoObjectRepository.findById(id);
         if (infoObjectOptional.isPresent()) {
             InfoObject existingInfoObject = infoObjectOptional.get();
@@ -58,7 +57,7 @@ public class InfoObjectService {
             existingInfoObject.setTopic(infoObjectDTO.getTopic());
             existingInfoObject.setTag(Optional.ofNullable(infoObjectDTO.getTag())
                     .map(String::toUpperCase).orElse(null));
-            infoObjectRepository.save(existingInfoObject);
+            return InfoObjectMapper.toDto(infoObjectRepository.save(existingInfoObject));
         } else {
             throw new IllegalArgumentException("InfoObject with id " + id + " not found");
         }
