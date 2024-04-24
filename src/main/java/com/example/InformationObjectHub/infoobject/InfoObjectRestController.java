@@ -18,7 +18,9 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 
 @RestController
+// TODO: Remove @CrossOrigin annotation
 @CrossOrigin
+@RequestMapping("/api/v1")
 @RequiredArgsConstructor
 public class InfoObjectRestController {
 
@@ -26,7 +28,7 @@ public class InfoObjectRestController {
 
     @Operation(summary = "Get all info objects", description = "Retrieve a page of info objects optionally filtered by tag")
     @ApiResponse(responseCode = "200", description = "Successful operation", content = @Content(mediaType = "application/json", schema = @Schema(implementation = InfoObjectResponseDTO.class)))
-    @GetMapping
+    @GetMapping("/info-object")
     public ResponseEntity<Page<InfoObjectResponseDTO>> getInfoObjects(
             @RequestParam(required = false) String tag,
             @RequestParam(defaultValue = "0") int page,
@@ -38,7 +40,7 @@ public class InfoObjectRestController {
 
     @Operation(summary = "Create a new info object", description = "Creates a new info object and assigns the IP address of the client")
     @ApiResponse(responseCode = "201", description = "Info object created successfully", content = @Content(mediaType = "application/json", schema = @Schema(implementation = InfoObjectResponseDTO.class)))
-    @PostMapping
+    @PostMapping("/info-object")
     public ResponseEntity<InfoObjectResponseDTO> createInfoObject(
             @Valid @RequestBody InfoObjectDTO infoObjectDTO,
             HttpServletRequest request) {
