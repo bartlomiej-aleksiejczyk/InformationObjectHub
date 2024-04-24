@@ -5,6 +5,7 @@ import { Todo } from '../../../core/models/todo';
 @Injectable({
   providedIn: 'root',
 })
+//Stop this from being Singelton as it cause problems during SPA transistion
 export class InfoobjectFormStoreService {
   private form!: FormGroup;
 
