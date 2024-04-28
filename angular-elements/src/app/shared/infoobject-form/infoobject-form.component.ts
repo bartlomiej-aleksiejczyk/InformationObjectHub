@@ -1,9 +1,9 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { InfoobjectFormStoreService } from './services/infoobject-form-store.service';
 import { FormType } from '../../core/models/form-type';
 import { TodoFormComponent } from './components/todo-form/todo-form.component';
 import { Todo } from '../../core/models/todo';
+import { InfoobjectFormStoreService } from './services/infoobject-form-store.service';
 
 @Component({
   selector: 'app-infoobject-form',
@@ -11,6 +11,7 @@ import { Todo } from '../../core/models/todo';
   imports: [ReactiveFormsModule, TodoFormComponent],
   templateUrl: './infoobject-form.component.html',
   styleUrls: ['./infoobject-form.component.scss'],
+  providers: [InfoobjectFormStoreService],
 })
 export class InfoobjectFormComponent {
   @Input() content: string = '';

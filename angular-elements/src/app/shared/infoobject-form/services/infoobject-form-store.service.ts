@@ -2,10 +2,7 @@ import { Injectable } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { Todo } from '../../../core/models/todo';
 
-@Injectable({
-  providedIn: 'root',
-})
-//Stop this from being Singelton as it cause problems during SPA transistion
+@Injectable()
 export class InfoobjectFormStoreService {
   private form!: FormGroup;
 
@@ -43,6 +40,7 @@ export class InfoobjectFormStoreService {
 
     this.setTodos(values.todos);
   }
+
   private setTodos(todos?: Todo[]): void {
     const todoArray = this.form.get('todos') as FormArray;
     todoArray.clear();
