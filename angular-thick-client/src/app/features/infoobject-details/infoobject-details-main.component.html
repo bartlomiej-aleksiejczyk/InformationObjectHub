@@ -1,0 +1,61 @@
+@if (isVisible){
+<div class="info-object-card">
+  <div class="header-container">
+    <div>
+      <h4>Author: {{ authorIp }}</h4>
+      <h5 *ngIf="topic">Topic: {{ topic }}</h5>
+    </div>
+    @if (tag){
+    <div class="info-object-tag">
+      <span>Tag: {{ tag }}</span>
+    </div>
+    }
+  </div>
+
+  @if (content) {
+  <app-copyable-content-wrapper [copyData]="content">
+    <p class="content">{{ content }}</p>
+  </app-copyable-content-wrapper>
+  } @if (markdownContent) {
+  <app-infoobject-markdown-preview
+    [markdownContent]="markdownContent"
+  ></app-infoobject-markdown-preview>
+  } @if (todos.length !==0) {
+  <app-infoobject-todo-preview [todos]="todos"></app-infoobject-todo-preview>
+  }
+  <div class="button-container">
+    <button (click)="downloadAsMarkdown()" class="download-button">
+      Download as Markdown
+    </button>
+    <div class="action-buttons">
+      <button (click)="openEditModal()">Edit</button>
+      <button
+        class="remove-button"
+        (click)="deleteInfoObject()"
+        [disabled]="isDeleting"
+      >
+        @if (!isDeleting && !deleteError) {
+        {{ deleteButtonText }}
+        } @if (isDeleting){
+        <span class="spinner"></span>
+        } @if (deleteError) {
+        {{ deleteError }}
+        }
+      </button>
+    </div>
+  </div>
+</div>
+<app-infoobject-edit-modal
+  [infoObjectId]="infoobjectId"
+  [content]="content"
+  [markdownContent]="markdownContent"
+  [topic]="topic"
+  [tag]="tag"
+  [todos]="todos"
+  [isVisible]="isEditModalOpen"
+  (close)="isEditModalOpen = false"
+  (save)="handleSave($event)"
+>
+</app-infoobject-edit-modal>
+
+}

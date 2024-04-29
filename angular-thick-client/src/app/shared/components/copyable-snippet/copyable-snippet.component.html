@@ -1,0 +1,11 @@
+<div class="code-container">
+  <div class="code-container__header">
+    <span class="code-container__language-label">Language: {{ language }}</span>
+    <button class="code-container__button" (click)="copyToClipboard()">
+      {{ copyButtonText }}
+    </button>
+  </div>
+  <pre
+    class="code-container__pre"
+  ><code class=" code-container__code language-{{language}}">{{ deserializedCode }}</code></pre>
+</div>

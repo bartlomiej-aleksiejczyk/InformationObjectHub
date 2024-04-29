@@ -1,0 +1,17 @@
+<div class="todo">
+    <div class="todo__header">
+        <h3 class="todo__title">Todo content:</h3>
+    </div>
+    <div class="todo__list">
+        @for (todo of todos; track todo.id) {
+        <div class="todo__list-item">
+            <span class="todo__list-item--checkbox">
+                {{ todo.isDone ? '[✔]' : '[ ]' }}
+            </span>
+            <span class="todo__list-item--content">
+                {{ todo.content }}
+            </span>
+        </div>
+        }
+    </div>
+</div>

@@ -1,0 +1,51 @@
+@use "../../../../styles/colors";
+.todo {
+  max-width: 600px;
+  margin: 0 auto 1rem 0;
+  color: colors.$text-color-primary;
+
+  &__header {
+    background-color: colors.$background-color-secondary;
+    display: flex;
+    align-items: center;
+    padding: 0 0.5rem;
+    color: colors.$text-color-header;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+  }
+
+  &__title {
+    font-size: 18px;
+  }
+
+  &__list {
+    list-style: none;
+    padding: 1rem 1rem 0.5rem 1rem;
+    background-color: colors.$background-color-primary;
+    border-bottom-left-radius: 3px;
+    border-bottom-right-radius: 3px;
+  }
+
+  &__list-item {
+    background-color: colors.$background-color-secondary;
+    margin-bottom: 10px;
+    padding: 10px 15px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+
+    &--checkbox {
+      margin-right: 10px;
+
+      input[type="checkbox"] {
+        accent-color: colors.$accent-color;
+        cursor: not-allowed;
+      }
+    }
+
+    &--content {
+      flex-grow: 1;
+      color: colors.$text-color-secondary;
+    }
+  }
+}

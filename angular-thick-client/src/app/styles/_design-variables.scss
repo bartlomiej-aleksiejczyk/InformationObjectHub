@@ -1,0 +1,40 @@
+// Typography
+$font-primary: "Courier New", Courier, monospace;
+
+$font-size-base: 16px;
+$font-size-extra-large: 20px;
+
+$font-size-large: 20px;
+$font-size-small: 14px;
+
+$line-height-base: 1.5;
+$heading-font-weight: bold;
+$text-font-weight: normal;
+
+// Border and Box Shadows
+$border-radius-base: 3px;
+$border-radius-large: 8px;
+
+$box-shadow-light: 0 1px 3px rgba(0, 0, 0, 0.1);
+$box-shadow-dark: 0 1px 3px rgba(0, 0, 0, 0.2);
+
+// Spacing
+$spacing-xs: 4px;
+$spacing-sm: 8px;
+$spacing-md: 16px;
+$spacing-lg: 24px;
+$spacing-xl: 32px;
+
+// Breakpoints
+$breakpoint-xs: 480px;
+$breakpoint-sm: 768px;
+$breakpoint-md: 992px;
+$breakpoint-lg: 1200px;
+
+// Z-index
+$zindex-dropdown: 1000;
+$zindex-sticky: 1020;
+$zindex-fixed: 1030;
+$zindex-modal-backdrop: 1040;
+$zindex-modal: 1050;
+$zindex-tooltip: 1060;

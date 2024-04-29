@@ -1,0 +1,17 @@
+@use "../../../../styles/colors";
+@import "https://unpkg.com/@highlightjs/cdn-assets@11.9.0/styles/a11y-dark.min.css";
+
+.markdown-content h1,
+.markdown-content h2,
+.markdown-content h3,
+.markdown-content h4,
+.markdown-content h5,
+.markdown-content h6 {
+  color: colors.$background-color-secondary;
+  font-family: "Arial", sans-serif;
+}
+
+.markdown-content p {
+  color: #666;
+  line-height: 1.6;
+}
