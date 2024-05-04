@@ -13,17 +13,17 @@ import lombok.experimental.FieldDefaults;
 
 import java.util.ArrayList;
 import java.util.List;
-import org.hibernate.type.descriptor.java.JavaType;
 
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 import com.example.InformationObjectHub.common.BaseEntity;
-import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
 
 @Entity
 @Table(name = "info_objects")
 @Getter
 @Setter
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class InfoObject extends BaseEntity {
+public class InfoObject extends BaseEntity  {
     String authorIp;
     String topic;
     @Column(length = 150)
@@ -37,7 +37,7 @@ public class InfoObject extends BaseEntity {
     @ElementCollection
     @CollectionTable(name = "iinfoobject_links", joinColumns = @JoinColumn(name = "infoobject_id"))
     List<String> infoobjectLinks = new ArrayList<>();
-    @Type(JavaType.class)
-    @Column(columnDefinition = "JSONB")
+    @JdbcTypeCode(SqlTypes.JSON)
+    @Column(columnDefinition="JSON")
     List<TodoContent> todoContentList;
 }

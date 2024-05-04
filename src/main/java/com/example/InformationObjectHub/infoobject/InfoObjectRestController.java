@@ -4,6 +4,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -36,6 +38,14 @@ public class InfoObjectRestController {
         PageRequest pageRequest = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "modifiedAt"));
         Page<InfoObjectResponseDTO> infoObjects = infoObjectService.findAllInfoObjects(tag, pageRequest);
         return ResponseEntity.ok(infoObjects);
+    }
+
+    @Operation(summary = "Get all unique tags", description = "Retrieves a list of all unique tags used in InfoObjects")
+    @ApiResponse(responseCode = "200", description = "Successfully retrieved all unique tags", content = @Content(mediaType = "application/json", schema = @Schema(implementation = List.class)))
+    @GetMapping("/tags")
+    public ResponseEntity<List<String>> getAllUniqueTags() {
+        List<String> tags = infoObjectService.findAllUniqueTags();
+        return ResponseEntity.ok(tags);
     }
 
     @Operation(summary = "Create a new info object", description = "Creates a new info object and assigns the IP address of the client")
