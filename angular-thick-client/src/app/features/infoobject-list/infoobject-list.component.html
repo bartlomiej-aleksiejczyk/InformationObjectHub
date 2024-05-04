@@ -1,0 +1,40 @@
+<div class="container">
+    <div class="info-objects">
+      <div>
+        <form (submit)="onSearch()">
+          <input type="text" [(ngModel)]="tagSearch" placeholder="Search by tag..." />
+          <input type="submit" value="Search" />
+        </form>
+  
+        <div>
+          <strong>Available Tags:</strong>
+          <span *ngFor="let tag of uniqueTags">
+            <a href="#" (click)="tagSearch = tag; onSearch()">{{ tag }}</a>
+          </span>
+        </div>
+  
+        <div id="last-reload-time">Last log load: {{ lastReloadTime | date: 'medium' }}</div>
+  
+        <div *ngFor="let infoObject of infoObjects">
+          <app-infoobject-details-main [infoobjectId]="infoObject.id" [editUrl]="infoObject.editUrl"
+            [content]="infoObject.content" [deleteUrl]="infoObject.deleteUrl" [topic]="infoObject.topic"
+            [authorIp]="infoObject.authorIp" [tag]="infoObject.tag" [dialogueContent]="infoObject.dialogueContent"
+            [infoobjectLinks]="infoObject.infoobjectLinks" [todoContent]="infoObject.todoContent">
+          </app-infoobject-details-main>
+        </div>
+      </div>
+  
+      <div class="pagination">
+        <a href="#" (click)="previousPage()" *ngIf="currentPage > 0">&laquo; first</a>
+        <a href="#" (click)="previousPage()" *ngIf="currentPage > 0">previous</a>
+        <span>Page {{ currentPage + 1 }} of {{ totalPages }}.</span>
+        <a href="#" (click)="nextPage()" *ngIf="currentPage < totalPages - 1">next</a>
+        <a href="#" (click)="nextPage()" *ngIf="currentPage < totalPages - 1">last &raquo;</a>
+      </div>
+    </div>
+  
+    <div class="form-container">
+      <app-infoobject-new></app-infoobject-new>
+    </div>
+  </div>
+  
