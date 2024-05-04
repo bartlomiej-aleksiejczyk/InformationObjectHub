@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Todo } from '../../../../core/models/todo';
+import { Todo } from '../../../../core/models/todo.model';
 
 @Component({
   selector: 'app-infoobject-todo-preview',

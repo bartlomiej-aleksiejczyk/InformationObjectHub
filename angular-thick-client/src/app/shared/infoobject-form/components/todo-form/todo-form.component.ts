@@ -24,7 +24,7 @@ import {
     ReactiveFormsModule,
     DragDropModule,
     CdkDragPreview,
-    CdkDragPlaceholder,
+    CdkDragPlaceholder
   ],
   templateUrl: './todo-form.component.html',
   styleUrls: ['./todo-form.component.scss'],

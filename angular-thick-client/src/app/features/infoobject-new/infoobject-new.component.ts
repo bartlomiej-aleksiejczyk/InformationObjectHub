@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormType } from '../../core/models/form-type';
+import { FormType } from '../../core/models/form-type.model';
 import { InfoobjectFormComponent } from '../../shared/infoobject-form/infoobject-form.component';
 
 @Component({

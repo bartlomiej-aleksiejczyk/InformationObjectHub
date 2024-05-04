@@ -1,4 +1,4 @@
-import { Todo } from '../../../core/models/todo';
+import { Todo } from '../../../core/models/todo.model';
 
 export class MarkdownUtils {
   static formatAsMarkdown(infoObject: {

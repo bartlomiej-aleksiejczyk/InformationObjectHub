@@ -3,7 +3,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { InfoObjectService } from './services/infoobject.service';
 import { ReactiveFormsModule } from '@angular/forms';
 import { InfoobjectEditModalComponent } from './components/infoobject-edit-modal/infoobject-edit-modal.component';
-import { Todo } from '../../core/models/todo';
+import { Todo } from '../../core/models/todo.model';
 import { InfoobjectTodoPreviewComponent } from './components/infoobject-todo-preview/infoobject-todo-preview.component';
 import { MarkdownUtils } from './utils/markdown-download-utils';
 import { CopyableContentWrapperComponent } from '../../shared/components/copyable-content-wrapper/copyable-content-wrapper.component';
