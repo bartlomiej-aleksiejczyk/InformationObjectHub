@@ -47,6 +47,7 @@ export class InfoobjectDetailsMainComponent implements OnInit, OnDestroy {
 
   constructor(private infoobjectStoreService: InfoobjectStoreService) {}
   //TODO: I am not sure it it is the good practice
+  //TODO: UNSUBSCRIBE TO LISTENERS
   ngOnDestroy(): void {
     document.body.style.overflow = 'auto';
   }
