@@ -45,12 +45,13 @@
   height: 10rem;
 }
 
+//TODO: Uniform button appearance through mixin
 .form-button {
   padding: 0.5rem;
   margin-bottom: auto;
   background-color: colors.$button-background-color;
   border: 2px solid colors.$border-color-primary;
-  font-size: 1rem;
+  font-size: 1.5rem;
   border-radius: design-variables.$border-radius-base;
   color: colors.$text-color-primary;
   cursor: pointer;

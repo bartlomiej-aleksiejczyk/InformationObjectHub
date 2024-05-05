@@ -1,11 +1,7 @@
-@use "../../styles/colors";
+@use "../styles/colors";
 
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-}
-
+//TODO: Remove redundant scss
+//TODO: Alter button handling
 body {
   display: flex;
   justify-content: center;
@@ -18,16 +14,7 @@ body {
   font-size: 1rem;
 }
 
-.container {
-  width: 100vw;
-  min-height: 100vh;
-  display: flex;
-  align-items: flex-start;
-  flex-direction: row;
-  padding: 20px;
-  background-color: colors.$background-color-quaternary;
-  gap: 20px;
-}
+
 
 .info-objects,
 .form-container {
@@ -39,7 +26,6 @@ body {
 }
 
 .info-objects {
-  width: 70%;
 }
 
 .form-container {
@@ -93,11 +79,4 @@ input[type="submit"]:active {
   color: #daf7dc;
 }
 
-@media (max-width: 1000px) {
-  .container,
-  .info-objects,
-  .form-container {
-    flex-direction: column;
-    width: 100%;
-  }
-}
+

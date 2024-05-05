@@ -1,7 +1,7 @@
 package com.example.InformationObjectHub.infoobject;
 
 public class TodoContent {
-    Integer id;
     String content;
+    Integer id;
     Boolean isDone;
 }

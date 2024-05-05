@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.example.InformationObjectHub.infoobject.dtos.InfoObjectDTO;
 import com.example.InformationObjectHub.infoobject.dtos.InfoObjectResponseDTO;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import java.util.Optional;
@@ -40,13 +41,30 @@ public class InfoObjectService {
     @Transactional
     public InfoObjectResponseDTO saveInfoObject(InfoObjectDTO infoObjectDTO, String authorIp) {
         InfoObject infoObject = new InfoObject();
+    
+        Optional.ofNullable(infoObjectDTO.getTodoContentList())
+            .ifPresent(list -> System.out.println(list));
+    
         infoObject.setContent(infoObjectDTO.getContent());
         infoObject.setTopic(infoObjectDTO.getTopic());
-        infoObject.setTag(Optional.ofNullable(infoObjectDTO.getTag())
-                .map(String::toUpperCase).orElse(null));
+        infoObject.setTag(Optional.ofNullable(infoObjectDTO.getTag()).map(String::toUpperCase).orElse(null));
+        
+        infoObject.setMarkdownContent(Optional.ofNullable(infoObjectDTO.getMarkdownContent()).orElse(null));
+        infoObject.setDialogueContent(Optional.ofNullable(infoObjectDTO.getDialogueContent()).orElse(null));
+    
+        infoObject.setInfoobjectLinks(Optional.ofNullable(infoObjectDTO.getInfoobjectLinks())
+                                              .map(ArrayList::new)
+                                              .orElseGet(ArrayList::new));
+        infoObject.setTodoContentList(Optional.ofNullable(infoObjectDTO.getTodoContentList())
+                                              .map(ArrayList::new)
+                                              .orElseGet(ArrayList::new));
+    
         infoObject.setAuthorIp(authorIp);
+    
         return InfoObjectMapper.toDto(infoObjectRepository.save(infoObject));
     }
+    
+    
 
     @Transactional
     public InfoObjectResponseDTO updateInfoObject(Long id, InfoObjectDTO infoObjectDTO) {

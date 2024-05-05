@@ -1,4 +1,20 @@
 @use "./app/styles/design-variables";
+
+@use "./app/styles/colors";
+
+// TODO: Remove font in scss in higher levewls
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  font-family: "Courier New", Courier, monospace;
+
+}
+
+body {
+    background-color: colors.$background-color-primary;
+}
+
 html {
   font-size: design-variables.$font-size-base;
 }

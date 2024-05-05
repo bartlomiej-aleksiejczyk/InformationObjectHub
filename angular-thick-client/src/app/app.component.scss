@@ -1,0 +1,27 @@
+@use "./styles/colors";
+
+body {
+    background-color: colors.$background-color-primary;
+
+}
+
+.main-container {
+    display: flex;
+    align-items: flex-start;
+    flex-direction: row;
+    padding: 20px;
+    gap: 20px;
+  }
+  .main-container__infoobjects {
+    width: 70vw;
+  }
+  .main-container__form-new {
+    width: 30vw;
+  }
+
+@media (max-width: 1000px) {
+    .main-container {
+      flex-direction: column;
+      width: 100%;
+    }
+  }

@@ -35,7 +35,7 @@ public class InfoObjectRestController {
             @RequestParam(required = false) String tag,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size) {
-        PageRequest pageRequest = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "modifiedAt"));
+        PageRequest pageRequest = PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "modifiedAt"));
         Page<InfoObjectResponseDTO> infoObjects = infoObjectService.findAllInfoObjects(tag, pageRequest);
         return ResponseEntity.ok(infoObjects);
     }

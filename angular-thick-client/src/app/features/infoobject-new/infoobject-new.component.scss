@@ -14,6 +14,7 @@
   align-items: stretch;
   flex-direction: row;
   margin-bottom: 0;
+  height: 100%;
 }
 
 .new-infoobject-container {
@@ -25,10 +26,14 @@
 
 .tab-container__tab {
   font-size: 1rem;
+  font-family: "Courier New", Courier, monospace;
+  text-transform:uppercase;
+  letter-spacing: 1px;
+  font-weight: bold;
   flex: 1 1 auto;
-  margin: 1rem 0.1rem 0;
+  margin: 0 0.1rem 0;
   width: 100%;
-  padding: 1rem;
+  padding: 0.5rem;
   border: none;
   color: colors.$text-color-secondary;
   background-color: colors.$background-color-quaternary;
@@ -38,10 +43,10 @@
   transition: background-color 0.3s ease, color 0.3s ease;
 
   &:last-of-type {
-    margin-right: 0.5rem;
+    margin-right: 0.8rem;
   }
   &:first-of-type {
-    margin-left: 0.5rem;
+    margin-left: 0;
   }
 
   &.active {
@@ -68,6 +73,9 @@
 @keyframes tabActivate {
   0% {
     transform: translateY(0);
+  }
+  5% {
+    background-color: colors.$background-color-secondary;
   }
   50% {
     transform: translateY(10px);

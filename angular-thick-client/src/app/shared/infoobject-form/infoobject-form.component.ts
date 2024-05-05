@@ -4,6 +4,9 @@ import { FormType } from '../../core/models/form-type.model';
 import { TodoFormComponent } from './components/todo-form/todo-form.component';
 import { Todo } from '../../core/models/todo.model';
 import { InfoobjectFormStoreService } from './services/infoobject-form-store.service';
+import { ApiService } from '../../core/services/api.service';
+import { Infoobject } from '../../core/models/infoobject.model';
+import { InfoobjectStoreService } from '../../core/services/infoobject-store-service';
 
 @Component({
   selector: 'app-infoobject-form',
@@ -22,6 +25,7 @@ export class InfoobjectFormComponent {
   @Input() formType?: FormType;
   @Output() formSubmit = new EventEmitter<any>();
 
+  
   form: FormGroup;
   fieldVisibility = {
     content: false,
@@ -31,7 +35,7 @@ export class InfoobjectFormComponent {
     todos: false,
   };
 
-  constructor(private formStore: InfoobjectFormStoreService) {
+  constructor(private formStore: InfoobjectFormStoreService, private apiService: ApiService, private infoobjectStoreService: InfoobjectStoreService) {
     this.form = this.formStore.getForm();
   }
 
@@ -86,6 +90,27 @@ export class InfoobjectFormComponent {
   }
 
   onSubmit(): void {
-    this.formSubmit.emit(this.form.value);
+    if (this.form.valid) {
+      const infoObjectDTO = new Infoobject(
+        this.form.value.topic,
+        this.form.value.tag,
+        this.form.value.content,
+        this.form.value.markdownContent,
+        undefined,
+        undefined,
+        this.form.value.todos
+      );
+
+      this.infoobjectStoreService.createInfoObject(infoObjectDTO).subscribe({
+        next: (newInfoObject) => {
+          this.formSubmit.emit(newInfoObject);
+        },
+        error: (error) => {
+          console.error('Failed to create info object:', error);
+        }
+      });
+    } else {
+      console.error('Form is not valid:', this.form);
+    }
   }
 }

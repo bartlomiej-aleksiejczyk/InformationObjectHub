@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { environment } from '../../../enviroments/environment';
+import { Infoobject } from '../models/infoobject.model';
  
 @Injectable({
   providedIn: 'root',
@@ -25,11 +26,11 @@ export class ApiService {
     );
   }
 
-  createInfoObject(infoObject: any): Observable<any> {
+  createInfoObject(infoobject: Infoobject): Observable<any> {
     const url = `${this.baseUrl}/info-object`;
-    return this.http.post(url, infoObject).pipe(
+    return this.http.post(url, infoobject).pipe(
       catchError((error) => {
-        throw new Error('Failed to create info object: ' + error);
+        throw new Error('Failed to create info object: ' + error.message);
       })
     );
   }
@@ -60,4 +61,6 @@ export class ApiService {
       })
     );
   }
+
+  
 }
