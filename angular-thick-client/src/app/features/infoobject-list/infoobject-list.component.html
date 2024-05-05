@@ -1,5 +1,4 @@
   <div class="info-objects">
-    <div>
       <form>
         <input type="text" placeholder="Search by tag..."  />
         <input type="submit" value="Search" />
@@ -7,20 +6,23 @@
 
       <div>
         <strong>Available Tags:</strong>
-        <span *ngFor="let tag of uniqueTags">
-          <a href="#">{{ tag }}</a>
-        </span>
+        <div class="tag-container">
+          @for (tag of uniqueTags; track tag){
+            <div>
+              <a class="tag-container__tag" href="#">{{ tag }}</a>
+            </div>
+          }
+        </div>
       </div>
 
       <div id="last-reload-time">Last log load: {{ lastReloadTime | date: 'medium' }}</div>
-      @for (infoObject of infoObjects; track infoObject.id){
+      @for (infoObject of infoObjects; track infoObject){
         <app-infoobject-details-main [infoobjectId]="infoObject.id"
           [content]="infoObject.content" [topic]="infoObject.topic"
           [authorIp]="infoObject.authorIp" [tag]="infoObject.tag" [dialogueContent]="infoObject.dialogueContent"
           [infoobjectLinks]="infoObject.infoobjectLinks" [todoContentList]="infoObject.todoContentList">
         </app-infoobject-details-main>
       }
-    </div>
 
     <div class="pagination">
       <a href="#" (click)="previousPage()" *ngIf="currentPage > 0">&laquo; first</a>

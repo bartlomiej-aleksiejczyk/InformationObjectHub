@@ -14,7 +14,35 @@ body {
   font-size: 1rem;
 }
 
+.tag-container {
+  margin-top: 0.75rem;
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+}
 
+.tag-container__tag {
+  background-color: colors.$background-color-secondary;
+  color: colors.$text-color-primary;
+  text-decoration: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  border: 2px solid colors.$border-color-primary;
+  display: inline-block;
+  transition: background-color 0.3s, color 0.3s;
+
+  &:hover {
+    background-color: colors.$background-color-tertiary;
+    color: colors.$text-color-header;
+    border-color: colors.$accent-color;
+  }
+
+  &:focus {
+    outline: none;
+    border-color: colors.$border-color-editable;
+    box-shadow: 0 0 0 2px rgba(colors.$border-color-editable, 0.5);
+  }
+}
 
 .info-objects,
 .form-container {
@@ -26,6 +54,9 @@ body {
 }
 
 .info-objects {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }
 
 .form-container {

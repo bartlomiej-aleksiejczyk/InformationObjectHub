@@ -38,6 +38,7 @@ export class InfoobjectListComponent implements OnInit {
     this.infoobjectStoreService.uniqueTags$.subscribe(tags => this.uniqueTags = tags);
 
     this.infoobjectStoreService.fetchInfoObjects();
+    this.infoobjectStoreService.fetchUniqueTags();
   }
 
   firstPage(): void {

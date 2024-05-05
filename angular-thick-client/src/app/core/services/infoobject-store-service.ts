@@ -77,12 +77,17 @@ export class InfoobjectStoreService {
 updateInfoObject(id: number, infoObject: InfoobjectRequest): Observable<InfoObjectResponse> {
   return this.apiService.updateInfoObject(id, infoObject).pipe(
     tap((updatedInfoObject) => {
+      console.log(updatedInfoObject)
       const currentInfoObjects = this.infoobjectsSubject.value;
       const index = currentInfoObjects.findIndex(item => item.id === updatedInfoObject.id);
       if (index !== -1) {
-        const updatedInfoObjects = [...currentInfoObjects];
-        updatedInfoObjects[index] = updatedInfoObject;
+        const updatedInfoObjects = [
+          ...currentInfoObjects.slice(0, index),
+          updatedInfoObject,
+          ...currentInfoObjects.slice(index + 1)
+        ];
         this.infoobjectsSubject.next(updatedInfoObjects);
+      console.log(this.infoobjectsSubject.value)
       }
     }),
     catchError((error) => {
@@ -91,6 +96,7 @@ updateInfoObject(id: number, infoObject: InfoobjectRequest): Observable<InfoObje
     })
   );
 }
+
 
   deleteInfoObject(id: number): Observable<any> {
     return this.apiService.deleteInfoObject(id).pipe(
