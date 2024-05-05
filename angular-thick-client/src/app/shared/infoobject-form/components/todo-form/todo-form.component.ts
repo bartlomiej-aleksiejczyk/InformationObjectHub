@@ -76,5 +76,10 @@ export class TodoFormComponent implements OnInit {
       event.previousIndex,
       event.currentIndex
     );
+    moveItemInArray(
+      this.todosFormArray.value,
+      event.previousIndex,
+      event.currentIndex
+    );
   }
 }
