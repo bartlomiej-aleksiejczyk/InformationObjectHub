@@ -31,8 +31,8 @@ export class InfoobjectDetailsMainComponent implements OnInit, OnDestroy {
   @Input() authorIp: string = '';
   @Input() tag: string = '';
   @Input() dialogueContent: string = '';
-  @Input() infoobjectLinks: string[] = [];
-  @Input() todoContentList: (Todo[] | null) = null;
+  @Input() infoobjectLinks: (string[]) = [];
+  @Input() todoContentList: (Todo[]) = [];
   @Input() markdownContent: string = '';
 
   deleteButtonText: string = 'Delete';

@@ -8,7 +8,7 @@ export interface InfoObjectResponse {
     markdownContent: string;
     dialogueContent: string;
     infoobjectLinks: string[];
-    todoContentList: Todo[] | null;
+    todoContentList: Todo[];
     authorIp: string;
     createdAt: Date;
     modifiedAt: Date;
