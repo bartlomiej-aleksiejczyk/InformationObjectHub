@@ -10,11 +10,14 @@ public record InfoObjectResponseDTO(
         String topic,
         String tag,
         String content,
+        String markdownContent,
+        String dialogueContent,
         List<String> infoobjectLinks,
         List<TodoContent> todoContentList,
         String authorIp,
         LocalDateTime createdAt,
         LocalDateTime modifiedAt) {
+    
     public InfoObjectResponseDTO {
         if (id == null) {
             throw new IllegalArgumentException("Id cannot be null");

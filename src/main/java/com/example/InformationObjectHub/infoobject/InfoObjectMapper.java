@@ -16,6 +16,8 @@ public class InfoObjectMapper {
                 entity.getTopic(),
                 entity.getTag(),
                 entity.getContent(),
+                entity.getMarkdownContent(),
+                entity.getDialogueContent(),
                 entity.getInfoobjectLinks(),
                 entity.getTodoContentList(),
                 entity.getAuthorIp(),

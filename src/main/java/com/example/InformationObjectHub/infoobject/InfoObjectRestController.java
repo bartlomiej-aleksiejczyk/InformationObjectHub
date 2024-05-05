@@ -6,6 +6,8 @@ import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -14,6 +16,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.example.InformationObjectHub.infoobject.dtos.InfoObjectDTO;
 import com.example.InformationObjectHub.infoobject.dtos.InfoObjectResponseDTO;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -25,6 +30,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 @RequestMapping("/api/v1")
 @RequiredArgsConstructor
 public class InfoObjectRestController {
+    Logger logger = LoggerFactory.getLogger(InfoObjectRestController.class);
 
     private final InfoObjectService infoObjectService;
 
@@ -52,11 +58,18 @@ public class InfoObjectRestController {
     @ApiResponse(responseCode = "201", description = "Info object created successfully", content = @Content(mediaType = "application/json", schema = @Schema(implementation = InfoObjectResponseDTO.class)))
     @PostMapping("/info-object")
     public ResponseEntity<InfoObjectResponseDTO> createInfoObject(
-            @Valid @RequestBody InfoObjectDTO infoObjectDTO,
+            @RequestBody String rawBody,
             HttpServletRequest request) {
-        String clientIpAddress = request.getRemoteAddr();
-        InfoObjectResponseDTO infoObject = infoObjectService.saveInfoObject(infoObjectDTO, clientIpAddress);
-        return ResponseEntity.status(HttpStatus.CREATED).body(infoObject);
+                logger.info("Received raw JSON: {}", rawBody);
+                try {
+                    InfoObjectDTO infoObjectDTO = new ObjectMapper().readValue(rawBody, InfoObjectDTO.class);
+                    String clientIpAddress = request.getRemoteAddr();
+                    InfoObjectResponseDTO infoObject = infoObjectService.saveInfoObject(infoObjectDTO, clientIpAddress);
+                    return ResponseEntity.status(HttpStatus.CREATED).body(infoObject);
+                } catch (JsonProcessingException e) {
+                    logger.error("JSON parsing error", e);
+                    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+                }
     }
 
     @Operation(summary = "Update an info object", description = "Updates an existing info object")

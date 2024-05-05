@@ -5,7 +5,7 @@ import { TodoFormComponent } from './components/todo-form/todo-form.component';
 import { Todo } from '../../core/models/todo.model';
 import { InfoobjectFormStoreService } from './services/infoobject-form-store.service';
 import { ApiService } from '../../core/services/api.service';
-import { Infoobject } from '../../core/models/infoobject.model';
+import { InfoobjectRequest } from '../../core/models/infoobject-request.model';
 import { InfoobjectStoreService } from '../../core/services/infoobject-store-service';
 
 @Component({
@@ -91,17 +91,17 @@ export class InfoobjectFormComponent {
 
   onSubmit(): void {
     if (this.form.valid) {
-      const infoObjectDTO = new Infoobject(
-        this.form.value.topic,
-        this.form.value.tag,
-        this.form.value.content,
-        this.form.value.markdownContent,
-        undefined,
-        undefined,
-        this.form.value.todos
-      );
+      const InfoobjectRequest: InfoobjectRequest = {
+        topic: this.form.value.topic,
+        tag: this.form.value.tag,
+        content: this.form.value.content,
+        markdownContent: this.form.value.markdownContent,
+        dialogueContent: null,
+        infoobjectLinks: [],
+        todoContentList: this.form.value.todos
+      };
 
-      this.infoobjectStoreService.createInfoObject(infoObjectDTO).subscribe({
+      this.infoobjectStoreService.createInfoObject(InfoobjectRequest).subscribe({
         next: (newInfoObject) => {
           this.formSubmit.emit(newInfoObject);
         },

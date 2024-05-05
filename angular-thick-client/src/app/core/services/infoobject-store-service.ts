@@ -2,13 +2,14 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { ApiService } from './api.service';
-import { Infoobject } from '../models/infoobject.model';
+import { InfoobjectRequest } from '../models/infoobject-request.model';
+import { InfoObjectResponse } from '../models/infoobject-response.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class InfoobjectStoreService {
-  private infoobjectsSubject = new BehaviorSubject<Infoobject[]>([]);
+  private infoobjectsSubject = new BehaviorSubject<InfoObjectResponse[]>([]);
   private uniqueTagsSubject = new BehaviorSubject<string[]>([]);
   private totalPagesSubject = new BehaviorSubject<number>(0);
   private currentPage = 0;
@@ -58,7 +59,7 @@ export class InfoobjectStoreService {
     }
   }
 
-  createInfoObject(infoObject: Infoobject): Observable<Infoobject> {
+  createInfoObject(infoObject: InfoobjectRequest): Observable<InfoObjectResponse> {
     return this.apiService.createInfoObject(infoObject).pipe(
       tap((newInfoObject) => {
         const currentInfoObjects = this.infoobjectsSubject.value;
@@ -72,14 +73,24 @@ export class InfoobjectStoreService {
 }
 
 
-  updateInfoObject(id: number, infoObject: any): Observable<any> {
-    return this.apiService.updateInfoObject(id, infoObject).pipe(
-      tap(() => this.fetchInfoObjects()),
-      catchError((error) => {
-        throw new Error('Failed to update info object: ' + error.message);
-      })
-    );
-  }
+
+updateInfoObject(id: number, infoObject: InfoobjectRequest): Observable<InfoObjectResponse> {
+  return this.apiService.updateInfoObject(id, infoObject).pipe(
+    tap((updatedInfoObject) => {
+      const currentInfoObjects = this.infoobjectsSubject.value;
+      const index = currentInfoObjects.findIndex(item => item.id === updatedInfoObject.id);
+      if (index !== -1) {
+        const updatedInfoObjects = [...currentInfoObjects];
+        updatedInfoObjects[index] = updatedInfoObject;
+        this.infoobjectsSubject.next(updatedInfoObjects);
+      }
+    }),
+    catchError((error) => {
+      console.error('Failed to update info object:', error);
+      return throwError(() => new Error('Failed to update info object: ' + error.message));
+    })
+  );
+}
 
   deleteInfoObject(id: number): Observable<any> {
     return this.apiService.deleteInfoObject(id).pipe(

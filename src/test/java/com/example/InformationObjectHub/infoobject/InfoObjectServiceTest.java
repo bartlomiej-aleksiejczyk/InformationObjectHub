@@ -53,7 +53,7 @@ class InfoObjectServiceTest {
     void testFindAllInfoObjectsWithTag() {
         Pageable pageable = Pageable.unpaged();
         InfoObject infoObject = new InfoObject();
-        InfoObjectResponseDTO dto = new InfoObjectResponseDTO(1L, "topic", "tag", "content", null, null, "127.0.0.1",
+        InfoObjectResponseDTO dto = new InfoObjectResponseDTO(1L, "topic", "tag", "content", null, null, null, null, "127.0.0.1",
                 LocalDateTime.now(), LocalDateTime.now());
         Page<InfoObject> entityPage = new PageImpl<>(Arrays.asList(infoObject));
         Page<InfoObjectResponseDTO> dtoPage = new PageImpl<>(Arrays.asList(dto));
@@ -72,7 +72,7 @@ class InfoObjectServiceTest {
     void testFindAllInfoObjectsNoTag() {
         Pageable pageable = Pageable.unpaged();
         InfoObject infoObject = new InfoObject();
-        InfoObjectResponseDTO dto = new InfoObjectResponseDTO(1L, "topic", "tag", "content", null, null, "127.0.0.1",
+        InfoObjectResponseDTO dto = new InfoObjectResponseDTO(1L, "topic", "tag", "content", null, null, null, null, "127.0.0.1",
                 LocalDateTime.now(), LocalDateTime.now());
         Page<InfoObject> entityPage = new PageImpl<>(Arrays.asList(infoObject));
         Page<InfoObjectResponseDTO> dtoPage = new PageImpl<>(Arrays.asList(dto));

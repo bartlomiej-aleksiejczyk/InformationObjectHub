@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { InfoobjectStoreServiceService } from './infoobject-store-service';
+import { InfoobjectStoreService } from './infoobject-store-service';
 
 describe('InfoobjectStoreServiceService', () => {
-  let service: InfoobjectStoreServiceService;
+  let service: InfoobjectStoreService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(InfoobjectStoreServiceService);
+    service = TestBed.inject(InfoobjectStoreService);
   });
 
   it('should be created', () => {

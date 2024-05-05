@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { InfoobjectFormComponent } from '../../../../shared/infoobject-form/infoobject-form.component';
 import { Todo } from '../../../../core/models/todo.model';
+import { InfoobjectRequest } from '../../../../core/models/infoobject-request.model';
 
 @Component({
   selector: 'app-infoobject-edit-modal',
@@ -12,7 +13,7 @@ import { Todo } from '../../../../core/models/todo.model';
 })
 //TODO: Remove ! near inputs
 export class InfoobjectEditModalComponent {
-  @Input() infoObjectId!: string;
+  @Input() infoObjectId!: number;
   @Input() content!: string;
   @Input() topic!: string;
   @Input() tag!: string;
@@ -44,7 +45,7 @@ export class InfoobjectEditModalComponent {
 
   onSubmit(): void {}
 
-  onSave(data: any): void {
+  onSave(data: InfoobjectRequest): void {
     this.save.emit(data);
   }
 
