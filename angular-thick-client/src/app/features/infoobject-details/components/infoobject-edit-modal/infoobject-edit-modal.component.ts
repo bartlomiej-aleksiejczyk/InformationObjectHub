@@ -43,8 +43,6 @@ export class InfoobjectEditModalComponent {
     });
   }
 
-  onSubmit(): void {}
-
   onSave(data: InfoobjectRequest): void {
     this.save.emit(data);
   }

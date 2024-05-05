@@ -100,17 +100,7 @@ export class InfoobjectFormComponent {
         infoobjectLinks: [],
         todoContentList: this.form.value.todos
       };
-
-      this.infoobjectStoreService.createInfoObject(InfoobjectRequest).subscribe({
-        next: (newInfoObject) => {
-          this.formSubmit.emit(newInfoObject);
-        },
-        error: (error) => {
-          console.error('Failed to create info object:', error);
-        }
-      });
-    } else {
-      console.error('Form is not valid:', this.form);
+      this.formSubmit.emit(InfoobjectRequest);
     }
   }
 }

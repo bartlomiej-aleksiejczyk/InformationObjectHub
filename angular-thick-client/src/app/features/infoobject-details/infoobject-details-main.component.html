@@ -54,7 +54,7 @@
   [tag]="tag"
   [todos]="todos"
   [isVisible]="isEditModalOpen"
-  (close)="isEditModalOpen = false"
+  (close)="closeEditModal()"
   (save)="handleSave($event)"
 >
 </app-infoobject-edit-modal>

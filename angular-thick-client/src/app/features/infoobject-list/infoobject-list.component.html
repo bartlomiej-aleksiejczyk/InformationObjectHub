@@ -13,14 +13,13 @@
       </div>
 
       <div id="last-reload-time">Last log load: {{ lastReloadTime | date: 'medium' }}</div>
-
-      <div *ngFor="let infoObject of infoObjects">
+      @for (infoObject of infoObjects; track infoObject.id){
         <app-infoobject-details-main [infoobjectId]="infoObject.id"
           [content]="infoObject.content" [topic]="infoObject.topic"
           [authorIp]="infoObject.authorIp" [tag]="infoObject.tag" [dialogueContent]="infoObject.dialogueContent"
           [infoobjectLinks]="infoObject.infoobjectLinks" [todoContentList]="infoObject.todoContentList">
         </app-infoobject-details-main>
-      </div>
+      }
     </div>
 
     <div class="pagination">
@@ -29,5 +28,4 @@
       <span>Page {{ currentPage + 1 }} of {{ totalPages }}.</span>
       <a href="#" (click)="nextPage()" *ngIf="currentPage < totalPages - 1">next</a>
       <a href="#" (click)="nextPage()" *ngIf="currentPage < totalPages - 1">last &raquo;</a>
-    </div>
   </div>

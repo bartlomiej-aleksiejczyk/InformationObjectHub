@@ -22,5 +22,7 @@
   </button>
 </div>
 <div class="new-infoobject-container">
-  <app-infoobject-form [formType]="activeFormType"></app-infoobject-form>
+  <app-infoobject-form       
+  (formSubmit)="onSave($event)"
+  [formType]="activeFormType"></app-infoobject-form>
 </div>
