@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { InfoobjectStoreService } from '../core/services/infoobject-store-service';
+import { InfoobjectStoreService } from '../../core/services/infoobject-store-service';
 
 @Component({
   standalone: true,
