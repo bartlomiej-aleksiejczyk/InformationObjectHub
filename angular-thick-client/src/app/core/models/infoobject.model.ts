@@ -2,6 +2,7 @@ import { Todo } from "./todo.model";
 
 export class Infoobject {
     constructor(
+      public id?: number,
       public topic?: string,
       public tag?: string,
       public content?: string,
