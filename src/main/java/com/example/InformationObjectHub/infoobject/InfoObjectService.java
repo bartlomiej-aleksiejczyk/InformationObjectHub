@@ -68,18 +68,41 @@ public class InfoObjectService {
 
     @Transactional
     public InfoObjectResponseDTO updateInfoObject(Long id, InfoObjectDTO infoObjectDTO) {
-        Optional<InfoObject> infoObjectOptional = infoObjectRepository.findById(id);
-        if (infoObjectOptional.isPresent()) {
-            InfoObject existingInfoObject = infoObjectOptional.get();
-            existingInfoObject.setContent(infoObjectDTO.getContent());
-            existingInfoObject.setTopic(infoObjectDTO.getTopic());
-            existingInfoObject.setTag(Optional.ofNullable(infoObjectDTO.getTag())
-                    .map(String::toUpperCase).orElse(null));
-            return InfoObjectMapper.toDto(infoObjectRepository.save(existingInfoObject));
-        } else {
-            throw new IllegalArgumentException("InfoObject with id " + id + " not found");
-        }
+        return infoObjectRepository.findById(id)
+            .map(existingInfoObject -> {
+                if (infoObjectDTO.getContent() != null) {
+                    existingInfoObject.setContent(infoObjectDTO.getContent());
+                }
+    
+                if (infoObjectDTO.getTopic() != null) {
+                    existingInfoObject.setTopic(infoObjectDTO.getTopic());
+                }
+    
+                Optional.ofNullable(infoObjectDTO.getTag())
+                        .map(String::toUpperCase)
+                        .ifPresent(existingInfoObject::setTag);
+    
+                if (infoObjectDTO.getMarkdownContent() != null) {
+                    existingInfoObject.setMarkdownContent(infoObjectDTO.getMarkdownContent());
+                }
+    
+                if (infoObjectDTO.getDialogueContent() != null) {
+                    existingInfoObject.setDialogueContent(infoObjectDTO.getDialogueContent());
+                }
+    
+                if (infoObjectDTO.getInfoobjectLinks() != null && !infoObjectDTO.getInfoobjectLinks().isEmpty()) {
+                    existingInfoObject.setInfoobjectLinks(new ArrayList<>(infoObjectDTO.getInfoobjectLinks()));
+                }
+    
+                if (infoObjectDTO.getTodoContentList() != null && !infoObjectDTO.getTodoContentList().isEmpty()) {
+                    existingInfoObject.setTodoContentList(new ArrayList<>(infoObjectDTO.getTodoContentList()));
+                }
+    
+                return InfoObjectMapper.toDto(infoObjectRepository.save(existingInfoObject));
+            })
+            .orElseThrow(() -> new IllegalArgumentException("InfoObject with id " + id + " not found"));
     }
+    
 
     @Transactional
     public void removeInfoObject(Long id) {
