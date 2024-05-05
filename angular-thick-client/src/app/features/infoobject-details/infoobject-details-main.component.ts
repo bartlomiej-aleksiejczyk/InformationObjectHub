@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { InfoobjectEditModalComponent } from './components/infoobject-edit-modal/infoobject-edit-modal.component';
 import { Todo } from '../../core/models/todo.model';
@@ -24,7 +24,7 @@ import { InfoobjectRequest } from '../../core/models/infoobject-request.model';
     InfoobjectMarkdownPreviewComponent,
   ],
 })
-export class InfoobjectDetailsMainComponent implements OnInit {
+export class InfoobjectDetailsMainComponent implements OnInit, OnDestroy {
   @Input() infoobjectId: (number | null) = null;
   @Input() content: string = '';
   @Input() topic: string = '';
@@ -46,6 +46,10 @@ export class InfoobjectDetailsMainComponent implements OnInit {
   isEditModalOpen: boolean = false;
 
   constructor(private infoobjectStoreService: InfoobjectStoreService) {}
+  //TODO: I am not sure it it is the good practice
+  ngOnDestroy(): void {
+    document.body.style.overflow = 'auto';
+  }
 
   ngOnInit(): void {
     this.parsetodoContentList();
