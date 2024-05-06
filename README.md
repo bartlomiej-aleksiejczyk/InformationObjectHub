@@ -32,7 +32,7 @@ To start the Information Object Hub application using Docker Compose, follow the
 3. **Access the Application**: Once the containers are up and running, you can access the Information Object Hub application by opening your web browser and navigating to:
 
    ```
-   http://localhost/springboot-info-object-hub/app
+   http://localhost/springboot-info-object-hub/ui/
    ```
 
 By following these steps, you'll be able to run and interact with the Information Object Hub application locally using Docker Compose. For further customization or development, refer to the specific service configurations within your `docker-compose-dev.yml` file.
