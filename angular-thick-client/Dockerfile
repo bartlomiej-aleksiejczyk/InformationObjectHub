@@ -1,9 +1,10 @@
 FROM node:alpine AS build
+ARG IMAGE_NAME
 WORKDIR /app
 COPY package.json package-lock.json ./
 RUN npm install
 COPY . ./
-RUN npm run build
+RUN npm run build-dev
 
 FROM nginx:alpine
 COPY --from=build /app/dist/angular-thick-client/browser /usr/share/nginx/html

@@ -44,6 +44,8 @@ services:
     build:
       context: ./angular-thick-client
       dockerfile: Dockerfile
+      args:
+        IMAGE_NAME: springboot-info-object-hub
     environment:
      - IMAGE_NAME=springboot-info-object-hub
      - TZ=Europe/Warsaw
