@@ -39,6 +39,18 @@ services:
       - postgres
     networks:
       - infoobjecthub
+    
+  angular:
+    build:
+      context: ./angular-thick-client
+      dockerfile: Dockerfile
+    environment:
+     - IMAGE_NAME=springboot-info-object-hub
+     - TZ=Europe/Warsaw
+    ports:
+      - "80:80"
+    networks:
+      - infoobjecthub
 
 networks:
   infoobjecthub:

@@ -1,0 +1,23 @@
+events {}
+http {
+    include       /etc/nginx/mime.types;
+    default_type  application/octet-stream;
+
+    sendfile        on;
+    keepalive_timeout  65;
+
+    server {
+        listen 80;
+        server_name localhost;
+
+        location /myapp/app/ {
+            root /usr/share/nginx/html;
+            try_files $uri $uri/ /index.html;
+        }
+
+        location /$IMAGE_NAME/ {
+            alias /usr/share/nginx/html/;
+            try_files $uri $uri/ =404;
+        }
+    }
+}
